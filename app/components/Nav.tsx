@@ -8,7 +8,7 @@ export default function Nav() {
   const pathname = usePathname()
   
   return (
-    <nav className="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-50">
+    <nav className="bg-[#FDFBEE] border-b border-gray-200 px-6 py-4 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">

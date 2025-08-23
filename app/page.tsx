@@ -443,16 +443,16 @@ export default function Home() {
     <div className="min-h-screen bg-white">
 
       {/* 英雄区域 */}
-      <div className="bg-gradient-to-br from-orange-500 to-orange-600 px-6 py-12">
+      <div className="bg-gradient-to-br from-orange-500 to-orange-600 px-6 py-1">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center justify-between">
             {/* 左侧内容 */}
             <div className="lg:w-1/2 text-white mb-8 lg:mb-0">
               <h1 className="text-5xl lg:text-6xl font-bold mb-6">
-                MagoTalk Episodes
+              MagoTalk 区块链与金融 
               </h1>
               <p className="text-xl text-orange-100 mb-8">
-                探索 Web3 世界的深度对话，与行业领袖一起探讨区块链、DeFi、NFT 等前沿话题
+              Web3, Blockchain, DeFi, NFT & The Future of Money and Finance
               </p>
             </div>
 
