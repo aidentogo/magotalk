@@ -4,412 +4,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Search, Play, Clock, User, X } from 'lucide-react'
-import { useState } from 'react'
-
-// 模拟数据：后续我们会改为从 Supabase 获取
-const episodes = [
-  {
-    slug: 'ep044',
-    cover_url: '/covers/ep044.jpg',
-    title: 'Web3 革命：去中心化的未来',
-    description: '探索区块链技术如何重塑互联网和数字经济的未来',
-    duration: '42:15',
-    host: 'MAGO',
-    category: 'TECHNOLOGY',
-    tags: ['Web3', 'Ethereum', 'DeFi']
-  },
-  {
-    slug: 'ep043',
-    cover_url: '/covers/ep043.jpg',
-    title: 'DeFi 深度解析：金融民主化',
-    description: '深入了解去中心化金融的机制、机遇与挑战',
-    duration: '38:30',
-    host: 'MAGO',
-    category: 'BUSINESS',
-    tags: ['DeFi', 'Lending', 'Stablecoins']
-  },
-  {
-    slug: 'ep042',
-    cover_url: '/covers/ep042.jpg',
-    title: 'NFT 艺术革命：数字收藏品时代',
-    description: '探讨 NFT 如何改变艺术创作和收藏的范式',
-    duration: '45:20',
-    host: 'MAGO',
-    category: 'ART',
-    tags: ['NFT', 'Ethereum', 'Art']
-  },
-  {
-    slug: 'ep041',
-    cover_url: '/covers/ep044.jpg',
-    title: '元宇宙：虚拟世界的无限可能',
-    description: '探索元宇宙技术发展和未来应用场景',
-    duration: '51:10',
-    host: 'MAGO',
-    category: 'TECHNOLOGY',
-    tags: ['Metaverse', 'Web3', 'VR']
-  },
-  {
-    slug: 'ep040',
-    cover_url: '/covers/ep043.jpg',
-    title: 'DAO 治理：社区驱动的组织模式',
-    description: '分析去中心化自治组织的运作机制和治理模式',
-    duration: '39:45',
-    host: 'MAGO',
-    category: 'BUSINESS',
-    tags: ['DAO', 'Governance', 'Community']
-  },
-  {
-    slug: 'ep039',
-    cover_url: '/covers/ep042.jpg',
-    title: 'Layer2 扩容：以太坊的未来之路',
-    description: '深入解析 Layer2 解决方案的技术原理和应用',
-    duration: '47:30',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep038',
-    cover_url: '/covers/ep044.jpg',
-    title: '智能合约安全：代码审计的重要性',
-    description: '探讨智能合约安全漏洞和审计最佳实践',
-    duration: '44:15',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep037',
-    cover_url: '/covers/ep043.jpg',
-    title: '跨链技术：多链生态的互联互通',
-    description: '分析跨链桥接技术和多链生态系统发展',
-    duration: '41:20',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep036',
-    cover_url: '/covers/ep042.jpg',
-    title: 'GameFi：游戏与金融的融合',
-    description: '探索游戏化金融和Play-to-Earn模式',
-    duration: '48:30',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep035',
-    cover_url: '/covers/ep044.jpg',
-    title: 'SocialFi：去中心化社交网络',
-    description: '探讨Web3社交平台和用户激励机制',
-    duration: '39:45',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep034',
-    cover_url: '/covers/ep043.jpg',
-    title: '零知识证明：隐私保护技术',
-    description: '深入解析ZK-SNARK和隐私计算技术',
-    duration: '52:10',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep033',
-    cover_url: '/covers/ep042.jpg',
-    title: '去中心化存储：IPFS与Filecoin',
-    description: '探讨分布式存储技术和数据主权',
-    duration: '46:25',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep032',
-    cover_url: '/covers/ep044.jpg',
-    title: 'Web3投资策略：风险与机遇',
-    description: '分析Web3项目投资方法和风险管理',
-    duration: '43:40',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep031',
-    cover_url: '/covers/ep043.jpg',
-    title: '去中心化身份：DID与数字主权',
-    description: '探讨自主身份管理和隐私保护',
-    duration: '47:15',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep030',
-    cover_url: '/covers/ep042.jpg',
-    title: 'DeFi衍生品：期权与期货',
-    description: '深入解析去中心化衍生品交易',
-    duration: '50:30',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep029',
-    cover_url: '/covers/ep044.jpg',
-    title: '区块链治理：共识机制演进',
-    description: '探讨PoS、DPoS等共识机制发展',
-    duration: '45:20',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep028',
-    cover_url: '/covers/ep043.jpg',
-    title: 'NFT市场分析：趋势与预测',
-    description: '分析NFT市场动态和投资机会',
-    duration: '41:35',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep027',
-    cover_url: '/covers/ep042.jpg',
-    title: '去中心化计算：分布式算力',
-    description: '探讨分布式计算和算力共享',
-    duration: '48:50',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep026',
-    cover_url: '/covers/ep044.jpg',
-    title: 'Web3基础设施：节点与网络',
-    description: '深入解析区块链基础设施架构',
-    duration: '44:15',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep025',
-    cover_url: '/covers/ep043.jpg',
-    title: '去中心化预测市场',
-    description: '探讨预测市场和信息聚合机制',
-    duration: '39:20',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep024',
-    cover_url: '/covers/ep042.jpg',
-    title: '区块链互操作性：多链未来',
-    description: '分析跨链技术和生态系统整合',
-    duration: '46:40',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep023',
-    cover_url: '/covers/ep044.jpg',
-    title: 'DeFi保险：风险对冲机制',
-    description: '探讨去中心化保险和风险管理',
-    duration: '42:55',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep022',
-    cover_url: '/covers/ep043.jpg',
-    title: '去中心化内容创作',
-    description: '分析Web3内容平台和创作者经济',
-    duration: '47:30',
-    host: 'MAGO',
-    category: 'ART'
-  },
-  {
-    slug: 'ep021',
-    cover_url: '/covers/ep042.jpg',
-    title: '区块链可扩展性解决方案',
-    description: '深入解析Layer2和分片技术',
-    duration: '50:15',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep020',
-    cover_url: '/covers/ep044.jpg',
-    title: '去中心化借贷协议',
-    description: '探讨DeFi借贷平台和利率机制',
-    duration: '43:25',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep019',
-    cover_url: '/covers/ep043.jpg',
-    title: 'Web3数据市场',
-    description: '分析去中心化数据交易和隐私',
-    duration: '45:50',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep018',
-    cover_url: '/covers/ep042.jpg',
-    title: '去中心化交易所演进',
-    description: '探讨DEX技术发展和用户体验',
-    duration: '41:10',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep017',
-    cover_url: '/covers/ep044.jpg',
-    title: '区块链隐私技术',
-    description: '深入解析隐私保护和匿名技术',
-    duration: '48:35',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep016',
-    cover_url: '/covers/ep043.jpg',
-    title: 'NFT艺术市场趋势',
-    description: '分析数字艺术市场和发展方向',
-    duration: '44:20',
-    host: 'MAGO',
-    category: 'ART'
-  },
-  {
-    slug: 'ep015',
-    cover_url: '/covers/ep042.jpg',
-    title: '去中心化治理实践',
-    description: '探讨DAO治理模式和投票机制',
-    duration: '46:15',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep014',
-    cover_url: '/covers/ep044.jpg',
-    title: 'Web3身份验证',
-    description: '分析去中心化身份和认证系统',
-    duration: '42:40',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep013',
-    cover_url: '/covers/ep043.jpg',
-    title: 'DeFi收益聚合器',
-    description: '探讨收益优化和自动化策略',
-    duration: '47:55',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep012',
-    cover_url: '/covers/ep042.jpg',
-    title: '区块链网络安全',
-    description: '深入解析网络安全威胁和防护',
-    duration: '49:30',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep011',
-    cover_url: '/covers/ep044.jpg',
-    title: '去中心化云存储',
-    description: '探讨分布式存储和文件共享',
-    duration: '43:15',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep010',
-    cover_url: '/covers/ep043.jpg',
-    title: 'NFT游戏生态系统',
-    description: '分析游戏NFT和虚拟资产经济',
-    duration: '45:25',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep009',
-    cover_url: '/covers/ep042.jpg',
-    title: 'Web3开发者工具',
-    description: '探讨区块链开发框架和工具链',
-    duration: '50:45',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep008',
-    cover_url: '/covers/ep044.jpg',
-    title: '去中心化预测平台',
-    description: '分析预测市场和信息聚合',
-    duration: '41:50',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep007',
-    cover_url: '/covers/ep043.jpg',
-    title: '区块链数据索引',
-    description: '探讨链上数据查询和分析',
-    duration: '46:20',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep006',
-    cover_url: '/covers/ep042.jpg',
-    title: 'DeFi风险管理',
-    description: '深入解析DeFi风险控制机制',
-    duration: '44:35',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep005',
-    cover_url: '/covers/ep044.jpg',
-    title: 'Web3用户体验设计',
-    description: '探讨去中心化应用的用户界面',
-    duration: '47:10',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep004',
-    cover_url: '/covers/ep043.jpg',
-    title: '去中心化内容分发',
-    description: '分析Web3内容平台和分发机制',
-    duration: '42:25',
-    host: 'MAGO',
-    category: 'BUSINESS'
-  },
-  {
-    slug: 'ep003',
-    cover_url: '/covers/ep042.jpg',
-    title: '区块链共识算法',
-    description: '深入解析各种共识机制原理',
-    duration: '48:40',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  },
-  {
-    slug: 'ep002',
-    cover_url: '/covers/ep044.jpg',
-    title: 'NFT收藏品市场',
-    description: '探讨数字收藏品和稀缺性经济',
-    duration: '45:15',
-    host: 'MAGO',
-    category: 'ART'
-  },
-  {
-    slug: 'ep001',
-    cover_url: '/covers/ep043.jpg',
-    title: 'Web3生态系统概览',
-    description: '全面了解Web3技术栈和应用',
-    duration: '51:20',
-    host: 'MAGO',
-    category: 'TECHNOLOGY'
-  }
-]
+import { useState, useEffect } from 'react'
+import { getEpisodes, getCoverImageUrl, Episode } from '@/lib/supabase'
 
 const categories = [
   'All Categories',
@@ -422,21 +18,70 @@ const categories = [
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [episodes, setEpisodes] = useState<Episode[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(['All Categories'])
+  
+  // 获取节目数据
+  useEffect(() => {
+    async function fetchEpisodes() {
+      try {
+        const data = await getEpisodes()
+        setEpisodes(data)
+      } catch (error) {
+        console.error('获取节目数据失败:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    
+    fetchEpisodes()
+  }, [])
   
   // 监听URL参数来触发搜索
   const handleSearchTrigger = () => {
     setIsSearchOpen(true)
   }
   
-  // 搜索过滤逻辑
+  // 处理分类选择
+  const handleCategorySelect = (category: string) => {
+    if (category === 'All Categories') {
+      setSelectedCategories(['All Categories'])
+    } else {
+      setSelectedCategories(prev => {
+        const newCategories = prev.filter(cat => cat !== 'All Categories')
+        if (newCategories.includes(category)) {
+          const filtered = newCategories.filter(cat => cat !== category)
+          return filtered.length === 0 ? ['All Categories'] : filtered
+        } else {
+          return [...newCategories, category]
+        }
+      })
+    }
+  }
+  
+  // 搜索和筛选过滤逻辑
   const filteredEpisodes = episodes.filter(episode => {
-    if (!searchQuery.trim()) return true
-    const query = searchQuery.toLowerCase()
-    return (
-      episode.title.toLowerCase().includes(query) ||
-      episode.description.toLowerCase().includes(query) ||
-      (episode.tags && episode.tags.some(tag => tag.toLowerCase().includes(query)))
-    )
+    // 搜索过滤
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase()
+      const matchesSearch = (
+        episode.title.toLowerCase().includes(query) ||
+        episode.description.toLowerCase().includes(query) ||
+        (episode.tags && episode.tags.some(tag => tag.toLowerCase().includes(query)))
+      )
+      if (!matchesSearch) return false
+    }
+    
+    // 分类过滤
+    if (!selectedCategories.includes('All Categories')) {
+      const hasMatchingTag = episode.tags && episode.tags.some(tag => 
+        selectedCategories.includes(tag)
+      )
+      if (!hasMatchingTag) return false
+    }
+    
+    return true
   })
 
   return (
@@ -507,89 +152,99 @@ export default function Home() {
       <div className="px-6 py-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-wrap gap-3">
-            {categories.map((category, index) => (
+            {categories.map((category) => (
               <button
                 key={category}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-                  index === 0 
-                    ? 'bg-green-600 text-white' 
-                    : 'bg-white text-gray-700 border border-gray-300 hover:border-gray-400'
+                onClick={() => handleCategorySelect(category)}
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  selectedCategories.includes(category)
+                    ? 'bg-orange-500 text-white shadow-md transform scale-105' 
+                    : 'bg-white text-gray-700 border border-gray-300 hover:border-orange-300 hover:text-orange-600 hover:bg-orange-50'
                 }`}
               >
                 {category}
               </button>
             ))}
           </div>
+          {selectedCategories.length > 0 && !selectedCategories.includes('All Categories') && (
+            <div className="mt-4 text-sm text-gray-600">
+              已选择: {selectedCategories.join(', ')} ({filteredEpisodes.length} 个节目)
+            </div>
+          )}
         </div>
       </div>
 
       {/* 节目网格 */}
       <div className="px-6 py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-            {filteredEpisodes.map((episode) => (
-              <Link key={episode.slug} href={`/episodes/${episode.slug}`} className="block">
-                <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer">
-                  {/* 封面图片 */}
-                  <div className="aspect-square relative bg-gray-100 rounded-t-lg overflow-hidden">
-                    <Image
-                      src={episode.cover_url}
-                      alt={episode.title}
-                      fill
-                      className="object-contain p-2 hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  
-                  {/* 内容区域 */}
-                  <div className="p-3 flex flex-col h-full">
-                    {/* 标题 */}
-                    <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 leading-tight">
-                      {episode.title}
-                    </h3>
-                    
-                    {/* 分类标签 */}
-                    <div className="mb-2">
-                      <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">
-                        {episode.category}
-                      </span>
+          {isLoading ? (
+            <div className="text-center py-12">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+              <p className="mt-4 text-gray-600">加载节目中...</p>
+            </div>
+          ) : filteredEpisodes.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600">暂无节目数据</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {filteredEpisodes.map((episode) => (
+                <Link key={episode.slug} href={`/episodes/${episode.slug}`} className="block">
+                  <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-1">
+                    {/* 封面图片 */}
+                    <div className="aspect-square relative bg-gray-100 overflow-hidden">
+                      <Image
+                        src={getCoverImageUrl(episode.cover_image)}
+                        alt={episode.title}
+                        fill
+                        className="object-cover hover:scale-105 transition-transform duration-300"
+                      />
                     </div>
                     
-                    {/* 节目标签 */}
-                    {episode.tags && episode.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mb-2">
-                        {episode.tags.slice(0, 2).map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                        {episode.tags.length > 2 && (
-                          <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
-                            +{episode.tags.length - 2}
-                          </span>
-                        )}
-                      </div>
-                    )}
-                    
-                    {/* 底部信息 - 使用 mt-auto 推到底部 */}
-                    <div className="flex items-center justify-between mt-auto pt-2">
-                      <div className="flex items-center space-x-1 text-xs text-gray-500">
-                        <Clock className="w-3 h-3" />
-                        <span>{episode.duration}</span>
-                      </div>
+                    {/* 内容区域 */}
+                    <div className="p-4 flex flex-col h-full">
+                      {/* 标题 */}
+                      <h3 className="text-base font-semibold text-gray-900 mb-3 line-clamp-2 leading-snug">
+                        {episode.title}
+                      </h3>
                       
-                      {/* 播放按钮 */}
-                      <div className="w-6 h-6 bg-orange-500 hover:bg-orange-600 rounded-full flex items-center justify-center text-white transition-colors">
-                        <Play className="w-3 h-3 ml-0.5" />
+                      {/* 节目标签 */}
+                      {episode.tags && episode.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mb-4">
+                          {episode.tags.slice(0, 4).map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full font-medium"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                          {episode.tags.length > 4 && (
+                            <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full font-medium">
+                              +{episode.tags.length - 4}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                      
+                      {/* 底部信息 - 使用 mt-auto 推到底部 */}
+                      <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-100">
+                        <div className="flex items-center space-x-1 text-xs text-gray-500">
+                          <Clock className="w-3 h-3" />
+                          <span className="truncate">{episode.date || '时间待定'}</span>
+                        </div>
+                        
+                        {/* 播放按钮 */}
+                        <div className="w-8 h-8 bg-orange-500 hover:bg-orange-600 rounded-full flex items-center justify-center text-white transition-colors shadow-md">
+                          <Play className="w-3 h-3 ml-0.5" />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
