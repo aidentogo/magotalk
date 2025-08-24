@@ -528,66 +528,66 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {filteredEpisodes.map((episode) => (
-              <div key={episode.slug} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-                {/* 封面图片 */}
-                <div className="aspect-square relative bg-gray-100 rounded-t-lg overflow-hidden">
-                  <Image
-                    src={episode.cover_url}
-                    alt={episode.title}
-                    fill
-                    className="object-contain p-2 hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                
-                {/* 内容区域 */}
-                <div className="p-3 flex flex-col h-full">
-                  {/* 标题 */}
-                  <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 leading-tight">
-                    {episode.title}
-                  </h3>
-                  
-                  {/* 分类标签 */}
-                  <div className="mb-2">
-                    <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">
-                      {episode.category}
-                    </span>
+              <Link key={episode.slug} href={`/episodes/${episode.slug}`} className="block">
+                <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer">
+                  {/* 封面图片 */}
+                  <div className="aspect-square relative bg-gray-100 rounded-t-lg overflow-hidden">
+                    <Image
+                      src={episode.cover_url}
+                      alt={episode.title}
+                      fill
+                      className="object-contain p-2 hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
                   
-                  {/* 节目标签 */}
-                  {episode.tags && episode.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mb-2">
-                      {episode.tags.slice(0, 2).map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                      {episode.tags.length > 2 && (
-                        <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
-                          +{episode.tags.length - 2}
-                        </span>
-                      )}
-                    </div>
-                  )}
-                  
-                  {/* 底部信息 - 使用 mt-auto 推到底部 */}
-                  <div className="flex items-center justify-between mt-auto pt-2">
-                    <div className="flex items-center space-x-1 text-xs text-gray-500">
-                      <Clock className="w-3 h-3" />
-                      <span>{episode.duration}</span>
+                  {/* 内容区域 */}
+                  <div className="p-3 flex flex-col h-full">
+                    {/* 标题 */}
+                    <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 leading-tight">
+                      {episode.title}
+                    </h3>
+                    
+                    {/* 分类标签 */}
+                    <div className="mb-2">
+                      <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">
+                        {episode.category}
+                      </span>
                     </div>
                     
-                    {/* 播放按钮 */}
-                    <Link href={`/episodes/${episode.slug}`}>
-                      <button className="w-6 h-6 bg-orange-500 hover:bg-orange-600 rounded-full flex items-center justify-center text-white transition-colors">
+                    {/* 节目标签 */}
+                    {episode.tags && episode.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mb-2">
+                        {episode.tags.slice(0, 2).map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                        {episode.tags.length > 2 && (
+                          <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                            +{episode.tags.length - 2}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                    
+                    {/* 底部信息 - 使用 mt-auto 推到底部 */}
+                    <div className="flex items-center justify-between mt-auto pt-2">
+                      <div className="flex items-center space-x-1 text-xs text-gray-500">
+                        <Clock className="w-3 h-3" />
+                        <span>{episode.duration}</span>
+                      </div>
+                      
+                      {/* 播放按钮 */}
+                      <div className="w-6 h-6 bg-orange-500 hover:bg-orange-600 rounded-full flex items-center justify-center text-white transition-colors">
                         <Play className="w-3 h-3 ml-0.5" />
-                      </button>
-                    </Link>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
