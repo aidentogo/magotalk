@@ -7,21 +7,21 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#caffbf] via-[#9bf6ff] to-[#ffc6ff]">
       {/* 页面头部 */}
-      <div className="bg-[#9bf6ff] border-b border-gray-200 px-6 py-16">
+      <div className="bg-[#9bf6ff] border-b border-gray-200 px-6 py-8">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Contact Us</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            我们期待听到您的声音，欢迎通过以下方式与我们联系
+            欢迎交流
           </p>
         </div>
       </div>
 
       {/* 主要内容 */}
-      <div className="px-6 py-16">
+      <div className="px-6 py-7">
         <div className="max-w-2xl mx-auto">
-          <div className="space-y-8">
+          <div className="space-y-4">
             {/* 联系方式 */}
-            <div className="bg-[#a0c4ff] rounded-lg shadow-sm p-8">
+            <div className="bg-[#a0c4ff] rounded-lg shadow-sm p-4">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">联系方式</h2>
               
               <div className="space-y-6">
@@ -55,7 +55,7 @@ export default function ContactPage() {
             </div>
             
             {/* 合作机会 */}
-            <div className="bg-[#bdb2ff] rounded-lg shadow-sm p-8">
+            <div className="bg-[#bdb2ff] rounded-lg shadow-sm p-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">合作机会</h2>
               <p className="text-gray-700 leading-relaxed">
                 如果您是 Web3 领域的专家、创业者或项目方，欢迎与我们联系，

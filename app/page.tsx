@@ -94,7 +94,7 @@ export default function Home() {
             {/* 左侧内容 */}
             <div className="w-full lg:w-1/2 text-white mb-1 lg:mb-0 text-center lg:text-left">
               <h1 className="text-5xl lg:text-6xl font-bold mb-4 leading-tight tracking-tight">
-                <span className="block lg:inline">MagoTalk</span>{' '}
+                <span className="block lg:inline">Mago Talk</span>{' '}
                 <span className="block lg:inline">区块链与金融</span>
               </h1>
               <p className="text-xl text-orange-100 mb-8">

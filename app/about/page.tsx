@@ -6,9 +6,9 @@ import Image from 'next/image'
 export default function AboutPage() {
   const pathname = usePathname()
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#a0c4ff] via-[#bdb2ff] to-[#ffd6a5]">
+    <div className="min-h-screen bg-gradient-to-br from-[#caffbf] via-[#9bf6ff] to-[#ffc6ff]">
       {/* 页面头部 */}
-      <div className="bg-[#ffadad] border-b border-gray-200 px-6 py-16">
+      <div className="bg-[#9bf6ff] border-b border-gray-200 px-6 py-8">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">About Us</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -18,18 +18,18 @@ export default function AboutPage() {
       </div>
 
       {/* 主要内容 */}
-      <div className="px-6 py-16">
+      <div className="px-6 py-7">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-2 gap-3">
             {/* 左侧：我们的使命 */}
-            <div className="bg-[#caffbf] rounded-lg shadow-sm p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">我们的使命</h2>
+            <div className="bg-[#a0c4ff] rounded-lg shadow-sm p-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">关于我们</h2>
               <p className="text-gray-700 leading-relaxed">
-                MagoTalk 致力于为 Web3 爱好者提供高质量的播客内容。通过深度访谈和行业洞察，帮助听众了解区块链技术的最新发展和应用前景。
+                MagoTalk 致力于为 Web3 爱好者提供高质量的区块链与金融内容。帮助大家了解区块链技术的最新发展和金融信息。
               </p>
               
               <p className="text-gray-700 leading-relaxed mt-4">
-                我们相信，教育与传播是推动去中心化理念普及的关键。MagoTalk 不仅提供一线专家的声音，也呈现全球区块链生态中的真实脉动。
+                我们相信，教育与传播是推动去中心化理念普及的关键。MagoTalk 不仅提供一线的声音，也呈现全球区块链生态中的真实脉动。
               </p>
               
               <p className="text-gray-700 leading-relaxed mt-4">
@@ -50,8 +50,8 @@ export default function AboutPage() {
             </div>
 
             {/* 右侧：主持人介绍 */}
-            <div className="bg-[#ffd6a5] rounded-lg shadow-sm p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">主持人介绍</h2>
+            <div className="bg-[#bdb2ff] rounded-lg shadow-sm p-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">嘉宾介绍</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* 主持人 1 - MAGO */}
                 <div className="text-center">
