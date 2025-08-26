@@ -88,26 +88,35 @@ export default function Home() {
     <div className="min-h-screen bg-white">
 
       {/* 英雄区域 */}
-      <div className="bg-gradient-to-br from-orange-500 to-orange-600 px-6 py-1">
+      <div className="bg-gradient-to-br from-orange-500 to-orange-600 px-6 pt-5 pb-2 lg:py-12">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center justify-between">
             {/* 左侧内容 */}
-            <div className="lg:w-1/2 text-white mb-8 lg:mb-0">
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6">
-              MagoTalk 区块链与金融 
+            <div className="w-full lg:w-1/2 text-white mb-1 lg:mb-0 text-center lg:text-left">
+              <h1 className="text-5xl lg:text-6xl font-bold mb-4 leading-tight tracking-tight">
+                <span className="block lg:inline">MagoTalk</span>{' '}
+                <span className="block lg:inline">区块链与金融</span>
               </h1>
               <p className="text-xl text-orange-100 mb-8">
               Web3, Blockchain, DeFi, NFT & The Future of Money and Finance
               </p>
             </div>
 
-            {/* 右侧图片 */}
-            <div className="lg:w-1/2 flex justify-center">
-              <div className="w-64 h-64 lg:w-80 lg:h-80 bg-white/10 rounded-full flex items-center justify-center">
-                <div className="w-56 h-56 lg:w-72 lg:h-72 bg-white/20 rounded-full flex items-center justify-center">
-                  <svg className="w-32 h-32 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clipRule="evenodd" />
-                  </svg>
+            {/* 右侧币种 Logo 容器 */}
+            <div className="lg:w-1/2 w-full flex lg:justify-end mt-0 lg:mt-0">
+              {/* 小屏：占满一行并均匀分布；大屏：贴右且等间距更宽 */}
+              <div className="flex w-full justify-evenly items-center lg:w-auto lg:justify-end lg:gap-8">
+                <div className="w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-white/95 p-2 lg:p-3 shadow-sm">
+                  <img src="/icons/coins/btc.svg"  alt="Bitcoin"      className="block w-full h-full object-contain" />
+                </div>
+                <div className="w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-white/95 p-2 lg:p-3 shadow-sm">
+                  <img src="/icons/coins/eth.svg"  alt="Ethereum"     className="block w-full h-full object-contain" />
+                </div>
+                <div className="w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-white/95 p-2 lg:p-3 shadow-sm">
+                  <img src="/icons/coins/usdt.svg" alt="Tether (USDT)" className="block w-full h-full object-contain" />
+                </div>
+                <div className="w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-white/95 p-2 lg:p-3 shadow-sm">
+                  <img src="/icons/coins/usdc.svg" alt="USD Coin"     className="block w-full h-full object-contain" />
                 </div>
               </div>
             </div>
@@ -240,10 +249,10 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
             </div>
+          </Link>
+        ))}
+      </div>
           )}
         </div>
       </div>
