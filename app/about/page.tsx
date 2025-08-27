@@ -27,7 +27,7 @@ export default function AboutPage() {
               At MagoTalk, we see education and open access to information as vital drivers of decentralization. Our platform highlights diverse perspectives and documents the evolving realities of the blockchain world.
               </p>
               <p className="text-gray-700 leading-relaxed mt-4">
-              Covering topics from crypto assets and DeFi systems to NFT movements and governance experiments, MagoTalk creates space for dialogue that connects today's ideas with tomorrow's digital society.
+              Covering topics from crypto assets and DeFi systems to NFT movements and governance experiments, MagoTalk creates space for dialogue that connects today&apos;s ideas with tomorrow&apos;s digital society.
               </p>
               
               <h3 className="text-xl font-semibold text-gray-800 mb-3 mt-6">Our Mission</h3>
