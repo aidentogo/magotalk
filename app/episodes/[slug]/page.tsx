@@ -39,7 +39,7 @@ export default async function EpisodeDetail({ params }: { params: Promise<{ slug
           <div className="bg-white rounded-lg shadow-sm p-6">
             <div className="flex items-center mb-4">
               <span className="text-2xl mr-3">🎙</span>
-              <h2 className="text-xl font-semibold text-gray-900">节目简介</h2>
+              <h2 className="text-xl font-semibold text-gray-900">Episode Summary</h2>
             </div>
             <div className="text-gray-700 leading-relaxed whitespace-pre-line">
               {episode.description}
@@ -51,7 +51,7 @@ export default async function EpisodeDetail({ params }: { params: Promise<{ slug
             <div className="bg-white rounded-lg shadow-sm p-6">
               <div className="flex items-center mb-4">
                 <span className="text-2xl mr-3">📎</span>
-                <h2 className="text-xl font-semibold text-gray-900">相关标签</h2>
+                <h2 className="text-xl font-semibold text-gray-900">Tags</h2>
               </div>
               <div className="flex flex-wrap gap-2">
                 {episode.tags.map((tag) => (
@@ -71,7 +71,7 @@ export default async function EpisodeDetail({ params }: { params: Promise<{ slug
             <div className="bg-white rounded-lg shadow-sm p-6">
               <div className="flex items-center mb-4">
                 <span className="text-2xl mr-3">🔗</span>
-                <h2 className="text-xl font-semibold text-gray-900">X Space 直播</h2>
+                <h2 className="text-xl font-semibold text-gray-900">X Space Live Link</h2>
               </div>
               <a
                 href={episode.space_link}
@@ -90,7 +90,7 @@ export default async function EpisodeDetail({ params }: { params: Promise<{ slug
             <div className="bg-white rounded-lg shadow-sm p-6">
               <div className="flex items-center mb-4">
                 <span className="text-2xl mr-3">📅</span>
-                <h2 className="text-xl font-semibold text-gray-900">节目时间</h2>
+                <h2 className="text-xl font-semibold text-gray-900">Episode Time</h2>
               </div>
               <p className="text-gray-700 text-lg">
                 {episode.date}
