@@ -6,7 +6,7 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">About Us</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            MagoTalk 区块链与金融
+            Mago Talk Blockchain & Finance
           </p>
         </div>
       </div>
@@ -17,17 +17,21 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 gap-3">
             {/* 左侧：我们的使命 */}
             <div className="bg-[#a0c4ff] rounded-lg shadow-sm p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">关于我们</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">About Us</h2>
+              
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Our Vision</h3>
               <p className="text-gray-700 leading-relaxed">
-                MagoTalk 致力于为 Web3 爱好者提供高质量的区块链与金融内容。帮助大家了解区块链技术的最新发展和金融信息。
+              MagoTalk strives to be a trusted gateway for Web3 communities, curating reliable blockchain and financial knowledge that keeps audiences ahead of rapid innovation.
               </p>
               <p className="text-gray-700 leading-relaxed mt-4">
-                我们相信，教育与传播是推动去中心化理念普及的关键。MagoTalk 不仅提供一线的声音，也呈现全球区块链生态中的真实脉动。
+              At MagoTalk, we see education and open access to information as vital drivers of decentralization. Our platform highlights diverse perspectives and documents the evolving realities of the blockchain world.
               </p>
               <p className="text-gray-700 leading-relaxed mt-4">
-                无论是加密资产、DeFi 协议、NFT 文化还是链上治理，我们用对话和声音构建一座通往未来的桥梁。
+              Covering topics from crypto assets and DeFi systems to NFT movements and governance experiments, MagoTalk creates space for dialogue that connects today&apos;s ideas with tomorrow&apos;s digital society.
               </p>
-              <p className="text-gray-700 leading-relaxed mt-6">
+              
+              <h3 className="text-xl font-semibold text-gray-800 mb-3 mt-6">Our Mission</h3>
+              <p className="text-gray-700 leading-relaxed">
                 MagoTalk is committed to delivering high-quality podcast content for Web3 enthusiasts. Through in-depth interviews and industry insights, we help our audience stay informed about the latest developments and future applications of blockchain technology.
               </p>
               <p className="text-gray-700 leading-relaxed mt-4">
@@ -40,7 +44,7 @@ export default function AboutPage() {
 
             {/* 右侧：主持人介绍 */}
             <div className="bg-[#bdb2ff] rounded-lg shadow-sm p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">嘉宾介绍</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Guest Bios</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* MAGO */}
                 <div className="text-center">

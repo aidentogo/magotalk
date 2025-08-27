@@ -11,7 +11,7 @@ export default function ContactPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Contact Us</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            欢迎交流
+          Let’s Connect
           </p>
         </div>
       </div>
@@ -22,7 +22,7 @@ export default function ContactPage() {
           <div className="space-y-4">
             {/* 联系方式 */}
             <div className="bg-[#a0c4ff] rounded-lg shadow-sm p-4">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">联系方式</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
               
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
@@ -30,7 +30,7 @@ export default function ContactPage() {
                     <span className="text-orange-600 text-lg">📧</span>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">邮箱</h3>
+                    <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
                     <p className="text-gray-600">magotalk@aol.com</p>
                   </div>
                 </div>
@@ -56,10 +56,10 @@ export default function ContactPage() {
             
             {/* 合作机会 */}
             <div className="bg-[#bdb2ff] rounded-lg shadow-sm p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">合作机会</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Collaboration Opportunities</h2>
               <p className="text-gray-700 leading-relaxed">
-                如果您是 Web3 领域的专家、创业者或项目方，欢迎与我们联系，
-                探讨合作、内容共创等机会。
+              MagoTalk welcomes partnerships with Web3 experts, entrepreneurs, and project teams to advance blockchain education and decentralized innovation. By fostering collaboration in content co-creation, media initiatives, and community engagement, we aim to amplify thought leadership and strengthen the global Web3 ecosystem.
+                
               </p>
             </div>
           </div>

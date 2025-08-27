@@ -92,13 +92,20 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center justify-between">
             {/* 左侧内容 */}
-            <div className="w-full lg:w-1/2 text-white mb-1 lg:mb-0 text-center lg:text-left">
-              <h1 className="text-5xl lg:text-6xl font-bold mb-4 leading-tight tracking-tight">
-                <span className="block lg:inline">Mago Talk</span>{' '}
-                <span className="block lg:inline">区块链与金融</span>
+            <div className="w-full lg:w-1/2 text-white mb-1 lg:mb-0 text-center lg:text-left mx-auto lg:mx-0 max-w-[700px]">
+              <h1 className="font-extrabold mb-4 leading-tight tracking-tight">
+                {/* 第一行：始终独占一行 */}
+                <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
+                  Mago Talk
+                </span>
+                {/* 第二行：移动端更小，保持单行；桌面逐级放大 */}
+                <span className="block whitespace-nowrap text-2xl sm:text-4xl md:text-5xl lg:text-6xl">
+                  Blockchain &amp; Finance
+                </span>
               </h1>
-              <p className="text-xl text-orange-100 mb-8">
-              Web3, Blockchain, DeFi, NFT & The Future of Money and Finance
+
+              <p className="text-lg sm:text-xl text-orange-100 mb-8">
+                Web3, Blockchain, DeFi, NFT &amp; The Future of Money and Finance
               </p>
             </div>
 
