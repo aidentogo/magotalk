@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#caffbf] via-[#9bf6ff] to-[#ffc6ff]">
@@ -47,12 +45,13 @@ export default function AboutPage() {
                 {/* MAGO */}
                 <div className="text-center">
                   <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-3">
-                    <Image
+                    <img
                       src="/hosts/host1-mago.png"
                       alt="MAGO"
                       width={80}
                       height={80}
-                      sizes="80px"
+                      loading="lazy"
+                      decoding="async"
                       className="w-20 h-20 rounded-full object-cover"
                     />
                   </div>
@@ -66,12 +65,13 @@ export default function AboutPage() {
                 {/* TigerHunter */}
                 <div className="text-center">
                   <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-3">
-                    <Image
+                    <img
                       src="/hosts/host2-mago.jpg"
                       alt="TigerHunter"
                       width={80}
                       height={80}
-                      sizes="80px"
+                      loading="lazy"
+                      decoding="async"
                       className="w-20 h-20 rounded-full object-cover"
                     />
                   </div>
@@ -85,12 +85,13 @@ export default function AboutPage() {
                 {/* KCVision */}
                 <div className="text-center">
                   <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-3">
-                    <Image
+                    <img
                       src="/hosts/host3-mago.jpg"
                       alt="KCVision"
                       width={80}
                       height={80}
-                      sizes="80px"
+                      loading="lazy"
+                      decoding="async"
                       className="w-20 h-20 rounded-full object-cover"
                     />
                   </div>
@@ -104,12 +105,13 @@ export default function AboutPage() {
                 {/* Steven Zhu */}
                 <div className="text-center">
                   <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-3">
-                    <Image
+                    <img
                       src="/hosts/host4-mago.jpg"
                       alt="Steven Zhu"
                       width={80}
                       height={80}
-                      sizes="80px"
+                      loading="lazy"
+                      decoding="async"
                       className="w-20 h-20 rounded-full object-cover"
                     />
                   </div>
