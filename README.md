@@ -28,6 +28,10 @@
 pnpm install
 ```
 
+### 配置环境变量
+
+在运行开发服务器之前，请先配置 `.env.local` 文件。项目根目录已包含一个模板文件，请用您的 Supabase 项目信息替换占位值。详细说明请参考 [SUPABASE_SETUP.md](./SUPABASE_SETUP.md)。
+
 ### 启动开发服务器
 
 ```bash
