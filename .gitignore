@@ -25,3 +25,7 @@ out
 *.mp4
 *.psd
 *.ai
+
+# pnpm local store/cache
+.pnpm-store/
+

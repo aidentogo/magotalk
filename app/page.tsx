@@ -164,8 +164,8 @@ export default function Home() {
         </div>
       )}
 
-      {/* 分类导航 */}
-      <div className="px-6 py-8 bg-white">
+      {/* 分类导航 - 移动端隐藏，桌面端显示 */}
+      <div className="hidden md:block px-6 py-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-wrap gap-3">
             {categories.map((category) => (
