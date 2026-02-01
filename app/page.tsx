@@ -215,23 +215,23 @@ export default function Home() {
                     {/* 内容区域 - 紧凑的垂直节奏 */}
                     <div className="px-4 pt-1 pb-3 md:px-3 md:pt-1 md:pb-2.5 flex flex-col">
                       {/* 标题 - 与 tag 保持紧密关联 */}
-                      <h3 className="text-base md:text-sm font-semibold text-gray-900 mb-1 md:mb-0.5 line-clamp-2 leading-snug md:leading-snug">
+                      <h3 className="text-base md:text-sm font-semibold text-gray-900 mb-1 md:mb-0.5 line-clamp-2 leading-snug md:leading-snug min-h-[48px] md:min-h-[40px]">
                         {episode.title}
                       </h3>
                       
                       {/* 节目标签 - 紧贴标题的注解，无额外 mb */}
                       {episode.tags && episode.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1 md:gap-0.5 mt-0 mb-1 md:mb-0.5">
+                        <div className="flex w-full justify-start items-center text-left flex-nowrap overflow-hidden whitespace-nowrap gap-1 md:gap-0.5 mt-0 mb-1 md:mb-0.5 min-h-[24px]">
                           {episode.tags.slice(0, 3).map((tag) => (
                             <span
                               key={tag}
-                              className="px-2 md:px-1.5 py-0.5 md:py-0.5 bg-gray-100 md:bg-transparent text-gray-500 md:text-gray-400 text-xs leading-none"
+                              className="pl-0 pr-1.5 md:pr-1 py-0.5 md:py-0.5 bg-gray-100 md:bg-transparent text-gray-500 md:text-gray-400 text-xs leading-none shrink-0"
                             >
                               {tag}
                             </span>
                           ))}
                           {episode.tags.length > 3 && (
-                            <span className="px-2 md:px-1.5 py-0.5 md:py-0.5 bg-gray-100 md:bg-transparent text-gray-400 text-xs leading-none">
+                            <span className="pl-0 pr-1.5 md:pr-1 py-0.5 md:py-0.5 bg-gray-100 md:bg-transparent text-gray-400 text-xs leading-none shrink-0">
                               +{episode.tags.length - 3}
                             </span>
                           )}
@@ -239,7 +239,7 @@ export default function Home() {
                       )}
                       
                       {/* 底部信息 - mt 控制与 tag 的距离 */}
-                      <div className="flex items-center justify-between mt-0.5 md:mt-0.5 pt-0.5 md:pt-0.5 border-t border-gray-100">
+                      <div className="flex items-center justify-between mt-auto pt-0.5 md:pt-0.5 border-t border-gray-100">
                         <div className="flex items-center space-x-1 text-xs text-gray-500">
                           <Clock className="w-3 h-3" />
                           <span className="truncate">{episode.date || '时间待定'}</span>
