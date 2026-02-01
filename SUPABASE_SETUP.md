@@ -13,7 +13,7 @@ NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 ```
 
-## ⚠️ 重要提示
+## ⚠️ 重要提示 ####
 
 在 Next.js 中，只有以 `NEXT_PUBLIC_` 开头的环境变量才能在客户端代码中访问。如果您使用：
 - `SUPABASE_URL` 和 `SUPABASE_ANON_KEY` - 这些变量只能在服务器端访问
