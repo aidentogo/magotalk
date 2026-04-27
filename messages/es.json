@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "title": "MagoTalk - Blockchain y finanzas",
+    "description": "Conversaciones en profundidad sobre Web3, blockchain, DeFi, NFT y el futuro de las finanzas digitales.",
+    "ogDescription": "Explora Web3 con entrevistas sobre blockchain, DeFi, NFT y más."
+  },
+  "Nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "language": "Idioma"
+  },
+  "Home": {
+    "heroTitle": "Mago Talk",
+    "heroSubtitle": "Entiende Web3 más rápido",
+    "heroDescription": "Conversaciones reales con builders, fundadores y gente de dentro en cripto, IA y finanzas.",
+    "loading": "Cargando episodios…",
+    "empty": "No hay episodios que coincidan con tus filtros.",
+    "selectedCategories": "Seleccionado: {tags} ({count} episodios)",
+    "footerCopyright": "© {year} MagoTalk. Todos los derechos reservados.",
+    "timeTbd": "Por definir"
+  },
+  "About": {
+    "title": "Acerca de",
+    "subtitle": "Cripto, DeFi y Web3, en lenguaje claro.",
+    "aboutHeading": "Acerca de",
+    "aboutBody": "Explicamos cripto, DeFi y quienes construyen Web3.\nSin humo, al grano.",
+    "missionHeading": "Misión",
+    "missionBody": "Hablamos con fundadores, traders e investigadores para que aprendas antes.\nTú eliges qué importa.",
+    "guestBiosTitle": "Anfitriones",
+    "teamIntro": "Quienes están detrás del micrófono.",
+    "hostMagoRole": "Anfitrión",
+    "hostMagoBio": "Fundador",
+    "hostKcRole": "Coanfitrión",
+    "hostKcBio": "Colaborador",
+    "hostStevenRole": "Coanfitrión",
+    "hostStevenBio": "Creador"
+  },
+  "Contact": {
+    "title": "Contacto",
+    "subtitle": "Di hola",
+    "pageIntro": "Escríbenos o mándanos un mensaje en X.\nLeemos todo.",
+    "getInTouch": "Cómo llegar",
+    "emailLabel": "Correo",
+    "xLabel": "X",
+    "collabTitle": "Colaboración",
+    "collabBody": "Episodios, eventos o educación: hablemos.\nDinos qué necesitas."
+  },
+  "Episode": {
+    "summaryTitle": "Resumen del episodio",
+    "tagsTitle": "Etiquetas",
+    "spaceTitle": "Enlace en vivo de X Space",
+    "listenCta": "Escuchar en X",
+    "timeTitle": "Fecha del episodio",
+    "guestsTitle": "Invitados",
+    "timeTbd": "Por confirmar",
+    "metaTitleSuffix": "MagoTalk"
+  },
+  "Error": {
+    "title": "Algo salió mal",
+    "hint": "Actualiza la página o inténtalo de nuevo más tarde.",
+    "retry": "Reintentar"
+  },
+  "NotFound": {
+    "title": "Página no encontrada",
+    "body": "La página que buscas no existe o se ha movido.",
+    "homeLink": "Volver al inicio"
+  }
+}
