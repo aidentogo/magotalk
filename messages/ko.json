@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "title": "MagoTalk - 블록체인과 금융",
+    "description": "Web3, 블록체인, DeFi, NFT, 디지털 금융의 미래를 다루는 깊이 있는 대화.",
+    "ogDescription": "블록체인, DeFi, NFT 등 Web3를 탐구하는 인터뷰."
+  },
+  "Nav": {
+    "home": "홈",
+    "about": "소개",
+    "contact": "문의",
+    "language": "언어"
+  },
+  "Home": {
+    "heroTitle": "Mago Talk",
+    "heroSubtitle": "Web3를 더 빨리 이해하세요",
+    "heroDescription": "암호화폐, AI, 금융 현장의 빌더, 창업자, 내부자와의 진짜 대화.",
+    "loading": "에피소드 불러오는 중…",
+    "empty": "조건에 맞는 에피소드가 없습니다.",
+    "selectedCategories": "선택: {tags} ({count}개)",
+    "footerCopyright": "© {year} MagoTalk. All rights reserved.",
+    "timeTbd": "미정"
+  },
+  "About": {
+    "title": "소개",
+    "subtitle": "암호화폐, DeFi, Web3를 쉬운 말로.",
+    "aboutHeading": "소개",
+    "aboutBody": "암호화폐, DeFi, 현장의 Web3 빌더를 짚어 드립니다.\n과장 없이, 직설적으로.",
+    "missionHeading": "미션",
+    "missionBody": "창업자, 트레이더, 연구자와 이야기해 이해를 돕습니다.\n무엇을 볼지는 당신이 정합니다.",
+    "guestBiosTitle": "호스트",
+    "teamIntro": "마이크 뒤 사람들.",
+    "hostMagoRole": "호스트",
+    "hostMagoBio": "창립자",
+    "hostKcRole": "공동 호스트",
+    "hostKcBio": "기여자",
+    "hostStevenRole": "공동 호스트",
+    "hostStevenBio": "크리에이터"
+  },
+  "Contact": {
+    "title": "문의",
+    "subtitle": "인사 나누기",
+    "pageIntro": "이메일이나 X로 연락 주세요.\n모두 읽습니다.",
+    "getInTouch": "연락처",
+    "emailLabel": "이메일",
+    "xLabel": "X",
+    "collabTitle": "협업",
+    "collabBody": "방송, 행사, 교육 협력 환영합니다.\n필요한 것을 알려 주세요."
+  },
+  "Episode": {
+    "summaryTitle": "에피소드 요약",
+    "tagsTitle": "태그",
+    "spaceTitle": "X Space 라이브 링크",
+    "listenCta": "X에서 듣기",
+    "timeTitle": "방송 일정",
+    "guestsTitle": "게스트",
+    "timeTbd": "미정",
+    "metaTitleSuffix": "MagoTalk"
+  },
+  "Error": {
+    "title": "문제가 발생했습니다",
+    "hint": "페이지를 새로고침하거나 잠시 후 다시 시도해 주세요.",
+    "retry": "다시 시도"
+  },
+  "NotFound": {
+    "title": "페이지를 찾을 수 없습니다",
+    "body": "찾으시는 페이지가 없거나 이동되었을 수 있습니다.",
+    "homeLink": "홈으로"
+  }
+}

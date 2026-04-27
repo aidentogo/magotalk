@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "title": "MagoTalk - Blockchain & Finance",
+    "description": "In-depth conversations on Web3, blockchain, DeFi, NFTs, and the future of digital finance.",
+    "ogDescription": "Explore Web3 through thoughtful interviews on blockchain, DeFi, NFTs, and more."
+  },
+  "Nav": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "Home": {
+    "heroTitle": "Mago Talk",
+    "heroSubtitle": "Understand Web3 Faster",
+    "heroDescription": "Real conversations with builders, founders, and insiders in crypto, AI, and finance.",
+    "loading": "Loading episodes…",
+    "empty": "No episodes match your filters.",
+    "selectedCategories": "Selected: {tags} ({count} episodes)",
+    "footerCopyright": "© {year} MagoTalk. All rights reserved.",
+    "timeTbd": "TBD"
+  },
+  "About": {
+    "title": "About",
+    "subtitle": "Crypto, DeFi, and Web3—in plain language.",
+    "aboutHeading": "About",
+    "aboutBody": "We break down crypto, DeFi, and the people building Web3.\nYou get straight talk—not hype.",
+    "missionHeading": "Mission",
+    "missionBody": "We talk to founders, traders, and researchers so you learn faster.\nYou pick what matters to you.",
+    "guestBiosTitle": "Hosts",
+    "teamIntro": "Meet the people behind the mic.",
+    "hostMagoRole": "Host",
+    "hostMagoBio": "Founder",
+    "hostKcRole": "Co-host",
+    "hostKcBio": "Contributor",
+    "hostStevenRole": "Co-host",
+    "hostStevenBio": "Creator"
+  },
+  "Contact": {
+    "title": "Contact",
+    "subtitle": "Say hello",
+    "pageIntro": "Email us or message on X.\nWe read every note.",
+    "getInTouch": "Reach us",
+    "emailLabel": "Email",
+    "xLabel": "X",
+    "collabTitle": "Collaboration",
+    "collabBody": "Partner on episodes, events, or education.\nTell us what you need."
+  },
+  "Episode": {
+    "summaryTitle": "Episode Summary",
+    "tagsTitle": "Tags",
+    "spaceTitle": "X Space Live Link",
+    "listenCta": "Listen on X",
+    "timeTitle": "Episode Time",
+    "guestsTitle": "Guests",
+    "timeTbd": "TBD",
+    "metaTitleSuffix": "MagoTalk"
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "hint": "Please refresh the page or try again later.",
+    "retry": "Try again"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "body": "The page you are looking for does not exist or was moved.",
+    "homeLink": "Back to home"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "title": "MagoTalk - 区块链与金融",
+    "description": "探索 Web3 世界的深度对话，与行业嘉宾一起探讨区块链、DeFi、NFT 等前沿话题。",
+    "ogDescription": "与行业领袖一起探讨区块链、DeFi、NFT 等 Web3 前沿话题。"
+  },
+  "Nav": {
+    "home": "首页",
+    "about": "关于",
+    "contact": "联系",
+    "language": "语言"
+  },
+  "Home": {
+    "heroTitle": "Mago Talk",
+    "heroSubtitle": "更快理解 Web3",
+    "heroDescription": "与加密、AI、金融领域的一线建设者、创始人和圈内人的真实对谈。",
+    "loading": "加载节目中…",
+    "empty": "暂无符合条件的节目。",
+    "selectedCategories": "已选择：{tags}（{count} 个节目）",
+    "footerCopyright": "© {year} MagoTalk. 保留所有权利。",
+    "timeTbd": "时间待定"
+  },
+  "About": {
+    "title": "关于",
+    "subtitle": "加密、DeFi、Web3，用大白话讲给你听。",
+    "aboutHeading": "关于",
+    "aboutBody": "我们拆解加密、DeFi 和一线的 Web3 建设者。\n观点直白，不堆概念。",
+    "missionHeading": "使命",
+    "missionBody": "我们对谈创始人、交易者和研究者，帮你更快看懂。\n看什么、信什么，由你决定。",
+    "guestBiosTitle": "主持团队",
+    "teamIntro": "认识话筒背后的他们。",
+    "hostMagoRole": "主持",
+    "hostMagoBio": "发起人",
+    "hostKcRole": "联合主持",
+    "hostKcBio": "贡献者",
+    "hostStevenRole": "联合主持",
+    "hostStevenBio": "创作者"
+  },
+  "Contact": {
+    "title": "联系",
+    "subtitle": "打个招呼",
+    "pageIntro": "发邮件或在 X 留言。\n每条我们都会看。",
+    "getInTouch": "找到我们",
+    "emailLabel": "邮箱",
+    "xLabel": "X",
+    "collabTitle": "合作",
+    "collabBody": "节目、活动或课程合作都可以聊。\n说说你的需求。"
+  },
+  "Episode": {
+    "summaryTitle": "节目简介",
+    "tagsTitle": "标签",
+    "spaceTitle": "X Space 直播链接",
+    "listenCta": "在 X 收听",
+    "timeTitle": "节目时间",
+    "guestsTitle": "嘉宾列表",
+    "timeTbd": "时间待定",
+    "metaTitleSuffix": "MagoTalk"
+  },
+  "Error": {
+    "title": "出错了",
+    "hint": "请刷新页面或稍后再试。",
+    "retry": "重试"
+  },
+  "NotFound": {
+    "title": "页面未找到",
+    "body": "您访问的页面不存在或已被移动。",
+    "homeLink": "返回首页"
+  }
+}

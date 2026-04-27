@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "title": "MagoTalk - Blockchain et finance",
+    "description": "Des conversations approfondies sur la Web3, la blockchain, la DeFi, les NFT et l'avenir de la finance numérique.",
+    "ogDescription": "Explorez la Web3 à travers des entretiens sur la blockchain, la DeFi, les NFT et plus encore."
+  },
+  "Nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "contact": "Contact",
+    "language": "Langue"
+  },
+  "Home": {
+    "heroTitle": "Mago Talk",
+    "heroSubtitle": "Comprenez la Web3 plus vite",
+    "heroDescription": "De vraies conversations avec des builders, fondateurs et initiés en crypto, IA et finance.",
+    "loading": "Chargement des épisodes…",
+    "empty": "Aucun épisode ne correspond à vos filtres.",
+    "selectedCategories": "Sélection : {tags} ({count} épisodes)",
+    "footerCopyright": "© {year} MagoTalk. Tous droits réservés.",
+    "timeTbd": "À confirmer"
+  },
+  "About": {
+    "title": "À propos",
+    "subtitle": "Crypto, DeFi et Web3, dit simplement.",
+    "aboutHeading": "À propos",
+    "aboutBody": "On décrypte la crypto, la DeFi et les builders Web3.\nDirect, sans blabla.",
+    "missionHeading": "Mission",
+    "missionBody": "On parle à des fondateurs, traders et chercheurs pour que tu comprennes vite.\nTu choisis ce qui compte.",
+    "guestBiosTitle": "Animateurs",
+    "teamIntro": "Les voix derrière le micro.",
+    "hostMagoRole": "Animateur",
+    "hostMagoBio": "Fondateur",
+    "hostKcRole": "Co-animateur",
+    "hostKcBio": "Contributeur",
+    "hostStevenRole": "Co-animateur",
+    "hostStevenBio": "Créateur"
+  },
+  "Contact": {
+    "title": "Contact",
+    "subtitle": "Dis bonjour",
+    "pageIntro": "Écris-nous ou envoie un message sur X.\nOn lit tout.",
+    "getInTouch": "Nous joindre",
+    "emailLabel": "E-mail",
+    "xLabel": "X",
+    "collabTitle": "Collaboration",
+    "collabBody": "Épisodes, événements ou formation : parlons-en.\nDis-nous ce dont tu as besoin."
+  },
+  "Episode": {
+    "summaryTitle": "Résumé de l'épisode",
+    "tagsTitle": "Tags",
+    "spaceTitle": "Lien X Space en direct",
+    "listenCta": "Écouter sur X",
+    "timeTitle": "Date de l'épisode",
+    "guestsTitle": "Invités",
+    "timeTbd": "À confirmer",
+    "metaTitleSuffix": "MagoTalk"
+  },
+  "Error": {
+    "title": "Une erreur s'est produite",
+    "hint": "Actualisez la page ou réessayez plus tard.",
+    "retry": "Réessayer"
+  },
+  "NotFound": {
+    "title": "Page introuvable",
+    "body": "La page que vous cherchez n'existe pas ou a été déplacée.",
+    "homeLink": "Retour à l'accueil"
+  }
+}

@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
+import { getLocale } from "next-intl/server";
 import "./globals.css";
-import Nav from "./components/Nav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,29 +13,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "MagoTalk - 区块链与金融",
-  description: "探索 Web3 世界的深度对话，与行业嘉宾一起探讨区块链、DeFi、NFT 等前沿话题",
-  keywords: ["Web3", "区块链", "播客", "访谈", "DeFi", "NFT", "元宇宙"],
-  authors: [{ name: "MAGO" }],
-  openGraph: {
-    title: "MagoTalk - 区块链与金融",
-    description: "探索 Web3 世界的深度对话，与行业领袖一起探讨区块链、DeFi、NFT 等前沿话题",
-    type: "website",
-  },
-};
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
+  const locale = await getLocale();
+
   return (
-    <html lang="zh-CN">
+    <html lang={locale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Nav />
         {children}
       </body>
     </html>

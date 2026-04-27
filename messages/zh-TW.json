@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "title": "MagoTalk - 區塊鏈與金融",
+    "description": "探索 Web3 世界的深度對話，與產業嘉賓一起探討區塊鏈、DeFi、NFT 等前沿議題。",
+    "ogDescription": "與產業領袖一起探討區塊鏈、DeFi、NFT 等 Web3 前沿議題。"
+  },
+  "Nav": {
+    "home": "首頁",
+    "about": "關於",
+    "contact": "聯絡",
+    "language": "語言"
+  },
+  "Home": {
+    "heroTitle": "Mago Talk",
+    "heroSubtitle": "更快理解 Web3",
+    "heroDescription": "與加密、AI、金融領域的一線建設者、創辦人與圈內人的真實對談。",
+    "loading": "載入節目中…",
+    "empty": "暫無符合條件的節目。",
+    "selectedCategories": "已選擇：{tags}（{count} 個節目）",
+    "footerCopyright": "© {year} MagoTalk. 保留所有權利。",
+    "timeTbd": "時間待定"
+  },
+  "About": {
+    "title": "關於",
+    "subtitle": "加密、DeFi、Web3，用白話講清楚。",
+    "aboutHeading": "關於",
+    "aboutBody": "我們拆解加密、DeFi 與一線的 Web3 建設者。\n觀點直白，不堆名詞。",
+    "missionHeading": "使命",
+    "missionBody": "我們對談創辦人、交易員與研究者，讓你更快看懂。\n看什麼、信什麼，由你決定。",
+    "guestBiosTitle": "主持團隊",
+    "teamIntro": "認識麥克風背後的他們。",
+    "hostMagoRole": "主持",
+    "hostMagoBio": "發起人",
+    "hostKcRole": "聯合主持",
+    "hostKcBio": "貢獻者",
+    "hostStevenRole": "聯合主持",
+    "hostStevenBio": "創作者"
+  },
+  "Contact": {
+    "title": "聯絡",
+    "subtitle": "打聲招呼",
+    "pageIntro": "寫信或在 X 留言。\n我們都會看。",
+    "getInTouch": "找到我們",
+    "emailLabel": "電子郵件",
+    "xLabel": "X",
+    "collabTitle": "合作",
+    "collabBody": "節目、活動或課程合作都可以談。\n說說你的需求。"
+  },
+  "Episode": {
+    "summaryTitle": "節目簡介",
+    "tagsTitle": "標籤",
+    "spaceTitle": "X Space 直播連結",
+    "listenCta": "在 X 收聽",
+    "timeTitle": "節目時間",
+    "guestsTitle": "嘉賓列表",
+    "timeTbd": "時間待定",
+    "metaTitleSuffix": "MagoTalk"
+  },
+  "Error": {
+    "title": "發生錯誤",
+    "hint": "請重新整理頁面或稍後再試。",
+    "retry": "重試"
+  },
+  "NotFound": {
+    "title": "找不到頁面",
+    "body": "您造訪的頁面不存在或已移動。",
+    "homeLink": "返回首頁"
+  }
+}
