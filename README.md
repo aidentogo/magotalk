@@ -129,6 +129,8 @@ theme: {
 - CMS 系统
 - API 接口
 
+运营发布流程请参考 [docs/MAGOTALK_WORKFLOW.md](./docs/MAGOTALK_WORKFLOW.md)，其中记录了海报制作、Supabase Storage 上传、`episodes` 表更新和验证步骤。
+
 ## 🤝 贡献指南
 
 1. Fork 项目
