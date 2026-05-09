@@ -66,18 +66,89 @@ node --input-type=module -e "import fs from 'fs'; import { createClient } from '
 
 ### 3. 上传海报并 upsert episode
 
-公开 anon key 没有写权限，会被 RLS 拦住。写入需要使用已登录 Supabase CLI 拿到 service role key，但不要把 key 打印、保存或提交到仓库。
+公开 anon key 没有写权限，会被 RLS 拦住。写入需要使用 admin key，但不要把 key 打印、保存或提交到仓库。
 
-把下面脚本里的 `ep080`、标题、副标题、日期、Space URL 和 `created_at` 改成当期信息再执行：
+优先使用环境变量 `SUPABASE_ADMIN_KEY`。如果没有设置，脚本会从已登录的 Supabase CLI 里读取可用 admin key，兼容旧的 `service_role` key 和新的 `sb_secret_*` secret key。
+
+把下面命令里的 `EPISODE_SLUG`、`POSTER_PATH`，以及脚本中的标题、副标题、日期、Space URL 和 `created_at` 改成当期信息再执行：
 
 ```bash
-node --input-type=module -e "import fs from 'fs'; import { execFileSync } from 'child_process'; import { createClient } from '@supabase/supabase-js'; const env=Object.fromEntries(fs.readFileSync('.env.local','utf8').split(/\n/).filter(l=>l&&!l.startsWith('#')).map(l=>{const i=l.indexOf('=');return [l.slice(0,i),l.slice(i+1)]})); const projectRef='pmlradrjbsfkrxpflxmy'; const keys=JSON.parse(execFileSync('supabase',['projects','api-keys','--project-ref',projectRef,'--output','json'],{encoding:'utf8'})); const serviceKey=keys.find(k=>k.id==='service_role')?.api_key; if(!serviceKey) throw new Error('service role key not found'); const supabase=createClient(env.NEXT_PUBLIC_SUPABASE_URL,serviceKey,{auth:{persistSession:false}}); const slug='ep080'; const file=fs.readFileSync('/Users/pengxie/Desktop/ep080.jpg'); const upload=await supabase.storage.from('covers').upload('ep080.jpg', file, {contentType:'image/jpeg', upsert:true, cacheControl:'3600'}); if(upload.error) throw upload.error; const row={slug, title:'AI Automation：一个人，正在变成一家公司', cover_image:'covers/ep080.jpg', description:'从 Agent 到自动化工作流，AI 如何让超级个体崛起？', tags:['Bitcoin','Ethereum','Wallets','Privacy','Web3'], date:'2026年5月8日 20:00 PM PDT / 11:00 AM CST', space_link:'https://x.com/i/spaces/1PKqrEoLElYGb?s=20', guests:[], created_at:'2026-05-09T03:00:00+00:00'}; const db=await supabase.from('episodes').upsert(row,{onConflict:'slug'}).select('slug,title,cover_image,date,space_link,created_at').single(); if(db.error) throw db.error; const publicUrl=supabase.storage.from('covers').getPublicUrl('ep080.jpg').data.publicUrl; console.log(JSON.stringify({ok:true,uploadedPath:upload.data.path,publicUrl,row:db.data},null,2));"
+EPISODE_SLUG=ep080 POSTER_PATH=/Users/pengxie/Desktop/ep080.jpg node --input-type=module <<'NODE'
+import fs from "fs";
+import { execFileSync } from "child_process";
+import { createClient } from "@supabase/supabase-js";
+
+const projectRef = "pmlradrjbsfkrxpflxmy";
+const slug = process.env.EPISODE_SLUG;
+const posterPath = process.env.POSTER_PATH;
+if (!slug || !posterPath) throw new Error("EPISODE_SLUG and POSTER_PATH are required");
+
+const env = Object.fromEntries(
+  fs
+    .readFileSync(".env.local", "utf8")
+    .split(/\n/)
+    .filter((line) => line && !line.startsWith("#"))
+    .map((line) => {
+      const index = line.indexOf("=");
+      return [line.slice(0, index), line.slice(index + 1)];
+    }),
+);
+
+function getAdminKey() {
+  if (process.env.SUPABASE_ADMIN_KEY) return process.env.SUPABASE_ADMIN_KEY;
+
+  const keys = JSON.parse(
+    execFileSync("supabase", ["projects", "api-keys", "--project-ref", projectRef, "--output", "json"], {
+      encoding: "utf8",
+    }),
+  );
+  return (
+    keys.find((key) => key.id === "service_role")?.api_key ??
+    keys.find((key) => key.api_key?.startsWith("sb_secret_"))?.api_key ??
+    keys.find((key) => /secret|service/i.test(`${key.id ?? ""} ${key.name ?? ""}`))?.api_key
+  );
+}
+
+const adminKey = getAdminKey();
+if (!adminKey) throw new Error("Admin Supabase key not found. Set SUPABASE_ADMIN_KEY and retry.");
+
+const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, adminKey, { auth: { persistSession: false } });
+const storagePath = `${slug}.jpg`;
+const file = fs.readFileSync(posterPath);
+const upload = await supabase.storage.from("covers").upload(storagePath, file, {
+  contentType: "image/jpeg",
+  upsert: true,
+  cacheControl: "3600",
+});
+if (upload.error) throw upload.error;
+
+const row = {
+  slug,
+  title: "AI Automation：一个人，正在变成一家公司",
+  cover_image: `covers/${storagePath}`,
+  description: "从 Agent 到自动化工作流，AI 如何让超级个体崛起？",
+  tags: ["Bitcoin", "Ethereum", "Wallets", "Privacy", "Web3"],
+  date: "2026年5月8日 20:00 PM PDT / 11:00 AM CST",
+  space_link: "https://x.com/i/spaces/1PKqrEoLElYGb?s=20",
+  guests: [],
+  created_at: "2026-05-09T03:00:00+00:00",
+};
+const db = await supabase
+  .from("episodes")
+  .upsert(row, { onConflict: "slug" })
+  .select("slug,title,cover_image,date,space_link,created_at")
+  .single();
+if (db.error) throw db.error;
+
+const publicUrl = supabase.storage.from("covers").getPublicUrl(storagePath).data.publicUrl;
+console.log(JSON.stringify({ ok: true, uploadedPath: upload.data.path, publicUrl, row: db.data }, null, 2));
+NODE
 ```
 
 经验点：
 
-- Storage 上传路径只写 `ep080.jpg`，不要写 `covers/ep080.jpg`，因为 bucket 已经是 `covers`。
-- 数据库 `cover_image` 写 `covers/ep080.jpg`，与现有 `ep079` 一致。
+- Storage 上传路径只写 `${slug}.jpg`，不要写 `covers/${slug}.jpg`，因为 bucket 已经是 `covers`。
+- 数据库 `cover_image` 写 `covers/${slug}.jpg`，与现有 `ep079` 一致。
 - `created_at` 控制首页排序。新一期必须晚于上一期，否则不会排在最前。
 - `tags` 当前沿用最近几期：`Bitcoin`、`Ethereum`、`Wallets`、`Privacy`、`Web3`。
 - `space_link` 可以后补。用户给 URL 后只更新这一列。
@@ -87,7 +158,59 @@ node --input-type=module -e "import fs from 'fs'; import { execFileSync } from '
 如果海报和 episode 行已经存在，只补 Space URL：
 
 ```bash
-node --input-type=module -e "import fs from 'fs'; import { execFileSync } from 'child_process'; import { createClient } from '@supabase/supabase-js'; const env=Object.fromEntries(fs.readFileSync('.env.local','utf8').split(/\n/).filter(l=>l&&!l.startsWith('#')).map(l=>{const i=l.indexOf('=');return [l.slice(0,i),l.slice(i+1)]})); const keys=JSON.parse(execFileSync('supabase',['projects','api-keys','--project-ref','pmlradrjbsfkrxpflxmy','--output','json'],{encoding:'utf8'})); const serviceKey=keys.find(k=>k.id==='service_role')?.api_key; if(!serviceKey) throw new Error('service role key not found'); const admin=createClient(env.NEXT_PUBLIC_SUPABASE_URL,serviceKey,{auth:{persistSession:false}}); const url='https://x.com/i/spaces/1PKqrEoLElYGb?s=20'; const update=await admin.from('episodes').update({space_link:url}).eq('slug','ep080').select('slug,title,space_link,cover_image,date,created_at').single(); if(update.error) throw update.error; const anon=createClient(env.NEXT_PUBLIC_SUPABASE_URL,env.NEXT_PUBLIC_SUPABASE_ANON_KEY); const verify=await anon.from('episodes').select('slug,space_link').eq('slug','ep080').single(); if(verify.error) throw verify.error; console.log(JSON.stringify({updated:update.data,verified:verify.data},null,2));"
+EPISODE_SLUG=ep080 SPACE_URL='https://x.com/i/spaces/1PKqrEoLElYGb?s=20' node --input-type=module <<'NODE'
+import fs from "fs";
+import { execFileSync } from "child_process";
+import { createClient } from "@supabase/supabase-js";
+
+const projectRef = "pmlradrjbsfkrxpflxmy";
+const slug = process.env.EPISODE_SLUG;
+const url = process.env.SPACE_URL;
+if (!slug || !url) throw new Error("EPISODE_SLUG and SPACE_URL are required");
+
+const env = Object.fromEntries(
+  fs
+    .readFileSync(".env.local", "utf8")
+    .split(/\n/)
+    .filter((line) => line && !line.startsWith("#"))
+    .map((line) => {
+      const index = line.indexOf("=");
+      return [line.slice(0, index), line.slice(index + 1)];
+    }),
+);
+
+function getAdminKey() {
+  if (process.env.SUPABASE_ADMIN_KEY) return process.env.SUPABASE_ADMIN_KEY;
+
+  const keys = JSON.parse(
+    execFileSync("supabase", ["projects", "api-keys", "--project-ref", projectRef, "--output", "json"], {
+      encoding: "utf8",
+    }),
+  );
+  return (
+    keys.find((key) => key.id === "service_role")?.api_key ??
+    keys.find((key) => key.api_key?.startsWith("sb_secret_"))?.api_key ??
+    keys.find((key) => /secret|service/i.test(`${key.id ?? ""} ${key.name ?? ""}`))?.api_key
+  );
+}
+
+const adminKey = getAdminKey();
+if (!adminKey) throw new Error("Admin Supabase key not found. Set SUPABASE_ADMIN_KEY and retry.");
+
+const admin = createClient(env.NEXT_PUBLIC_SUPABASE_URL, adminKey, { auth: { persistSession: false } });
+const update = await admin
+  .from("episodes")
+  .update({ space_link: url })
+  .eq("slug", slug)
+  .select("slug,title,space_link,cover_image,date,created_at")
+  .single();
+if (update.error) throw update.error;
+
+const anon = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+const verify = await anon.from("episodes").select("slug,space_link").eq("slug", slug).single();
+if (verify.error) throw verify.error;
+console.log(JSON.stringify({ updated: update.data, verified: verify.data }, null, 2));
+NODE
 ```
 
 ## 验证流程
