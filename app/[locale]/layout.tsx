@@ -22,18 +22,15 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "metadata" });
+  const appLocale = isAppLocale(locale) ? locale : routing.defaultLocale;
+  const t = await getTranslations({ locale: appLocale, namespace: "metadata" });
 
-  const ogLocaleMap: Record<string, string> = {
+  const ogLocaleMap: Record<AppLocale, string> = {
     en: "en_US",
-    "zh-CN": "zh_CN",
-    "zh-TW": "zh_TW",
-    ja: "ja_JP",
-    ko: "ko_KR",
-    es: "es_ES",
-    fr: "fr_FR",
+    "zh-Hans": "zh_Hans",
+    "zh-Hant": "zh_Hant",
   };
-  const ogLocale = ogLocaleMap[locale] ?? "en_US";
+  const ogLocale = ogLocaleMap[appLocale];
 
   return {
     title: t("title"),
