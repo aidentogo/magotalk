@@ -6,6 +6,7 @@ node_modules/
 dist/
 build/
 out/
+*.tsbuildinfo
 
 # pnpm store/cache (prevent accidental tracking of cache files)
 .pnpm-store/
@@ -45,4 +46,3 @@ Thumbs.db
 *.mp4
 *.psd
 *.ai
-

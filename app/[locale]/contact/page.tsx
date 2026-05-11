@@ -1,6 +1,7 @@
 import { ExternalLink, Mail } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { contactEmail, contactEmailHref } from "@/lib/contact";
 
 type AppLocale = (typeof routing.locales)[number];
 
@@ -68,26 +69,29 @@ export default async function ContactPage({
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               <a
-                href="mailto:magotalk@aol.com"
+                href={contactEmailHref}
+                aria-label={`${t("emailLabel")}: ${contactEmail}`}
                 className="group flex gap-4 rounded-2xl border border-gray-100 bg-gradient-to-br from-orange-50/80 to-white p-5 shadow-sm ring-1 ring-orange-100/60 transition-[box-shadow,transform,border-color] hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
               >
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-orange-100 text-orange-600 transition-colors group-hover:bg-orange-500 group-hover:text-white">
                   <Mail className="h-5 w-5" strokeWidth={2} aria-hidden />
                 </div>
                 <div className="min-w-0 text-left">
-                  <h3 className="text-sm font-semibold text-gray-500">
+                  <h3 className="flex items-center gap-1.5 text-sm font-semibold text-gray-500">
                     {t("emailLabel")}
+                    <ExternalLink
+                      className="h-3.5 w-3.5 shrink-0 opacity-50 transition-opacity group-hover:opacity-100"
+                      aria-hidden
+                    />
                   </h3>
                   <p className="mt-1 break-all text-base font-medium text-gray-900 group-hover:text-orange-700">
-                    magotalk@aol.com
+                    {contactEmail}
                   </p>
                 </div>
               </a>
 
               <a
                 href="https://x.com/MagoTalk"
-                target="_blank"
-                rel="noopener noreferrer"
                 className="group flex gap-4 rounded-2xl border border-gray-100 bg-gradient-to-br from-orange-50/80 to-white p-5 shadow-sm ring-1 ring-orange-100/60 transition-[box-shadow,transform,border-color] hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
               >
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gray-900 text-white transition-colors group-hover:bg-orange-500">
