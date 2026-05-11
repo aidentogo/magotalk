@@ -1,15 +1,16 @@
-import type { Config } from 'tailwindcss'
+import lineClamp from "@tailwindcss/line-clamp";
+import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ['./app/**/*.{js,ts,jsx,tsx}'],
+  content: ["./app/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        magoGreen: '#00B88C',
-        magoOrange: '#F15B2A',
+        magoGreen: "#00B88C",
+        magoOrange: "#F15B2A",
       },
     },
   },
-  plugins: [require('@tailwindcss/line-clamp')],
-}
-export default config
+  plugins: [lineClamp],
+};
+export default config;

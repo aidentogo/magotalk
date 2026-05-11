@@ -5,6 +5,7 @@ import { Play, Clock } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { contactEmail, contactEmailHref } from "@/lib/contact";
 import { getEpisodes, getCoverImageUrl, type Episode } from "@/lib/supabase";
 
 const categories = [
@@ -107,31 +108,39 @@ export default function HomePage() {
             <div className="flex w-full md:w-auto justify-center md:justify-end">
               <div className="flex items-center gap-4 lg:gap-6">
                 <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/95 p-2 shadow-sm">
-                  <img
+                  <Image
                     src="/icons/coins/btc.svg"
                     alt="Bitcoin"
-                    className="block w-full h-full object-contain"
+                    width={32}
+                    height={32}
+                    className="block h-full w-full object-contain"
                   />
                 </div>
                 <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/95 p-2 shadow-sm">
-                  <img
+                  <Image
                     src="/icons/coins/eth.svg"
                     alt="Ethereum"
-                    className="block w-full h-full object-contain"
+                    width={32}
+                    height={32}
+                    className="block h-full w-full object-contain"
                   />
                 </div>
                 <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/95 p-2 shadow-sm">
-                  <img
+                  <Image
                     src="/icons/coins/usdt.svg"
                     alt="Tether (USDT)"
-                    className="block w-full h-full object-contain"
+                    width={32}
+                    height={32}
+                    className="block h-full w-full object-contain"
                   />
                 </div>
                 <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/95 p-2 shadow-sm">
-                  <img
+                  <Image
                     src="/icons/coins/usdc.svg"
                     alt="USD Coin"
-                    className="block w-full h-full object-contain"
+                    width={32}
+                    height={32}
+                    className="block h-full w-full object-contain"
                   />
                 </div>
               </div>
@@ -245,10 +254,16 @@ export default function HomePage() {
       </div>
 
       <footer className="bg-[#FDFBEE] border-t border-gray-200 py-6 md:py-5 px-6">
-        <div className="max-w-7xl mx-auto text-center">
+        <div className="max-w-7xl mx-auto flex flex-col items-center justify-center gap-2 text-center sm:flex-row sm:gap-3">
           <p className="text-sm text-gray-500">
             {t("footerCopyright", { year: new Date().getFullYear() })}
           </p>
+          <a
+            href={contactEmailHref}
+            className="text-sm font-medium text-gray-700 underline-offset-4 hover:text-orange-600 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+          >
+            {contactEmail}
+          </a>
         </div>
       </footer>
     </div>
