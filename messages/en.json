@@ -7,6 +7,7 @@
   "Nav": {
     "home": "Home",
     "about": "About",
+    "books": "Books",
     "contact": "Contact",
     "language": "Language"
   },
@@ -45,6 +46,30 @@
     "xLabel": "X",
     "collabTitle": "Collaboration",
     "collabBody": "Partner on episodes, events, or education.\nTell us what you need."
+  },
+  "Books": {
+    "pageEyebrow": "Free eBooks",
+    "pageTitle": "Books",
+    "pageIntro": "Download MAGO's books in EPUB. Each title can provide English, Traditional, and Simplified editions.",
+    "coverAlt": "Money Code book cover",
+    "authorLabel": "Author",
+    "allEditionsEyebrow": "Available editions",
+    "allBooksTitle": "Book library",
+    "formatHint": "EPUB adapts to phones, tablets, computers, and e-readers, with adjustable font size and reading modes.",
+    "rightsReserved": "All rights reserved.",
+    "bookDescriptions": {
+      "moneyCode": "Money Code is MAGO's guide to understanding money, work, leverage, and personal decision-making in a world reshaped by AI and digital networks."
+    },
+    "editions": {
+      "zh-Hans": "Simplified",
+      "zh-Hant": "Traditional",
+      "en": "English"
+    },
+    "editionDescriptions": {
+      "zh-Hans": "Simplified edition",
+      "zh-Hant": "Traditional edition",
+      "en": "English edition"
+    }
   },
   "Episode": {
     "summaryTitle": "Episode Summary",
