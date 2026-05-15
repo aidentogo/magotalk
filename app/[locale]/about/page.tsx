@@ -35,103 +35,95 @@ export default async function AboutPage({
   const t = await getTranslations("About");
 
   return (
-    <div className="min-h-screen bg-[#FDFBEE]">
-      <header className="relative overflow-hidden bg-gradient-to-br from-orange-500 via-orange-500 to-amber-600 px-6 py-12 md:py-16">
-        <div
-          className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-white/10 blur-2xl"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-amber-400/20 blur-2xl"
-          aria-hidden
-        />
-        <div className="relative mx-auto max-w-3xl text-center">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-orange-100/90 md:text-sm">
-            MagoTalk
-          </p>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white md:text-5xl md:leading-tight">
+    <main className="flex min-h-[calc(100svh-73px)] bg-[#FDFBEE] px-5 py-6 md:h-[calc(100svh-73px)] md:items-center md:overflow-hidden md:px-8 md:py-8">
+      <div className="mx-auto grid w-full max-w-7xl gap-8 md:grid-cols-[minmax(0,1.08fr)_minmax(300px,0.72fr)] md:items-center md:gap-10 lg:gap-14">
+        <section aria-labelledby="about-title" className="min-w-0">
+          <h1
+            id="about-title"
+            className="max-w-3xl text-5xl font-extrabold leading-none tracking-tight text-gray-950 md:text-6xl lg:text-7xl"
+          >
             {t("title")}
           </h1>
-          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-orange-50/95 md:text-lg">
+          <p className="mt-5 max-w-2xl text-xl font-semibold leading-snug text-gray-900 md:text-2xl">
             {t("subtitle")}
           </p>
-        </div>
-      </header>
 
-      <div className="mx-auto max-w-5xl px-6 py-12 md:py-16">
-        <div className="flex flex-col gap-8 md:gap-10">
-          <section
-            aria-labelledby="about-blurb-heading"
-            className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-gray-200/80 md:p-10"
-          >
-            <h2
-              id="about-blurb-heading"
-              className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl"
-            >
-              {t("aboutHeading")}
-            </h2>
-            <p className="mt-4 max-w-2xl whitespace-pre-line text-base leading-relaxed text-gray-600">
-              {t("aboutBody")}
-            </p>
-          </section>
+          <div className="mt-8 grid max-w-3xl gap-5 sm:grid-cols-2 md:mt-10">
+            <div className="border-t border-gray-300 pt-5">
+              <h2 className="text-sm font-bold uppercase tracking-[0.16em] text-gray-950">
+                {t("aboutHeading")}
+              </h2>
+              <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-gray-600">
+                {t("aboutBody")}
+              </p>
+            </div>
+            <div className="border-t border-orange-300 pt-5">
+              <h2 className="text-sm font-bold uppercase tracking-[0.16em] text-gray-950">
+                {t("missionHeading")}
+              </h2>
+              <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-gray-600">
+                {t("missionBody")}
+              </p>
+            </div>
+          </div>
 
-          <section
-            aria-labelledby="about-mission-heading"
-            className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-gray-200/80 md:p-10"
-          >
-            <h2
-              id="about-mission-heading"
-              className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl"
-            >
-              {t("missionHeading")}
-            </h2>
-            <p className="mt-4 max-w-2xl whitespace-pre-line text-base leading-relaxed text-gray-600">
-              {t("missionBody")}
-            </p>
-          </section>
+        </section>
 
-          <section aria-labelledby="about-team-heading">
-            <div className="mb-8 md:mb-10">
+        <section
+          aria-labelledby="about-team-heading"
+          className="min-w-0 border-l-0 border-gray-200 md:border-l md:pl-8 lg:pl-10"
+        >
+          <div className="flex items-end justify-between gap-4 border-b border-gray-200 pb-4">
+            <div>
               <h2
                 id="about-team-heading"
-                className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl"
+                className="text-2xl font-bold tracking-tight text-gray-950"
               >
                 {t("guestBiosTitle")}
               </h2>
-              <p className="mt-2 max-w-2xl text-sm text-gray-500 md:text-base">
-                {t("teamIntro")}
-              </p>
+              <p className="mt-1 text-sm text-gray-500">{t("teamIntro")}</p>
             </div>
+            <p className="text-sm font-semibold text-orange-600 tabular-nums">
+              0{hosts.length}
+            </p>
+          </div>
 
-            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-              {hosts.map((host) => (
-                <li key={host.name}>
-                  <article className="flex h-full flex-col items-center rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-gray-200/80 transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-md hover:ring-orange-200/70 md:p-8">
-                    <div className="relative mb-5 h-28 w-28 shrink-0 overflow-hidden rounded-full ring-4 ring-orange-100/90">
-                      <Image
-                        src={host.image}
-                        alt={host.name}
-                        fill
-                        sizes="112px"
-                        className="object-cover"
-                      />
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-900">
+          <ul className="mt-4 divide-y divide-gray-200 md:mt-5">
+            {hosts.map((host) => (
+              <li key={host.name} className="py-4 first:pt-0 last:pb-0">
+                <article className="group flex items-center gap-4">
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full bg-gray-100 ring-1 ring-gray-200 md:h-[72px] md:w-[72px]">
+                    <Image
+                      src={host.image}
+                      alt={host.name}
+                      fill
+                      sizes="72px"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-bold text-gray-950">
                       {host.name}
                     </h3>
-                    <p className="mt-1 text-sm font-medium text-orange-600">
+                    <p className="mt-0.5 text-sm font-semibold text-orange-600">
                       {t(host.roleKey)}
                     </p>
-                    <p className="mt-3 text-sm leading-relaxed text-gray-600">
+                    <p className="mt-1 text-sm leading-relaxed text-gray-600">
                       {t(host.bioKey)}
                     </p>
-                  </article>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-6 border-t border-gray-200 pt-5">
+            <p className="text-sm leading-relaxed text-gray-600">
+              {t("subtitle")}
+            </p>
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }

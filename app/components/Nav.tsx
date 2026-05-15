@@ -35,6 +35,16 @@ export default function Nav() {
               {t("home")}
             </Link>
             <Link
+              href="/books"
+              className={`transition-colors whitespace-nowrap ${
+                pathname === "/books"
+                  ? "text-orange-500 font-bold"
+                  : "text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              {t("books")}
+            </Link>
+            <Link
               href="/about"
               className={`transition-colors whitespace-nowrap ${
                 pathname === "/about"

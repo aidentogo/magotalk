@@ -7,6 +7,7 @@
   "Nav": {
     "home": "首頁",
     "about": "關於",
+    "books": "電子書",
     "contact": "聯絡",
     "language": "語言"
   },
@@ -45,6 +46,30 @@
     "xLabel": "X",
     "collabTitle": "合作",
     "collabBody": "節目、活動或課程合作都可以談。\n說說你的需求。"
+  },
+  "Books": {
+    "pageEyebrow": "免費電子書",
+    "pageTitle": "書籍",
+    "pageIntro": "這裡集中下載 MAGO 的書。每本書可以同時提供 English、繁體、簡體版本，統一提供 EPUB。",
+    "coverAlt": "Money Code 書籍封面",
+    "authorLabel": "作者",
+    "allEditionsEyebrow": "可下載版本",
+    "allBooksTitle": "書籍列表",
+    "formatHint": "EPUB 會適配手機、平板、電腦和電子書閱讀器，使用者可以調整字級、行距和閱讀模式。",
+    "rightsReserved": "保留所有權利。",
+    "bookDescriptions": {
+      "moneyCode": "Money Code 是 MAGO 關於金錢、工作、槓桿與個人決策的一本書，幫助你在 AI 與數位網路重塑世界的時代重新理解賺錢方式。"
+    },
+    "editions": {
+      "zh-Hans": "簡體",
+      "zh-Hant": "繁體",
+      "en": "English"
+    },
+    "editionDescriptions": {
+      "zh-Hans": "適合簡體讀者的版本。",
+      "zh-Hant": "適合繁體讀者的版本。",
+      "en": "English edition."
+    }
   },
   "Episode": {
     "summaryTitle": "節目簡介",
