@@ -9,13 +9,28 @@
     "about": "關於",
     "books": "電子書",
     "contact": "聯絡",
-    "language": "語言"
+    "language": "語言",
+    "menuOpen": "開啟選單",
+    "menuClose": "關閉選單"
+  },
+  "Footer": {
+    "copyright": "© {year} MagoTalk. 保留所有權利。"
   },
   "Home": {
     "heroTitle": "Mago Talk",
     "heroSubtitle": "更快理解 Web3",
     "heroDescription": "與加密、AI、金融領域的一線建設者、創辦人與圈內人的真實對談。",
+    "filterToggle": "依標籤篩選",
+    "filterHint": "可選擇一個或多個標籤，符合任一標籤的節目都會顯示。",
+    "filterClear": "清除篩選",
+    "filterRemoveTag": "移除標籤",
+    "allCategories": "全部分類",
     "loading": "載入節目中…",
+    "paginationPrev": "上一頁",
+    "paginationNext": "下一頁",
+    "paginationStatus": "第 {page} / {totalPages} 頁",
+    "paginationPage": "第 {page} 頁",
+    "viewEpisode": "查看 {episode}",
     "empty": "暫無符合條件的節目。",
     "selectedCategories": "已選擇：{tags}（{count} 個節目）",
     "footerCopyright": "© {year} MagoTalk. 保留所有權利。",
@@ -23,19 +38,19 @@
   },
   "About": {
     "title": "關於",
-    "subtitle": "加密、DeFi、Web3，用白話講清楚。",
-    "aboutHeading": "關於",
-    "aboutBody": "我們拆解加密、DeFi 與一線的 Web3 建設者。\n觀點直白，不堆名詞。",
-    "missionHeading": "使命",
-    "missionBody": "我們對談創辦人、交易員與研究者，讓你更快看懂。\n看什麼、信什麼，由你決定。",
+    "subtitle": "聚焦加密、AI 與金融的深度對談，協助你在資訊洪流中建立清晰判斷。",
+    "aboutHeading": "我們是誰",
+    "aboutBody": "MagoTalk 是一檔面向中文聽眾的訪談與直播節目，聚焦區塊鏈、去中心化金融、人工智慧及相關金融議題。我們以第一線建設者、創辦人與從業者的親身視角，拆解趨勢、機制與爭議，避免空泛炒作與術語堆疊。",
+    "missionHeading": "我們的使命",
+    "missionBody": "透過嚴謹而富溫度的對談，降低理解門檻，讓你更快建立判斷框架。\n我們呈現多元觀點，但不取代你的獨立決策。",
     "guestBiosTitle": "主持團隊",
-    "teamIntro": "認識麥克風背後的他們。",
-    "hostMagoRole": "主持",
-    "hostMagoBio": "發起人",
+    "teamIntro": "負責選題、主持與內容呈現的核心團隊。",
+    "hostMagoRole": "創辦人 · 主持",
+    "hostMagoBio": "MagoTalk 發起人，長期關注 Web3 與數位資產生態。",
     "hostKcRole": "聯合主持",
-    "hostKcBio": "貢獻者",
+    "hostKcBio": "參與議題策劃與現場討論，側重市場與產業觀察。",
     "hostStevenRole": "聯合主持",
-    "hostStevenBio": "創作者"
+    "hostStevenBio": "參與節目製作與內容表達，連結社群與聽眾回饋。"
   },
   "Contact": {
     "title": "聯絡",
@@ -72,6 +87,7 @@
     }
   },
   "Episode": {
+    "backToEpisodes": "全部節目",
     "summaryTitle": "節目簡介",
     "tagsTitle": "標籤",
     "spaceTitle": "X Space 直播連結",
@@ -79,7 +95,9 @@
     "timeTitle": "節目時間",
     "guestsTitle": "嘉賓列表",
     "timeTbd": "時間待定",
-    "metaTitleSuffix": "MagoTalk"
+    "metaTitleSuffix": "MagoTalk",
+    "spacePending": "𝕏 Space 連結即將公布，請稍後再來。",
+    "followOnX": "關注 @MagoTalk"
   },
   "Error": {
     "title": "發生錯誤",
