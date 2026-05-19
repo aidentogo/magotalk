@@ -9,13 +9,28 @@
     "about": "About",
     "books": "Books",
     "contact": "Contact",
-    "language": "Language"
+    "language": "Language",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu"
+  },
+  "Footer": {
+    "copyright": "© {year} MagoTalk. All rights reserved."
   },
   "Home": {
     "heroTitle": "Mago Talk",
     "heroSubtitle": "Understand Web3 Faster",
     "heroDescription": "Real conversations with builders, founders, and insiders in crypto, AI, and finance.",
+    "filterToggle": "Filter by tag",
+    "filterHint": "Choose one or more tags. Episodes matching any selected tag will be shown.",
+    "filterClear": "Clear filters",
+    "filterRemoveTag": "Remove tag",
+    "allCategories": "All categories",
     "loading": "Loading episodes…",
+    "paginationPrev": "Previous",
+    "paginationNext": "Next",
+    "paginationStatus": "Page {page} of {totalPages}",
+    "paginationPage": "Page {page}",
+    "viewEpisode": "View {episode}",
     "empty": "No episodes match your filters.",
     "selectedCategories": "Selected: {tags} ({count} episodes)",
     "footerCopyright": "© {year} MagoTalk. All rights reserved.",
@@ -23,19 +38,19 @@
   },
   "About": {
     "title": "About",
-    "subtitle": "Crypto, DeFi, and Web3—in plain language.",
-    "aboutHeading": "About",
-    "aboutBody": "We break down crypto, DeFi, and the people building Web3.\nYou get straight talk—not hype.",
-    "missionHeading": "Mission",
-    "missionBody": "We talk to founders, traders, and researchers so you learn faster.\nYou pick what matters to you.",
-    "guestBiosTitle": "Hosts",
-    "teamIntro": "Meet the people behind the mic.",
-    "hostMagoRole": "Host",
-    "hostMagoBio": "Founder",
+    "subtitle": "In-depth conversations on crypto, AI, and finance—so you can see the landscape clearly.",
+    "aboutHeading": "Who we are",
+    "aboutBody": "MagoTalk is a Chinese-language interview and live-audio series on blockchain, DeFi, artificial intelligence, and related financial themes. We speak with builders, founders, and operators on the front lines—unpacking trends, mechanics, and debates without hype or jargon for its own sake.",
+    "missionHeading": "Our mission",
+    "missionBody": "Through rigorous, accessible dialogue, we lower the barrier to understanding and help you form your own framework faster.\nWe surface diverse perspectives—we do not make decisions for you.",
+    "guestBiosTitle": "Host team",
+    "teamIntro": "The people behind programming, hosting, and delivery.",
+    "hostMagoRole": "Founder & host",
+    "hostMagoBio": "Founded MagoTalk; focuses on Web3 and digital-asset ecosystems.",
     "hostKcRole": "Co-host",
-    "hostKcBio": "Contributor",
+    "hostKcBio": "Shapes topics and live discussion, with a focus on markets and industry context.",
     "hostStevenRole": "Co-host",
-    "hostStevenBio": "Creator"
+    "hostStevenBio": "Supports production and storytelling; bridges community and audience feedback."
   },
   "Contact": {
     "title": "Contact",
@@ -72,6 +87,7 @@
     }
   },
   "Episode": {
+    "backToEpisodes": "All episodes",
     "summaryTitle": "Episode Summary",
     "tagsTitle": "Tags",
     "spaceTitle": "X Space Live Link",
@@ -79,7 +95,9 @@
     "timeTitle": "Episode Time",
     "guestsTitle": "Guests",
     "timeTbd": "TBD",
-    "metaTitleSuffix": "MagoTalk"
+    "metaTitleSuffix": "MagoTalk",
+    "spacePending": "The X Space link will be posted here soon.",
+    "followOnX": "Follow @MagoTalk on X"
   },
   "Error": {
     "title": "Something went wrong",

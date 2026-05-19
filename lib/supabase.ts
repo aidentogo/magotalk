@@ -69,39 +69,94 @@ const mockEpisodes: Episode[] = [
   }
 ]
 
-// 获取所有节目数据
-export async function getEpisodes(): Promise<Episode[]> {
-  // 如果环境变量未配置，返回模拟数据
+export const EPISODES_PAGE_SIZE = 12
+
+export type EpisodesPageOptions = {
+  limit?: number
+  offset?: number
+  tags?: string[]
+}
+
+export type EpisodesPageResult = {
+  episodes: Episode[]
+  hasMore: boolean
+  total: number
+}
+
+function filterMockEpisodesByTags(episodes: Episode[], tags?: string[]): Episode[] {
+  if (!tags || tags.length === 0) {
+    return episodes
+  }
+  return episodes.filter(
+    (episode) =>
+      episode.tags?.some((tag) => tags.includes(tag)) ?? false,
+  )
+}
+
+function paginateEpisodes(
+  episodes: Episode[],
+  limit: number,
+  offset: number,
+): EpisodesPageResult {
+  const total = episodes.length
+  const page = episodes.slice(offset, offset + limit)
+  return {
+    episodes: page,
+    hasMore: offset + page.length < total,
+    total,
+  }
+}
+
+export async function getEpisodesPage(
+  options: EpisodesPageOptions = {},
+): Promise<EpisodesPageResult> {
+  const limit = options.limit ?? EPISODES_PAGE_SIZE
+  const offset = options.offset ?? 0
+  const tags = options.tags
+
   if (!supabaseUrl || !supabaseKey) {
-    console.log('使用模拟数据 - 环境变量未配置')
-    return mockEpisodes
+    const filtered = filterMockEpisodesByTags(mockEpisodes, tags)
+    return paginateEpisodes(filtered, limit, offset)
   }
 
   try {
-    console.log('正在从 Supabase 获取节目数据...')
-    const { data, error } = await supabase
+    let query = supabase
       .from('episodes')
-      .select('*')
+      .select('*', { count: 'exact' })
       .order('created_at', { ascending: false })
+
+    if (tags && tags.length > 0) {
+      query = query.overlaps('tags', tags)
+    }
+
+    const { data, error, count } = await query.range(offset, offset + limit - 1)
 
     if (error) {
       console.error('获取节目列表失败:', error)
-      console.log('返回空数组')
-      return []
+      return { episodes: [], hasMore: false, total: 0 }
     }
 
-    console.log(`成功获取 ${data?.length || 0} 个节目`)
-    if (data && data.length > 0) {
-      console.log('节目列表:', data.map(ep => ep.slug))
-    } else {
-      console.log('数据库中没有找到任何节目')
+    const episodes = data || []
+    const total = count ?? episodes.length
+
+    return {
+      episodes,
+      hasMore: offset + episodes.length < total,
+      total,
     }
-    return data || []
   } catch (error) {
     console.error('获取节目列表错误:', error)
-    console.log('返回空数组')
-    return []
+    return { episodes: [], hasMore: false, total: 0 }
   }
+}
+
+/** @deprecated Prefer getEpisodesPage for list views. */
+export async function getEpisodes(): Promise<Episode[]> {
+  const { episodes } = await getEpisodesPage({
+    limit: 10_000,
+    offset: 0,
+  })
+  return episodes
 }
 
 // 根据 slug 获取单个节目

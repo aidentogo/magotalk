@@ -13,6 +13,21 @@
 - 网站图片解析：`lib/supabase.ts` 的 `getCoverImageUrl()` 会把 `covers/` 前缀清理后拼出 public Storage URL
 - Figma 文件：`Mago Talk Space 海报`，file key 为 `wyWfyxdZldrUeK96PVV3Ve`
 
+## 新窗口快速恢复
+
+如果是新的 Codex 窗口，先读这份文档，再执行任务。用户默认只安排目标，Codex 负责查文件、更新 Supabase、验证结果。
+
+固定原则：
+
+- 海报图片不要提交到 GitHub。
+- 海报只保留在本地电脑和 Supabase Storage。
+- GitHub 只放网站代码、文档和必要配置。
+- 新一期海报优先找：`/Users/pengxie/Desktop/杰出人才/Mago Talk Space/MAGOTALK_EPxx/`。
+- 完整海报通常是 `EP0xx.png` 这种方形大图；`epxx.PNG` 可能只是手机竖屏截图预览，不要直接当网站封面。
+- Supabase `episodes.cover_image` 写 `covers/ep081.jpg` 这种相对路径。
+- 新一期如果还没有 Space URL，先写空字符串，用户补链接后只更新 `space_link`。
+- 每次更新完必须用 anon key 读回验证，确认网站侧能读取。
+
 ## 输入清单
 
 每次新一期发布前，尽量从用户拿到这些信息：
@@ -213,6 +228,17 @@ console.log(JSON.stringify({ updated: update.data, verified: verify.data }, null
 NODE
 ```
 
+如果 Supabase CLI 报 `Access token not provided`，不要反复重试 CLI。优先改用 Supabase MCP 的 SQL 工具直接更新：
+
+```sql
+update public.episodes
+set space_link = 'https://x.com/i/spaces/xxx?s=20'
+where slug = 'ep081'
+returning slug, title, space_link, cover_image, date, created_at;
+```
+
+然后仍然用网站 anon key 从 `.env.local` 读回验证。
+
 ## 验证流程
 
 ### 1. 验证图片公开 URL
@@ -246,6 +272,7 @@ node --input-type=module -e "import fs from 'fs'; import { createClient } from '
 - 不要提交 `.env.local`。
 - 不要把 Supabase `service_role` key 写进文档、代码、提交记录或最终回复。
 - 可以使用 Supabase CLI 获取 key 并在一次性脚本内存中使用，但不要打印 key。
+- 如果 Supabase CLI 没有登录状态，MCP SQL 是可用替代方案，适合只更新 `episodes` 表字段。
 - 如果 anon key 写入报 `new row violates row-level security policy`，这是正常的，改用 service role。
 - 修改数据库前先只读查询，确认目标 `slug` 是否已存在。
 - 如果用户只说“更新海报”，不要顺手改标题、时间、Space URL；只替换 Storage 文件和必要的 `cover_image`。
@@ -260,3 +287,24 @@ node --input-type=module -e "import fs from 'fs'; import { createClient } from '
 - 副标题/description：`从 Agent 到自动化工作流，AI 如何让超级个体崛起？`
 - 时间：`2026年5月8日 20:00 PM PDT / 11:00 AM CST`
 - Space URL：`https://x.com/i/spaces/1PKqrEoLElYGb?s=20`
+
+## EP081 已执行记录
+
+- 本地文件夹：`/Users/pengxie/Desktop/杰出人才/Mago Talk Space/MAGOTALK_EP81/`
+- 完整海报源文件：`/Users/pengxie/Desktop/杰出人才/Mago Talk Space/MAGOTALK_EP81/EP081.png`
+- 不采用的预览截图：`/Users/pengxie/Desktop/杰出人才/Mago Talk Space/MAGOTALK_EP81/ep81.PNG`
+- 转换后的临时上传文件：`/private/tmp/ep081.jpg`
+- Storage public URL：`https://pmlradrjbsfkrxpflxmy.supabase.co/storage/v1/object/public/covers/ep081.jpg`
+- 数据库 slug：`ep081`
+- 标题：`AI 时代，普通人会越来越难翻身吗？`
+- 副标题/description：`Scott Galloway 最新观点：AI 正在拉大人与人之间的差距。`
+- 时间：`2026年5月16日 7:00 AM PDT / 22:00 CST`
+- Space URL：`https://x.com/i/spaces/1kKzDMXnwZqJv?s=20`
+- `created_at`：`2026-05-16T14:00:00+00:00`
+
+执行经验：
+
+- `EP081.png` 是 `6360 x 6360` 方形大图，适合作为网站封面。
+- 上传前用 `sips -s format jpeg ... --out /private/tmp/ep081.jpg` 转成 JPEG，保持网站已有 `ep080.jpg` 命名风格。
+- 初查数据库时 `ep081` 不存在，因此执行的是新增 episode 记录，不只是替换海报。
+- 补 Space URL 时 Supabase CLI 报 `Access token not provided`，最终使用 Supabase MCP SQL 只更新 `space_link`，再用 anon key 验证成功。

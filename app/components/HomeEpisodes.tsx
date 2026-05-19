@@ -1,0 +1,402 @@
+"use client";
+
+import Image from "next/image";
+import {
+  Play,
+  Clock,
+  ChevronLeft,
+  ChevronRight,
+  SlidersHorizontal,
+  X,
+} from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import {
+  EPISODE_CATEGORIES,
+  selectedFilterTags,
+} from "@/lib/episodeCategories";
+import {
+  EPISODES_PAGE_SIZE,
+  getEpisodesPage,
+  getCoverImageUrl,
+  type Episode,
+  type EpisodesPageResult,
+} from "@/lib/supabase";
+import EpisodeGridSkeleton from "@/app/components/EpisodeGridSkeleton";
+
+type HomeEpisodesProps = {
+  initialData: EpisodesPageResult;
+};
+
+export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
+  const t = useTranslations("Home");
+  const [episodes, setEpisodes] = useState<Episode[]>(initialData.episodes);
+  const [totalCount, setTotalCount] = useState(initialData.total);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    "All Categories",
+  ]);
+  const skipInitialFetch = useRef(true);
+
+  const totalPages = Math.max(1, Math.ceil(totalCount / EPISODES_PAGE_SIZE));
+  const hasActiveFilters = !selectedCategories.includes("All Categories");
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (
+      skipInitialFetch.current &&
+      currentPage === 1 &&
+      !selectedFilterTags(selectedCategories)
+    ) {
+      skipInitialFetch.current = false;
+      return;
+    }
+    skipInitialFetch.current = false;
+
+    async function loadPage() {
+      setIsLoading(true);
+      try {
+        const tags = selectedFilterTags(selectedCategories);
+        const offset = (currentPage - 1) * EPISODES_PAGE_SIZE;
+        const { episodes: page, total } = await getEpisodesPage({
+          limit: EPISODES_PAGE_SIZE,
+          offset,
+          tags,
+        });
+
+        if (!cancelled) {
+          setEpisodes(page);
+          setTotalCount(total);
+        }
+      } catch (error) {
+        console.error("Failed to load episodes:", error);
+        if (!cancelled) {
+          setEpisodes([]);
+          setTotalCount(0);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadPage();
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedCategories, currentPage]);
+
+  const skipScrollOnMount = useRef(true);
+  useEffect(() => {
+    if (skipScrollOnMount.current) {
+      skipScrollOnMount.current = false;
+      return;
+    }
+    document.getElementById("episodes-list")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, [currentPage]);
+
+  const handleCategorySelect = (category: string) => {
+    setCurrentPage(1);
+    if (category === "All Categories") {
+      setSelectedCategories(["All Categories"]);
+    } else {
+      setSelectedCategories((prev) => {
+        const next = prev.filter((cat) => cat !== "All Categories");
+        if (next.includes(category)) {
+          const filtered = next.filter((cat) => cat !== category);
+          return filtered.length === 0 ? ["All Categories"] : filtered;
+        }
+        return [...next, category];
+      });
+    }
+  };
+
+  const clearFilters = () => {
+    setCurrentPage(1);
+    setSelectedCategories(["All Categories"]);
+    setFiltersOpen(false);
+  };
+
+  const goToPage = (page: number) => {
+    if (page < 1 || page > totalPages || page === currentPage || isLoading) {
+      return;
+    }
+    setCurrentPage(page);
+  };
+
+  return (
+    <div>
+      <div className="bg-gradient-to-r from-orange-500 to-orange-600 px-6 flex items-center min-h-[140px] md:min-h-[160px] lg:min-h-[180px]">
+        <div className="max-w-7xl mx-auto w-full py-5 md:py-6 lg:py-7">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="w-full md:w-3/5 lg:w-1/2 text-white text-center md:text-left">
+              <h1 className="font-extrabold tracking-tight">
+                <span className="block text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-none">
+                  {t("heroTitle")}
+                </span>
+                <span className="block text-lg sm:text-xl md:text-3xl lg:text-4xl leading-tight mt-0.5 md:mt-1">
+                  {t("heroSubtitle")}
+                </span>
+              </h1>
+              <p className="mt-3 max-w-xl mx-auto md:mx-0 text-sm sm:text-base md:text-lg text-orange-50/95 leading-snug">
+                {t("heroDescription")}
+              </p>
+            </div>
+
+            <div className="flex w-full md:w-auto justify-center md:justify-end">
+              <div className="flex items-center gap-4 lg:gap-6">
+                <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/95 p-2 shadow-sm">
+                  <Image
+                    src="/icons/coins/btc.svg"
+                    alt="Bitcoin"
+                    width={32}
+                    height={32}
+                    className="block h-full w-full object-contain"
+                  />
+                </div>
+                <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/95 p-2 shadow-sm">
+                  <Image
+                    src="/icons/coins/eth.svg"
+                    alt="Ethereum"
+                    width={32}
+                    height={32}
+                    className="block h-full w-full object-contain"
+                  />
+                </div>
+                <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/95 p-2 shadow-sm">
+                  <Image
+                    src="/icons/coins/usdt.svg"
+                    alt="Tether (USDT)"
+                    width={32}
+                    height={32}
+                    className="block h-full w-full object-contain"
+                  />
+                </div>
+                <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/95 p-2 shadow-sm">
+                  <Image
+                    src="/icons/coins/usdc.svg"
+                    alt="USD Coin"
+                    width={32}
+                    height={32}
+                    className="block h-full w-full object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="episodes-list"
+        className="px-6 pt-4 pb-8 md:pt-5 md:pb-6 lg:pb-5 bg-[#FDFBEE]"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setFiltersOpen((open) => !open)}
+              aria-expanded={filtersOpen}
+              className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3.5 py-2 text-sm font-semibold text-gray-800 shadow-sm transition-colors hover:border-orange-300 hover:text-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+            >
+              <SlidersHorizontal className="h-4 w-4" aria-hidden />
+              {t("filterToggle")}
+              {hasActiveFilters && (
+                <span className="rounded-full bg-orange-500 px-1.5 py-0.5 text-xs font-bold text-white tabular-nums">
+                  {selectedCategories.length}
+                </span>
+              )}
+            </button>
+
+            {hasActiveFilters && (
+              <>
+                {selectedCategories.map((category) => (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => handleCategorySelect(category)}
+                    className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200"
+                  >
+                    {category}
+                    <X className="h-3 w-3" aria-hidden />
+                    <span className="sr-only">{t("filterRemoveTag")}</span>
+                  </button>
+                ))}
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="text-sm font-medium text-gray-600 underline-offset-4 hover:text-orange-600 hover:underline"
+                >
+                  {t("filterClear")}
+                </button>
+              </>
+            )}
+          </div>
+
+          {filtersOpen && (
+            <div className="mb-5 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+              <p className="mb-3 text-sm text-gray-600">{t("filterHint")}</p>
+              <div className="flex flex-wrap gap-2">
+                {EPISODE_CATEGORIES.map((category) => (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => handleCategorySelect(category)}
+                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                      selectedCategories.includes(category)
+                        ? "bg-orange-500 text-white"
+                        : "bg-[#FDFBEE] text-gray-600 ring-1 ring-gray-200 hover:ring-orange-300 hover:text-orange-600"
+                    }`}
+                  >
+                    {category === "All Categories"
+                      ? t("allCategories")
+                      : category}
+                  </button>
+                ))}
+              </div>
+              {hasActiveFilters && (
+                <p className="mt-3 text-sm text-gray-600">
+                  {t("selectedCategories", {
+                    tags: selectedCategories.join(", "),
+                    count: totalCount,
+                  })}
+                </p>
+              )}
+            </div>
+          )}
+
+          {isLoading ? (
+            <EpisodeGridSkeleton />
+          ) : episodes.length === 0 ? (
+            <div className="text-center py-10 md:py-8">
+              <p className="text-gray-600">{t("empty")}</p>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-5 lg:gap-4">
+                {episodes.map((episode) => (
+                  <Link
+                    key={episode.slug}
+                    href={`/episodes/${episode.slug}`}
+                    aria-label={t("viewEpisode", {
+                      episode: episode.slug.toUpperCase(),
+                    })}
+                    className="group block"
+                  >
+                    <div className="bg-white rounded-xl md:rounded-lg shadow-md md:shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-0.5">
+                      <div className="aspect-square relative bg-gray-100 overflow-hidden">
+                        <Image
+                          src={getCoverImageUrl(episode.cover_image)}
+                          alt={episode.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          className="object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+
+                      <div className="px-4 pt-1 pb-3 md:px-3 md:pt-1 md:pb-2.5 flex flex-col">
+                        <h3 className="text-base md:text-sm font-semibold text-gray-900 mb-2 md:mb-1.5 line-clamp-2 leading-snug md:leading-snug min-h-[48px] md:min-h-[40px]">
+                          {episode.title}
+                        </h3>
+
+                        <div className="flex items-center justify-between mt-auto pt-0.5 md:pt-0.5 border-t border-gray-100">
+                          <div className="flex items-center space-x-1 text-xs text-gray-500">
+                            <Clock className="w-3 h-3" />
+                            <span className="truncate">
+                              {episode.date || t("timeTbd")}
+                            </span>
+                          </div>
+
+                          <div
+                            className="w-6 h-6 md:w-6 md:h-6 bg-orange-500 group-hover:bg-orange-600 rounded-full flex items-center justify-center text-white transition-colors"
+                            aria-hidden
+                          >
+                            <Play className="w-3 h-3 md:w-2.5 md:h-2.5 ml-0.5" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              {totalPages > 1 && (
+                <nav
+                  className="mt-8 flex flex-col items-center gap-4 md:mt-6"
+                  aria-label={t("paginationStatus", {
+                    page: currentPage,
+                    totalPages,
+                  })}
+                >
+                  <p className="text-sm text-gray-600">
+                    {t("paginationStatus", { page: currentPage, totalPages })}
+                  </p>
+                  <div className="flex flex-wrap items-center justify-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => goToPage(currentPage - 1)}
+                      disabled={currentPage <= 1 || isLoading}
+                      className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm transition-colors hover:border-orange-300 hover:text-orange-600 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      <ChevronLeft className="h-4 w-4" aria-hidden />
+                      {t("paginationPrev")}
+                    </button>
+
+                    <div className="flex flex-wrap items-center justify-center gap-1">
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                        (page) => (
+                          <button
+                            key={page}
+                            type="button"
+                            onClick={() => goToPage(page)}
+                            disabled={isLoading}
+                            aria-current={
+                              page === currentPage ? "page" : undefined
+                            }
+                            aria-label={t("paginationPage", { page })}
+                            className={`min-w-9 rounded-lg px-2.5 py-2 text-sm font-semibold transition-colors ${
+                              page === currentPage
+                                ? "bg-orange-500 text-white"
+                                : "border border-gray-200 bg-white text-gray-800 hover:border-orange-300 hover:text-orange-600"
+                            } disabled:cursor-not-allowed disabled:opacity-50`}
+                          >
+                            {page}
+                          </button>
+                        ),
+                      )}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => goToPage(currentPage + 1)}
+                      disabled={currentPage >= totalPages || isLoading}
+                      className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm transition-colors hover:border-orange-300 hover:text-orange-600 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      {t("paginationNext")}
+                      <ChevronRight className="h-4 w-4" aria-hidden />
+                    </button>
+                  </div>
+                </nav>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+
+    </div>
+  );
+}

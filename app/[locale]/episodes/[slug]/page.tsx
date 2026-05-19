@@ -1,13 +1,59 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import {
+  Calendar,
+  ChevronLeft,
+  Headphones,
+  Link2,
+  Mic,
+  Tag,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
+import {
   getTranslations,
   setRequestLocale,
 } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { getEpisodeBySlug, getCoverImageUrl } from "@/lib/supabase";
 import { routing } from "@/i18n/routing";
 
 type AppLocale = (typeof routing.locales)[number];
+
+function SectionHeading({
+  icon: Icon,
+  title,
+  compact = false,
+}: {
+  icon: LucideIcon;
+  title: string;
+  compact?: boolean;
+}) {
+  return (
+    <div
+      className={`flex items-center gap-2.5 ${compact ? "mb-2" : "mb-3"}`}
+    >
+      <div
+        className={`flex shrink-0 items-center justify-center rounded-full bg-orange-50 text-orange-600 ring-1 ring-orange-100 ${
+          compact ? "h-8 w-8" : "h-9 w-9"
+        }`}
+      >
+        <Icon
+          className={compact ? "h-3.5 w-3.5" : "h-4 w-4"}
+          strokeWidth={2}
+          aria-hidden
+        />
+      </div>
+      <h2
+        className={`font-semibold text-gray-900 ${
+          compact ? "text-base md:text-sm" : "text-xl md:text-lg"
+        }`}
+      >
+        {title}
+      </h2>
+    </div>
+  );
+}
 
 export async function generateMetadata({
   params,
@@ -53,13 +99,20 @@ export default async function EpisodeDetail({
   return (
     <main className="min-h-screen bg-[#FDFBEE]">
       <header className="bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-8 md:py-10">
-        <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
+        <div className="max-w-5xl mx-auto">
+          <Link
+            href="/"
+            className="mb-5 inline-flex items-center gap-1.5 text-sm font-semibold text-orange-50 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <ChevronLeft className="h-4 w-4" aria-hidden />
+            {t("backToEpisodes")}
+          </Link>
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-orange-100/90">
+            {slug.toUpperCase()}
+          </p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight text-center md:text-left">
             {episode.title}
           </h1>
-          <p className="mt-3 text-sm md:text-base text-orange-50/95 max-w-3xl mx-auto line-clamp-2">
-            {episode.description}
-          </p>
         </div>
       </header>
 
@@ -81,12 +134,7 @@ export default async function EpisodeDetail({
               </div>
 
               <div className="bg-white rounded-xl shadow-sm ring-1 ring-gray-200/80 p-6 md:p-5">
-                <div className="flex items-center mb-3">
-                  <span className="text-2xl md:text-xl mr-2">🎙</span>
-                  <h2 className="text-xl md:text-lg font-semibold text-gray-900">
-                    {t("summaryTitle")}
-                  </h2>
-                </div>
+                <SectionHeading icon={Mic} title={t("summaryTitle")} />
                 <div className="text-gray-700 leading-relaxed text-base md:text-sm whitespace-pre-line">
                   {episode.description}
                 </div>
@@ -94,12 +142,7 @@ export default async function EpisodeDetail({
 
               {episode.tags && episode.tags.length > 0 && (
                 <div className="bg-white rounded-xl shadow-sm ring-1 ring-gray-200/80 p-6 md:p-5">
-                  <div className="flex items-center mb-3">
-                    <span className="text-2xl md:text-xl mr-2">📎</span>
-                    <h2 className="text-xl md:text-lg font-semibold text-gray-900">
-                      {t("tagsTitle")}
-                    </h2>
-                  </div>
+                  <SectionHeading icon={Tag} title={t("tagsTitle")} />
                   <div className="flex flex-wrap gap-2">
                     {episode.tags.map((tag) => (
                       <span
@@ -115,12 +158,7 @@ export default async function EpisodeDetail({
 
               {episode.guests && episode.guests.length > 0 && (
                 <div className="bg-white rounded-xl shadow-sm ring-1 ring-gray-200/80 p-6 md:p-5">
-                  <div className="flex items-center mb-3">
-                    <span className="text-2xl md:text-xl mr-2">🧠</span>
-                    <h2 className="text-xl md:text-lg font-semibold text-gray-900">
-                      {t("guestsTitle")}
-                    </h2>
-                  </div>
+                  <SectionHeading icon={Users} title={t("guestsTitle")} />
                   <div className="space-y-2">
                     {episode.guests.map((guest, index) => (
                       <div key={index} className="flex items-center">
@@ -138,36 +176,46 @@ export default async function EpisodeDetail({
             <aside className="lg:sticky lg:top-24">
               <div className="bg-white rounded-xl shadow-sm ring-1 ring-gray-200/80 p-6 md:p-5 space-y-5">
                 <div>
-                  <div className="flex items-center mb-2">
-                    <span className="text-xl mr-2">📅</span>
-                    <h2 className="text-base md:text-sm font-semibold text-gray-900">
-                      {t("timeTitle")}
-                    </h2>
-                  </div>
+                  <SectionHeading
+                    icon={Calendar}
+                    title={t("timeTitle")}
+                    compact
+                  />
                   <p className="text-gray-700 text-sm md:text-sm">
                     {episode.date || t("timeTbd")}
                   </p>
                 </div>
 
                 <div className="border-t border-gray-100 pt-5">
-                  <div className="flex items-center mb-3">
-                    <span className="text-xl mr-2">🔗</span>
-                    <h2 className="text-base md:text-sm font-semibold text-gray-900">
-                      {t("spaceTitle")}
-                    </h2>
-                  </div>
+                  <SectionHeading
+                    icon={Link2}
+                    title={t("spaceTitle")}
+                    compact
+                  />
                   {episode.space_link ? (
                     <a
                       href={episode.space_link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center px-5 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm rounded-lg transition-colors"
+                      className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm rounded-lg transition-colors"
                     >
-                      <span className="mr-2">🎧</span>
+                      <Headphones className="h-4 w-4" aria-hidden />
                       {t("listenCta")}
                     </a>
                   ) : (
-                    <p className="text-sm text-gray-500">-</p>
+                    <div className="space-y-3">
+                      <p className="text-sm leading-relaxed text-gray-600">
+                        {t("spacePending")}
+                      </p>
+                      <a
+                        href="https://x.com/MagoTalk"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex text-sm font-semibold text-orange-600 underline-offset-4 transition-colors hover:text-orange-700 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+                      >
+                        {t("followOnX")}
+                      </a>
+                    </div>
                   )}
                 </div>
               </div>

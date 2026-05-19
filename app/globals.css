@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FDFBEE;
+  --background: #fdfbee;
   --foreground: #171717;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -12,15 +13,8 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
+  background: #fdfbee;
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -28,7 +22,6 @@ body {
   scroll-behavior: smooth;
 }
 
-/* 自定义滚动条样式 */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -46,15 +39,22 @@ body {
   background: #a8a8a8;
 }
 
-/* 确保图片和视频的响应式行为 */
-img, video {
+img,
+video {
   max-width: 100%;
   height: auto;
 }
 
-/* 平滑过渡效果 */
-* {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+@media (prefers-reduced-motion: no-preference) {
+  a,
+  button,
+  summary,
+  input,
+  select,
+  textarea {
+    transition-property: color, background-color, border-color, box-shadow,
+      opacity, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
 }

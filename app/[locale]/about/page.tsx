@@ -117,11 +117,6 @@ export default async function AboutPage({
             ))}
           </ul>
 
-          <div className="mt-6 border-t border-gray-200 pt-5">
-            <p className="text-sm leading-relaxed text-gray-600">
-              {t("subtitle")}
-            </p>
-          </div>
         </section>
       </div>
     </main>
