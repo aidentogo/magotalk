@@ -313,19 +313,19 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
                           {episode.title}
                         </h3>
 
-                        <div className="flex items-center justify-between mt-auto pt-0.5 md:pt-0.5 border-t border-gray-100">
-                          <div className="flex items-center space-x-1 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span className="truncate">
+                        <div className="grid grid-cols-[minmax(0,1fr)_2.5rem] items-center gap-2 mt-auto pt-0.5 md:pt-0.5 border-t border-gray-100">
+                          <div className="min-w-0 flex items-center gap-1 text-xs text-gray-500">
+                            <Clock className="h-3 w-3 shrink-0" />
+                            <span className="min-w-0 truncate">
                               {episode.date || t("timeTbd")}
                             </span>
                           </div>
 
                           <div
-                            className="w-6 h-6 md:w-6 md:h-6 bg-orange-500 group-hover:bg-orange-600 rounded-full flex items-center justify-center text-white transition-colors"
+                            className="size-10 shrink-0 rounded-full bg-orange-500 text-white transition-colors group-hover:bg-orange-600 flex items-center justify-center"
                             aria-hidden
                           >
-                            <Play className="w-3 h-3 md:w-2.5 md:h-2.5 ml-0.5" />
+                            <Play className="ml-0.5 size-[17px]" />
                           </div>
                         </div>
                       </div>
