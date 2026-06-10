@@ -45,8 +45,8 @@ export default function Nav() {
     }`;
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-gray-200 bg-[#FDFBEE] px-4 py-3 md:px-6 md:py-4">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
+    <nav className="sticky top-0 z-50 border-b border-white/55 bg-[#FDFBEE]/78 px-4 py-3 shadow-[0_1px_0_rgba(23,23,23,0.06)] backdrop-blur-xl backdrop-saturate-150 md:border-gray-200/70 md:bg-[#FDFBEE]/86 md:px-6 md:py-4">
+      <div className="relative z-50 mx-auto flex max-w-7xl items-center justify-between gap-3">
         <Link href="/" className="flex shrink-0 items-center">
           <Image
             src="/logo-magotalk.svg"
@@ -72,7 +72,7 @@ export default function Nav() {
           <LocaleSwitcher />
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-700 shadow-sm transition-colors hover:border-orange-300 hover:text-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/70 bg-white/58 text-gray-800 shadow-[0_4px_18px_rgba(15,23,42,0.14)] backdrop-blur-xl transition-colors hover:border-orange-300/70 hover:bg-white/78 hover:text-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
             aria-expanded={menuOpen}
             aria-controls={menuId}
             aria-label={menuOpen ? t("menuClose") : t("menuOpen")}
@@ -91,13 +91,13 @@ export default function Nav() {
         <>
           <button
             type="button"
-            className="fixed inset-0 top-[57px] z-40 bg-black/20 md:hidden"
+            className="fixed inset-0 z-40 bg-black/10 backdrop-blur-[1px] md:hidden"
             aria-label={t("menuClose")}
             onClick={() => setMenuOpen(false)}
           />
           <div
             id={menuId}
-            className="relative z-50 border-t border-gray-200 bg-[#FDFBEE] px-2 pb-4 pt-2 md:hidden"
+            className="relative z-50 mt-3 overflow-hidden rounded-lg border border-white/60 bg-[#FDFBEE]/88 px-2 py-2 shadow-[0_18px_50px_rgba(15,23,42,0.16)] backdrop-blur-2xl backdrop-saturate-150 md:hidden"
           >
             <div className="flex flex-col gap-1">
               {navLinks.map(({ href, key }) => (
