@@ -1,7 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { contactEmail, contactEmailHref } from "@/lib/contact";
+import XIcon from "@/app/components/XIcon";
+import { contactEmail, xHandle, xProfileUrl } from "@/lib/contact";
 
 export default function Footer() {
   const t = useTranslations("Footer");
@@ -12,12 +13,19 @@ export default function Footer() {
         <p className="text-sm text-gray-500">
           {t("copyright", { year: new Date().getFullYear() })}
         </p>
-        <a
-          href={contactEmailHref}
-          className="text-sm font-medium text-gray-700 underline-offset-4 transition-colors hover:text-orange-600 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
-        >
-          {contactEmail}
-        </a>
+        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+          <span className="text-sm font-medium text-gray-700">
+            {contactEmail}
+          </span>
+          <a
+            href={xProfileUrl}
+            aria-label={`Open ${xHandle} on X`}
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 underline-offset-4 transition-colors hover:text-orange-600 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+          >
+            <XIcon className="h-3.5 w-3.5 shrink-0" />
+            <span>{xHandle}</span>
+          </a>
+        </div>
       </div>
     </footer>
   );

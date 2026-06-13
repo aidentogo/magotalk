@@ -17,6 +17,7 @@ import {
 import { Link } from "@/i18n/navigation";
 import { getEpisodeBySlug, getCoverImageUrl } from "@/lib/supabase";
 import { routing } from "@/i18n/routing";
+import { xProfileUrl } from "@/lib/contact";
 
 type AppLocale = (typeof routing.locales)[number];
 
@@ -208,7 +209,7 @@ export default async function EpisodeDetail({
                         {t("spacePending")}
                       </p>
                       <a
-                        href="https://x.com/MagoTalk"
+                        href={xProfileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex text-sm font-semibold text-orange-600 underline-offset-4 transition-colors hover:text-orange-700 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"

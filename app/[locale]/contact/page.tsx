@@ -1,22 +1,15 @@
 import { ExternalLink, Mail } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { contactEmail, contactEmailHref } from "@/lib/contact";
+import XIcon from "@/app/components/XIcon";
+import {
+  contactEmail,
+  contactEmailHref,
+  xHandle,
+  xProfileUrl,
+} from "@/lib/contact";
 
 type AppLocale = (typeof routing.locales)[number];
-
-function XIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      fill="currentColor"
-      aria-hidden
-    >
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-  );
-}
 
 export default async function ContactPage({
   params,
@@ -85,7 +78,7 @@ export default async function ContactPage({
             </a>
 
             <a
-              href="https://x.com/MagoTalk"
+              href={xProfileUrl}
               className="group flex items-center gap-4 py-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-500"
             >
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gray-950 text-white transition-colors group-hover:bg-orange-500">
@@ -100,7 +93,7 @@ export default async function ContactPage({
                   />
                 </h3>
                 <p className="mt-1 text-lg font-semibold text-gray-950 group-hover:text-orange-700">
-                  @MagoTalk
+                  {xHandle}
                 </p>
               </div>
             </a>
