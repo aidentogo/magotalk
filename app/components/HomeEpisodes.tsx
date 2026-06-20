@@ -284,7 +284,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
               role="search"
               aria-label={t("searchLabel")}
               onSubmit={submitSearch}
-              className="flex w-full items-center gap-2 md:w-[22rem]"
+              className="flex h-12 w-full overflow-hidden rounded-full border border-gray-300 bg-white shadow-sm transition-colors focus-within:border-gray-400 focus-within:ring-2 focus-within:ring-gray-100 md:max-w-[32rem] lg:max-w-[34rem]"
             >
               <label htmlFor="episode-search" className="sr-only">
                 {t("searchLabel")}
@@ -295,15 +295,15 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
                 value={searchInput}
                 onChange={(event) => setSearchInput(event.target.value)}
                 placeholder={t("searchPlaceholder")}
-                className="h-10 min-w-0 flex-1 rounded-lg border border-gray-200 bg-white px-3 text-sm font-medium text-gray-900 shadow-sm outline-none transition-colors placeholder:text-gray-400 hover:border-orange-300 focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+                className="min-w-0 flex-1 bg-transparent px-5 text-base font-medium text-gray-900 outline-none placeholder:text-gray-500"
               />
               <button
                 type="submit"
                 disabled={isLoading}
-                className="inline-flex h-10 shrink-0 items-center justify-center gap-1.5 rounded-lg bg-orange-500 px-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+                aria-label={t("searchSubmit")}
+                className="inline-flex h-full w-16 shrink-0 items-center justify-center border-l border-gray-300 text-gray-950 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-gray-500 md:w-[4.5rem]"
               >
-                <Search className="h-4 w-4" aria-hidden />
-                {t("searchSubmit")}
+                <Search className="h-7 w-7" strokeWidth={2.5} aria-hidden />
               </button>
             </form>
           </div>

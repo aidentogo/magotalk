@@ -25,7 +25,7 @@
     "filterClear": "清除篩選",
     "filterRemoveTag": "移除標籤",
     "searchLabel": "搜尋節目",
-    "searchPlaceholder": "搜尋標題、EP 或關鍵字",
+    "searchPlaceholder": "搜尋",
     "searchSubmit": "搜尋",
     "searchClear": "清除搜尋",
     "searchActive": "搜尋：{query}",

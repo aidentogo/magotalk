@@ -25,7 +25,7 @@
     "filterClear": "Clear filters",
     "filterRemoveTag": "Remove tag",
     "searchLabel": "Search episodes",
-    "searchPlaceholder": "Search title, EP, or keyword",
+    "searchPlaceholder": "Search",
     "searchSubmit": "Search",
     "searchClear": "Clear search",
     "searchActive": "Search: {query}",
