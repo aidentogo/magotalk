@@ -6,10 +6,11 @@ import {
   Clock,
   ChevronLeft,
   ChevronRight,
+  Search,
   SlidersHorizontal,
   X,
 } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import {
@@ -36,6 +37,8 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [activeSearchQuery, setActiveSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
     "All Categories",
   ]);
@@ -43,6 +46,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
 
   const totalPages = Math.max(1, Math.ceil(totalCount / EPISODES_PAGE_SIZE));
   const hasActiveFilters = !selectedCategories.includes("All Categories");
+  const hasActiveSearch = activeSearchQuery.length > 0;
 
   useEffect(() => {
     if (currentPage > totalPages) {
@@ -56,7 +60,8 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
     if (
       skipInitialFetch.current &&
       currentPage === 1 &&
-      !selectedFilterTags(selectedCategories)
+      !selectedFilterTags(selectedCategories) &&
+      !activeSearchQuery
     ) {
       skipInitialFetch.current = false;
       return;
@@ -72,6 +77,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
           limit: EPISODES_PAGE_SIZE,
           offset,
           tags,
+          search: activeSearchQuery,
         });
 
         if (!cancelled) {
@@ -95,7 +101,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
     return () => {
       cancelled = true;
     };
-  }, [selectedCategories, currentPage]);
+  }, [selectedCategories, currentPage, activeSearchQuery]);
 
   const skipScrollOnMount = useRef(true);
   useEffect(() => {
@@ -129,6 +135,18 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
     setCurrentPage(1);
     setSelectedCategories(["All Categories"]);
     setFiltersOpen(false);
+  };
+
+  const submitSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setCurrentPage(1);
+    setActiveSearchQuery(searchInput.trim());
+  };
+
+  const clearSearch = () => {
+    setCurrentPage(1);
+    setSearchInput("");
+    setActiveSearchQuery("");
   };
 
   const goToPage = (page: number) => {
@@ -206,45 +224,88 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
         className="px-6 pt-4 pb-8 md:pt-5 md:pb-6 lg:pb-5 bg-[#FDFBEE]"
       >
         <div className="max-w-7xl mx-auto">
-          <div className="mb-4 flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setFiltersOpen((open) => !open)}
-              aria-expanded={filtersOpen}
-              className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3.5 py-2 text-sm font-semibold text-gray-800 shadow-sm transition-colors hover:border-orange-300 hover:text-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
-            >
-              <SlidersHorizontal className="h-4 w-4" aria-hidden />
-              {t("filterToggle")}
-              {hasActiveFilters && (
-                <span className="rounded-full bg-orange-500 px-1.5 py-0.5 text-xs font-bold text-white tabular-nums">
-                  {selectedCategories.length}
-                </span>
-              )}
-            </button>
+          <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setFiltersOpen((open) => !open)}
+                aria-expanded={filtersOpen}
+                className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3.5 py-2 text-sm font-semibold text-gray-800 shadow-sm transition-colors hover:border-orange-300 hover:text-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+              >
+                <SlidersHorizontal className="h-4 w-4" aria-hidden />
+                {t("filterToggle")}
+                {hasActiveFilters && (
+                  <span className="rounded-full bg-orange-500 px-1.5 py-0.5 text-xs font-bold text-white tabular-nums">
+                    {selectedCategories.length}
+                  </span>
+                )}
+              </button>
 
-            {hasActiveFilters && (
-              <>
-                {selectedCategories.map((category) => (
+              {hasActiveFilters && (
+                <>
+                  {selectedCategories.map((category) => (
+                    <button
+                      key={category}
+                      type="button"
+                      onClick={() => handleCategorySelect(category)}
+                      className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200"
+                    >
+                      {category}
+                      <X className="h-3 w-3" aria-hidden />
+                      <span className="sr-only">{t("filterRemoveTag")}</span>
+                    </button>
+                  ))}
                   <button
-                    key={category}
                     type="button"
-                    onClick={() => handleCategorySelect(category)}
-                    className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200"
+                    onClick={clearFilters}
+                    className="text-sm font-medium text-gray-600 underline-offset-4 hover:text-orange-600 hover:underline"
                   >
-                    {category}
-                    <X className="h-3 w-3" aria-hidden />
-                    <span className="sr-only">{t("filterRemoveTag")}</span>
+                    {t("filterClear")}
                   </button>
-                ))}
+                </>
+              )}
+
+              {hasActiveSearch && (
                 <button
                   type="button"
-                  onClick={clearFilters}
-                  className="text-sm font-medium text-gray-600 underline-offset-4 hover:text-orange-600 hover:underline"
+                  onClick={clearSearch}
+                  aria-label={t("searchClear")}
+                  className="inline-flex max-w-full items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700 ring-1 ring-gray-200 hover:text-orange-600 hover:ring-orange-200"
                 >
-                  {t("filterClear")}
+                  <span className="max-w-64 truncate">
+                    {t("searchActive", { query: activeSearchQuery })}
+                  </span>
+                  <X className="h-3 w-3 shrink-0" aria-hidden />
                 </button>
-              </>
-            )}
+              )}
+            </div>
+
+            <form
+              role="search"
+              aria-label={t("searchLabel")}
+              onSubmit={submitSearch}
+              className="flex w-full items-center gap-2 md:w-[22rem]"
+            >
+              <label htmlFor="episode-search" className="sr-only">
+                {t("searchLabel")}
+              </label>
+              <input
+                id="episode-search"
+                type="search"
+                value={searchInput}
+                onChange={(event) => setSearchInput(event.target.value)}
+                placeholder={t("searchPlaceholder")}
+                className="h-10 min-w-0 flex-1 rounded-lg border border-gray-200 bg-white px-3 text-sm font-medium text-gray-900 shadow-sm outline-none transition-colors placeholder:text-gray-400 hover:border-orange-300 focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+              />
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="inline-flex h-10 shrink-0 items-center justify-center gap-1.5 rounded-lg bg-orange-500 px-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+              >
+                <Search className="h-4 w-4" aria-hidden />
+                {t("searchSubmit")}
+              </button>
+            </form>
           </div>
 
           {filtersOpen && (

@@ -75,6 +75,7 @@ export type EpisodesPageOptions = {
   limit?: number
   offset?: number
   tags?: string[]
+  search?: string
 }
 
 export type EpisodesPageResult = {
@@ -91,6 +92,46 @@ function filterMockEpisodesByTags(episodes: Episode[], tags?: string[]): Episode
     (episode) =>
       episode.tags?.some((tag) => tags.includes(tag)) ?? false,
   )
+}
+
+function normalizeSearchQuery(search?: string): string | undefined {
+  const query = search?.trim().replace(/\s+/g, ' ')
+  return query || undefined
+}
+
+function filterMockEpisodesBySearch(
+  episodes: Episode[],
+  search?: string,
+): Episode[] {
+  const query = normalizeSearchQuery(search)?.toLowerCase()
+
+  if (!query) {
+    return episodes
+  }
+
+  return episodes.filter((episode) => {
+    const searchableText = [
+      episode.slug,
+      episode.title,
+      episode.description,
+      episode.date,
+      ...(episode.tags ?? []),
+      ...(episode.guests ?? []),
+    ]
+      .join(' ')
+      .toLowerCase()
+
+    return searchableText.includes(query)
+  })
+}
+
+function getPostgrestSearchPattern(search?: string): string | undefined {
+  const query = normalizeSearchQuery(search)
+    ?.replace(/[%,()]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+  return query ? `%${query}%` : undefined
 }
 
 function paginateEpisodes(
@@ -113,9 +154,13 @@ export async function getEpisodesPage(
   const limit = options.limit ?? EPISODES_PAGE_SIZE
   const offset = options.offset ?? 0
   const tags = options.tags
+  const search = normalizeSearchQuery(options.search)
 
   if (!supabaseUrl || !supabaseKey) {
-    const filtered = filterMockEpisodesByTags(mockEpisodes, tags)
+    const filtered = filterMockEpisodesBySearch(
+      filterMockEpisodesByTags(mockEpisodes, tags),
+      search,
+    )
     return paginateEpisodes(filtered, limit, offset)
   }
 
@@ -127,6 +172,18 @@ export async function getEpisodesPage(
 
     if (tags && tags.length > 0) {
       query = query.overlaps('tags', tags)
+    }
+
+    const searchPattern = getPostgrestSearchPattern(search)
+    if (searchPattern) {
+      query = query.or(
+        [
+          `title.ilike.${searchPattern}`,
+          `description.ilike.${searchPattern}`,
+          `slug.ilike.${searchPattern}`,
+          `date.ilike.${searchPattern}`,
+        ].join(','),
+      )
     }
 
     const { data, error, count } = await query.range(offset, offset + limit - 1)
