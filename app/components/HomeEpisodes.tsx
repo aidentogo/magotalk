@@ -284,7 +284,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
               role="search"
               aria-label={t("searchLabel")}
               onSubmit={submitSearch}
-              className="flex h-12 w-full overflow-hidden rounded-full border border-gray-300 bg-white shadow-sm transition-colors focus-within:border-gray-400 focus-within:ring-2 focus-within:ring-gray-100 md:max-w-[32rem] lg:max-w-[34rem]"
+              className="flex h-12 w-full overflow-hidden rounded-full border border-gray-300 bg-white shadow-sm transition-colors focus-within:border-gray-400 focus-within:ring-2 focus-within:ring-gray-100 md:w-[22rem]"
             >
               <label htmlFor="episode-search" className="sr-only">
                 {t("searchLabel")}
