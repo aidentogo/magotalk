@@ -34,7 +34,11 @@ export default function LocaleSwitcher() {
         className="list-none cursor-pointer inline-flex items-center gap-1.5 rounded-md px-1.5 py-1 text-sm md:text-base text-gray-600 transition-colors hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 group-open:text-orange-500"
         aria-label={t("language")}
       >
-        <Globe className="h-[1em] w-[1em] shrink-0 opacity-70" strokeWidth={1.5} aria-hidden />
+        <Globe
+          className="h-[1em] w-[1em] shrink-0 opacity-70"
+          strokeWidth={1.5}
+          aria-hidden
+        />
       </summary>
       <div
         role="listbox"

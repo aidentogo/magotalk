@@ -65,14 +65,17 @@ export default function Nav() {
               </Link>
             ))}
           </div>
-          <LocaleSwitcher />
         </div>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 md:gap-3">
+          <div
+            id="home-header-actions"
+            className="flex items-center gap-1.5 empty:hidden md:gap-2"
+          />
           <LocaleSwitcher />
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/70 bg-white/58 text-gray-800 shadow-[0_4px_18px_rgba(15,23,42,0.14)] backdrop-blur-xl transition-colors hover:border-orange-300/70 hover:bg-white/78 hover:text-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/70 bg-white/58 text-gray-800 shadow-[0_4px_18px_rgba(15,23,42,0.14)] backdrop-blur-xl transition-colors hover:border-orange-300/70 hover:bg-white/78 hover:text-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 md:hidden"
             aria-expanded={menuOpen}
             aria-controls={menuId}
             aria-label={menuOpen ? t("menuClose") : t("menuOpen")}
