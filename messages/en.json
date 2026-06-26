@@ -26,6 +26,8 @@
     "filterRemoveTag": "Remove tag",
     "searchLabel": "Search episodes",
     "searchPlaceholder": "Search",
+    "searchOpen": "Open search",
+    "searchClose": "Close search",
     "searchSubmit": "Search",
     "searchClear": "Clear search",
     "searchActive": "Search: {query}",

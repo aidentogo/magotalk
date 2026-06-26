@@ -37,12 +37,14 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [activeSearchQuery, setActiveSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
     "All Categories",
   ]);
   const skipInitialFetch = useRef(true);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const totalPages = Math.max(1, Math.ceil(totalCount / EPISODES_PAGE_SIZE));
   const hasActiveFilters = !selectedCategories.includes("All Categories");
@@ -53,6 +55,12 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
       setCurrentPage(totalPages);
     }
   }, [currentPage, totalPages]);
+
+  useEffect(() => {
+    if (searchOpen) {
+      searchInputRef.current?.focus();
+    }
+  }, [searchOpen]);
 
   useEffect(() => {
     let cancelled = false;
@@ -137,16 +145,28 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
     setFiltersOpen(false);
   };
 
+  const openSearch = () => {
+    setSearchInput(activeSearchQuery);
+    setSearchOpen(true);
+  };
+
+  const closeSearch = () => {
+    setSearchInput(activeSearchQuery);
+    setSearchOpen(false);
+  };
+
   const submitSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setCurrentPage(1);
     setActiveSearchQuery(searchInput.trim());
+    setSearchOpen(false);
   };
 
   const clearSearch = () => {
     setCurrentPage(1);
     setSearchInput("");
     setActiveSearchQuery("");
+    setSearchOpen(false);
   };
 
   const goToPage = (page: number) => {
@@ -224,88 +244,107 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
         className="px-6 pt-4 pb-8 md:pt-5 md:pb-6 lg:pb-5 bg-[#FDFBEE]"
       >
         <div className="max-w-7xl mx-auto">
-          <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setFiltersOpen((open) => !open)}
-                aria-expanded={filtersOpen}
-                className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3.5 py-2 text-sm font-semibold text-gray-800 shadow-sm transition-colors hover:border-orange-300 hover:text-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
-              >
-                <SlidersHorizontal className="h-4 w-4" aria-hidden />
-                {t("filterToggle")}
-                {hasActiveFilters && (
-                  <span className="rounded-full bg-orange-500 px-1.5 py-0.5 text-xs font-bold text-white tabular-nums">
-                    {selectedCategories.length}
-                  </span>
-                )}
-              </button>
-
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setFiltersOpen((open) => !open)}
+              aria-expanded={filtersOpen}
+              className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3.5 py-2 text-sm font-semibold text-gray-800 shadow-sm transition-colors hover:border-orange-300 hover:text-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+            >
+              <SlidersHorizontal className="h-4 w-4" aria-hidden />
+              {t("filterToggle")}
               {hasActiveFilters && (
-                <>
-                  {selectedCategories.map((category) => (
-                    <button
-                      key={category}
-                      type="button"
-                      onClick={() => handleCategorySelect(category)}
-                      className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200"
-                    >
-                      {category}
-                      <X className="h-3 w-3" aria-hidden />
-                      <span className="sr-only">{t("filterRemoveTag")}</span>
-                    </button>
-                  ))}
-                  <button
-                    type="button"
-                    onClick={clearFilters}
-                    className="text-sm font-medium text-gray-600 underline-offset-4 hover:text-orange-600 hover:underline"
-                  >
-                    {t("filterClear")}
-                  </button>
-                </>
+                <span className="rounded-full bg-orange-500 px-1.5 py-0.5 text-xs font-bold text-white tabular-nums">
+                  {selectedCategories.length}
+                </span>
               )}
+            </button>
 
-              {hasActiveSearch && (
+            {searchOpen ? (
+              <form
+                role="search"
+                aria-label={t("searchLabel")}
+                onSubmit={submitSearch}
+                className="order-last flex h-11 w-full overflow-hidden rounded-full border border-gray-300 bg-white shadow-sm transition-colors focus-within:border-gray-400 focus-within:ring-2 focus-within:ring-gray-100 sm:order-none sm:w-80"
+              >
+                <label htmlFor="episode-search" className="sr-only">
+                  {t("searchLabel")}
+                </label>
+                <input
+                  ref={searchInputRef}
+                  id="episode-search"
+                  type="search"
+                  value={searchInput}
+                  onChange={(event) => setSearchInput(event.target.value)}
+                  placeholder={t("searchPlaceholder")}
+                  className="min-w-0 flex-1 bg-transparent px-4 text-base font-medium text-gray-900 outline-none placeholder:text-gray-500"
+                />
                 <button
                   type="button"
-                  onClick={clearSearch}
-                  aria-label={t("searchClear")}
-                  className="inline-flex max-w-full items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700 ring-1 ring-gray-200 hover:text-orange-600 hover:ring-orange-200"
+                  onClick={closeSearch}
+                  aria-label={t("searchClose")}
+                  className="inline-flex h-full w-11 shrink-0 items-center justify-center text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-gray-500"
                 >
-                  <span className="max-w-64 truncate">
-                    {t("searchActive", { query: activeSearchQuery })}
-                  </span>
-                  <X className="h-3 w-3 shrink-0" aria-hidden />
+                  <X className="h-5 w-5" aria-hidden />
                 </button>
-              )}
-            </div>
-
-            <form
-              role="search"
-              aria-label={t("searchLabel")}
-              onSubmit={submitSearch}
-              className="flex h-12 w-full overflow-hidden rounded-full border border-gray-300 bg-white shadow-sm transition-colors focus-within:border-gray-400 focus-within:ring-2 focus-within:ring-gray-100 md:w-[22rem]"
-            >
-              <label htmlFor="episode-search" className="sr-only">
-                {t("searchLabel")}
-              </label>
-              <input
-                id="episode-search"
-                type="search"
-                value={searchInput}
-                onChange={(event) => setSearchInput(event.target.value)}
-                placeholder={t("searchPlaceholder")}
-                className="min-w-0 flex-1 bg-transparent px-5 text-base font-medium text-gray-900 outline-none placeholder:text-gray-500"
-              />
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  aria-label={t("searchSubmit")}
+                  className="inline-flex h-full w-12 shrink-0 items-center justify-center border-l border-gray-300 text-gray-950 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-gray-500"
+                >
+                  <Search className="h-6 w-6" strokeWidth={2.5} aria-hidden />
+                </button>
+              </form>
+            ) : (
               <button
-                type="submit"
-                disabled={isLoading}
-                aria-label={t("searchSubmit")}
-                className="inline-flex h-full w-16 shrink-0 items-center justify-center border-l border-gray-300 text-gray-950 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-gray-500 md:w-[4.5rem]"
+                type="button"
+                onClick={openSearch}
+                aria-label={t("searchOpen")}
+                aria-expanded={searchOpen}
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-950 shadow-sm transition-colors hover:border-orange-300 hover:text-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
               >
-                <Search className="h-7 w-7" strokeWidth={2.5} aria-hidden />
+                <Search className="h-6 w-6" strokeWidth={2.4} aria-hidden />
               </button>
-            </form>
+            )}
+
+            {hasActiveFilters && (
+              <>
+                {selectedCategories.map((category) => (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => handleCategorySelect(category)}
+                    className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200"
+                  >
+                    {category}
+                    <X className="h-3 w-3" aria-hidden />
+                    <span className="sr-only">{t("filterRemoveTag")}</span>
+                  </button>
+                ))}
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="text-sm font-medium text-gray-600 underline-offset-4 hover:text-orange-600 hover:underline"
+                >
+                  {t("filterClear")}
+                </button>
+              </>
+            )}
+
+            {hasActiveSearch && (
+              <button
+                type="button"
+                onClick={clearSearch}
+                aria-label={t("searchClear")}
+                className="inline-flex max-w-full items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700 ring-1 ring-gray-200 hover:text-orange-600 hover:ring-orange-200"
+              >
+                <span className="max-w-64 truncate">
+                  {t("searchActive", { query: activeSearchQuery })}
+                </span>
+                <X className="h-3 w-3 shrink-0" aria-hidden />
+              </button>
+            )}
           </div>
 
           {filtersOpen && (

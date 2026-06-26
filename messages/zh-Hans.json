@@ -26,6 +26,8 @@
     "filterRemoveTag": "移除标签",
     "searchLabel": "搜索节目",
     "searchPlaceholder": "搜索",
+    "searchOpen": "打开搜索",
+    "searchClose": "关闭搜索",
     "searchSubmit": "搜索",
     "searchClear": "清除搜索",
     "searchActive": "搜索：{query}",
