@@ -311,6 +311,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
           role="search"
           aria-label={t("searchLabel")}
           onSubmit={submitSearch}
+          autoComplete="off"
           className="fixed left-4 right-4 top-[4.5rem] z-[70] rounded-xl border border-gray-200 bg-white p-2 shadow-[0_18px_50px_rgba(15,23,42,0.18)] md:absolute md:left-auto md:right-0 md:top-full md:mt-2 md:w-80"
         >
           <div className="flex h-11 overflow-hidden rounded-full border border-gray-300 bg-white transition-colors focus-within:border-gray-400 focus-within:ring-2 focus-within:ring-gray-100">
@@ -320,10 +321,15 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
             <input
               ref={searchInputRef}
               id="episode-search"
+              name="episode-search-query"
               type="search"
               value={searchInput}
               onChange={(event) => setSearchInput(event.target.value)}
               placeholder={t("searchPlaceholder")}
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="none"
+              spellCheck={false}
               className="min-w-0 flex-1 bg-transparent px-4 text-base font-medium text-gray-900 outline-none placeholder:text-gray-500"
             />
             <button
