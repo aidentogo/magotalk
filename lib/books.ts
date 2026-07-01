@@ -99,7 +99,16 @@ export const books: Book[] = [
       en: {
         coverPath:
           "ai-is-eating-the-world/cover_front_ebook_1600x2560.jpg",
-        files: {},
+        files: {
+          epub: {
+            path: "ai-is-eating-the-world/AI_is_eating_the_world-en.epub",
+            filename: "AI_is_eating_the_world-en.epub",
+          },
+          markdown: {
+            path: "ai-is-eating-the-world/AI_is_eating_the_world_EN_web_preview.md",
+            filename: "AI_is_eating_the_world_EN_web_preview.md",
+          },
+        },
       },
       "zh-Hans": {
         coverPath:
