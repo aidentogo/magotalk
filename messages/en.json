@@ -80,6 +80,7 @@
     "formatHint": "EPUB is best for e-readers and adjustable text. PDF preserves the original layout for previewing and downloading.",
     "viewDetails": "View details",
     "downloadFormat": "Download {format}",
+    "comingSoon": "Coming soon",
     "rightsReserved": "All rights reserved.",
     "formatLabels": {
       "epub": "EPUB",

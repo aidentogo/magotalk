@@ -14,7 +14,9 @@ import {
   getBookCoverUrl,
   getBookDownloadFilename,
   getBookDownloadUrl,
+  getBookFile,
   getPublicBookUrl,
+  type BookLocale,
 } from "@/lib/books";
 
 type AppLocale = (typeof routing.locales)[number];
@@ -31,7 +33,8 @@ type BookPageContent = {
   intro: string[];
   readPdf: string;
   viewToc: string;
-  downloadManuscript: string;
+  downloadEpub: string;
+  downloadUnavailable: string;
   aboutLabel: string;
   aboutTitle: string;
   aboutParagraphs: string[];
@@ -48,12 +51,9 @@ type BookPageContent = {
 };
 
 const book = aiIsEatingTheWorldBook;
-const bookLocale = "zh-Hans";
-const pdfUrl = getBookDownloadUrl(book, bookLocale, "pdf");
-const pdfFilename = getBookDownloadFilename(book, bookLocale, "pdf");
-const manuscriptUrl = book.manuscriptPath
-  ? getPublicBookUrl(book.manuscriptPath)
-  : "";
+const previewLocale: BookLocale = "zh-Hans";
+const pdfUrl = getBookDownloadUrl(book, previewLocale, "pdf");
+const pdfFilename = getBookDownloadFilename(book, previewLocale, "pdf");
 
 const pageContent: Record<AppLocale, BookPageContent> = {
   "zh-Hans": {
@@ -67,7 +67,8 @@ const pageContent: Record<AppLocale, BookPageContent> = {
     ],
     readPdf: "阅读 PDF",
     viewToc: "查看目录",
-    downloadManuscript: "下载书稿",
+    downloadEpub: "下载 EPUB",
+    downloadUnavailable: "即将提供",
     aboutLabel: "ABOUT",
     aboutTitle: "关于本书",
     aboutParagraphs: [
@@ -140,7 +141,8 @@ const pageContent: Record<AppLocale, BookPageContent> = {
     ],
     readPdf: "閱讀 PDF",
     viewToc: "查看目錄",
-    downloadManuscript: "下載書稿",
+    downloadEpub: "下載 EPUB",
+    downloadUnavailable: "即將提供",
     aboutLabel: "ABOUT",
     aboutTitle: "關於本書",
     aboutParagraphs: [
@@ -213,7 +215,8 @@ const pageContent: Record<AppLocale, BookPageContent> = {
     ],
     readPdf: "Read PDF",
     viewToc: "View contents",
-    downloadManuscript: "Download manuscript",
+    downloadEpub: "Download EPUB",
+    downloadUnavailable: "Coming soon",
     aboutLabel: "ABOUT",
     aboutTitle: "About the book",
     aboutParagraphs: [
@@ -285,6 +288,14 @@ function getPageContent(locale: string) {
   return pageContent["zh-Hans"];
 }
 
+function getBookLocale(locale: string): BookLocale {
+  if (locale === "en" || locale === "zh-Hans" || locale === "zh-Hant") {
+    return locale;
+  }
+
+  return previewLocale;
+}
+
 function BookCover({
   className,
   sizes,
@@ -298,7 +309,7 @@ function BookCover({
     <div className={className}>
       <div className="relative aspect-[5/8] overflow-hidden rounded-lg bg-[#0b1212] shadow-[0_34px_90px_rgba(0,0,0,0.58)] ring-1 ring-white/15">
         <Image
-          src={getBookCoverUrl(book, bookLocale)}
+          src={getBookCoverUrl(book, previewLocale)}
           alt={alt}
           fill
           priority
@@ -327,7 +338,7 @@ export async function generateMetadata({
       type: "book",
       images: [
         {
-          url: getBookCoverUrl(book, bookLocale),
+          url: getBookCoverUrl(book, previewLocale),
           width: 1600,
           height: 2560,
           alt: content.coverAlt,
@@ -345,6 +356,9 @@ export default async function AiIsEatingTheWorldPage({
   const { locale } = await params;
   setRequestLocale(locale as AppLocale);
   const content = getPageContent(locale);
+  const currentBookLocale = getBookLocale(locale);
+  const epubFile = getBookFile(book, currentBookLocale, "epub");
+  const markdownFile = getBookFile(book, currentBookLocale, "markdown");
 
   return (
     <main className="min-h-screen bg-[#F7F1E3] text-[#101312]">
@@ -406,14 +420,20 @@ export default async function AiIsEatingTheWorldPage({
                 <ListTree className="h-4 w-4" aria-hidden />
                 {content.viewToc}
               </a>
-              <a
-                href={pdfUrl}
-                download={pdfFilename}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-amber-200/36 bg-amber-200/10 px-5 py-3 text-sm font-bold text-amber-100 transition-colors hover:border-amber-200/70 hover:bg-amber-200/16 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-200"
-              >
-                <Download className="h-4 w-4" aria-hidden />
-                {content.downloadManuscript}
-              </a>
+              {epubFile ? (
+                <a
+                  href={getPublicBookUrl(epubFile.path)}
+                  download={epubFile.filename}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-amber-200/36 bg-amber-200/10 px-5 py-3 text-sm font-bold text-amber-100 transition-colors hover:border-amber-200/70 hover:bg-amber-200/16 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-200"
+                >
+                  <Download className="h-4 w-4" aria-hidden />
+                  {content.downloadEpub}
+                </a>
+              ) : (
+                <span className="inline-flex min-h-11 cursor-not-allowed items-center justify-center rounded-lg border border-white/12 bg-white/6 px-5 py-3 text-sm font-bold text-white/46">
+                  {content.downloadUnavailable}
+                </span>
+              )}
             </div>
           </div>
 
@@ -509,10 +529,24 @@ export default async function AiIsEatingTheWorldPage({
                 <Download className="h-4 w-4" aria-hidden />
                 {content.downloadPdf}
               </a>
-              {manuscriptUrl ? (
+              {epubFile ? (
                 <a
-                  href={manuscriptUrl}
-                  download="AI_is_eating_the_world_CN_full_manuscript.md"
+                  href={getPublicBookUrl(epubFile.path)}
+                  download={epubFile.filename}
+                  className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-[#c5b89f] bg-white/48 px-4 py-2 text-sm font-semibold text-[#111513] transition-colors hover:border-teal-700 hover:text-teal-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
+                >
+                  <Download className="h-4 w-4" aria-hidden />
+                  {content.downloadEpub}
+                </a>
+              ) : (
+                <span className="inline-flex min-h-10 cursor-not-allowed items-center justify-center rounded-lg border border-[#d8cbb5] bg-white/34 px-4 py-2 text-sm font-semibold text-[#777066]">
+                  {content.downloadUnavailable}
+                </span>
+              )}
+              {markdownFile ? (
+                <a
+                  href={getPublicBookUrl(markdownFile.path)}
+                  download={markdownFile.filename}
                   className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-[#c5b89f] bg-white/48 px-4 py-2 text-sm font-semibold text-[#111513] transition-colors hover:border-teal-700 hover:text-teal-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
                 >
                   <FileText className="h-4 w-4" aria-hidden />

@@ -93,13 +93,22 @@ export const books: Book[] = [
     detailPath: "/books/ai-is-eating-the-world",
     manuscriptPath:
       "ai-is-eating-the-world/AI_is_eating_the_world_CN_full_manuscript.md",
-    primaryFormat: "pdf",
+    primaryFormat: "epub",
     fallbackLocale: "zh-Hans",
     editions: {
+      en: {
+        coverPath:
+          "ai-is-eating-the-world/cover_front_ebook_1600x2560.jpg",
+        files: {},
+      },
       "zh-Hans": {
         coverPath:
           "ai-is-eating-the-world/cover_front_ebook_1600x2560.jpg",
         files: {
+          epub: {
+            path: "ai-is-eating-the-world/AI_is_eating_the_world-zh-Hans.epub",
+            filename: "AI_is_eating_the_world-zh-Hans.epub",
+          },
           pdf: {
             path: "ai-is-eating-the-world/AI_is_eating_the_world_CN_preview.pdf",
             filename: "AI_is_eating_the_world_CN_preview.pdf",
@@ -107,6 +116,20 @@ export const books: Book[] = [
           markdown: {
             path: "ai-is-eating-the-world/AI_is_eating_the_world_CN_full_manuscript.md",
             filename: "AI_is_eating_the_world_CN_full_manuscript.md",
+          },
+        },
+      },
+      "zh-Hant": {
+        coverPath:
+          "ai-is-eating-the-world/cover_front_ebook_1600x2560.jpg",
+        files: {
+          epub: {
+            path: "ai-is-eating-the-world/AI_is_eating_the_world-zh-Hant.epub",
+            filename: "AI_is_eating_the_world-zh-Hant.epub",
+          },
+          markdown: {
+            path: "ai-is-eating-the-world/AI_is_eating_the_world_zh-Hant_full_manuscript.md",
+            filename: "AI_is_eating_the_world_zh-Hant_full_manuscript.md",
           },
         },
       },

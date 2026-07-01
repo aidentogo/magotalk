@@ -80,6 +80,7 @@
     "formatHint": "EPUB 适合电子书阅读器和可调字号阅读；PDF 适合保持原始排版、在线预览和下载保存。",
     "viewDetails": "查看详情",
     "downloadFormat": "下载 {format}",
+    "comingSoon": "即将提供",
     "rightsReserved": "保留所有权利。",
     "formatLabels": {
       "epub": "EPUB",

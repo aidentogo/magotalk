@@ -7,8 +7,8 @@ import {
   books,
   getAvailableBookLocales,
   getBookCoverUrl,
-  getBookDownloadFilename,
-  getBookDownloadUrl,
+  getBookFile,
+  getPublicBookUrl,
   type BookLocale,
 } from "@/lib/books";
 
@@ -79,12 +79,19 @@ export default async function BooksPage({
           </div>
 
           <div className="space-y-6">
-            {books.map((book) => (
-              <article
-                key={book.slug}
-                id={book.slug}
-                className="grid gap-6 rounded-lg border border-gray-200 bg-white p-5 shadow-sm md:grid-cols-[180px_1fr] md:p-6 lg:grid-cols-[220px_1fr]"
-              >
+            {books.map((book) => {
+              const primaryFile = getBookFile(
+                book,
+                currentLocale,
+                book.primaryFormat,
+              );
+
+              return (
+                <article
+                  key={book.slug}
+                  id={book.slug}
+                  className="grid gap-6 rounded-lg border border-gray-200 bg-white p-5 shadow-sm md:grid-cols-[180px_1fr] md:p-6 lg:grid-cols-[220px_1fr]"
+                >
                 <div className="mx-auto w-full max-w-[220px] md:mx-0">
                   <div className="relative aspect-[5/8] overflow-hidden rounded-lg bg-gray-100 ring-1 ring-gray-200">
                     <Image
@@ -126,72 +133,76 @@ export default async function BooksPage({
                         <ArrowRight className="h-4 w-4" aria-hidden />
                       </Link>
                     ) : null}
-                    <a
-                      href={getBookDownloadUrl(
-                        book,
-                        currentLocale,
-                        book.primaryFormat,
-                      )}
-                      download={getBookDownloadFilename(
-                        book,
-                        currentLocale,
-                        book.primaryFormat,
-                      )}
-                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:border-teal-600 hover:text-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
-                    >
-                      <Download className="h-4 w-4" aria-hidden />
-                      {t("downloadFormat", {
-                        format: t(`formatLabels.${book.primaryFormat}`),
-                      })}
-                    </a>
+                    {primaryFile ? (
+                      <a
+                        href={getPublicBookUrl(primaryFile.path)}
+                        download={primaryFile.filename}
+                        className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:border-teal-600 hover:text-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+                      >
+                        <Download className="h-4 w-4" aria-hidden />
+                        {t("downloadFormat", {
+                          format: t(`formatLabels.${book.primaryFormat}`),
+                        })}
+                      </a>
+                    ) : (
+                      <span className="inline-flex min-h-10 cursor-not-allowed items-center justify-center gap-2 rounded-lg border border-gray-200 bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-500">
+                        {t("comingSoon")}
+                      </span>
+                    )}
                   </div>
 
                   <div className="mt-6 grid gap-4 lg:grid-cols-3">
-                    {getAvailableBookLocales(book).map((editionLocale) => (
-                      <div
-                        key={editionLocale}
-                        className="rounded-lg border border-gray-200 bg-[#FDFBEE] p-4"
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className="relative h-20 w-12 shrink-0 overflow-hidden rounded-md bg-gray-100 ring-1 ring-gray-200">
-                            <Image
-                              src={getBookCoverUrl(book, editionLocale)}
-                              alt={t("coverAlt", { title: book.title })}
-                              fill
-                              sizes="48px"
-                              className="object-cover"
-                            />
-                          </div>
-                          <div className="min-w-0">
-                            <h4 className="text-base font-bold text-gray-950">
-                              {t(`editions.${editionLocale}`)}
-                            </h4>
-                            <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                              {t(`editionDescriptions.${editionLocale}`)}
-                            </p>
-                          </div>
-                        </div>
+                    {getAvailableBookLocales(book).map((editionLocale) => {
+                      const editionFile = getBookFile(
+                        book,
+                        editionLocale,
+                        book.primaryFormat,
+                      );
 
-                        <div className="mt-4">
-                          <a
-                            href={getBookDownloadUrl(
-                              book,
-                              editionLocale,
-                              book.primaryFormat,
+                      return (
+                        <div
+                          key={editionLocale}
+                          className="rounded-lg border border-gray-200 bg-[#FDFBEE] p-4"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className="relative h-20 w-12 shrink-0 overflow-hidden rounded-md bg-gray-100 ring-1 ring-gray-200">
+                              <Image
+                                src={getBookCoverUrl(book, editionLocale)}
+                                alt={t("coverAlt", { title: book.title })}
+                                fill
+                                sizes="48px"
+                                className="object-cover"
+                              />
+                            </div>
+                            <div className="min-w-0">
+                              <h4 className="text-base font-bold text-gray-950">
+                                {t(`editions.${editionLocale}`)}
+                              </h4>
+                              <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                                {t(`editionDescriptions.${editionLocale}`)}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="mt-4">
+                            {editionFile ? (
+                              <a
+                                href={getPublicBookUrl(editionFile.path)}
+                                download={editionFile.filename}
+                                className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-lg bg-gray-950 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+                              >
+                                <Download className="h-4 w-4" />
+                                {t(`formatLabels.${book.primaryFormat}`)}
+                              </a>
+                            ) : (
+                              <span className="inline-flex min-h-10 w-full cursor-not-allowed items-center justify-center rounded-lg bg-gray-200 px-3 py-2 text-sm font-semibold text-gray-500">
+                                {t("comingSoon")}
+                              </span>
                             )}
-                            download={getBookDownloadFilename(
-                              book,
-                              editionLocale,
-                              book.primaryFormat,
-                            )}
-                            className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-lg bg-gray-950 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
-                          >
-                            <Download className="h-4 w-4" />
-                            {t(`formatLabels.${book.primaryFormat}`)}
-                          </a>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
 
                   <p className="mt-5 text-xs text-gray-500">
@@ -199,8 +210,9 @@ export default async function BooksPage({
                     {t("rightsReserved")}
                   </p>
                 </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
