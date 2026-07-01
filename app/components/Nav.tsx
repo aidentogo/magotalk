@@ -37,12 +37,16 @@ export default function Nav() {
     };
   }, [menuOpen]);
 
-  const linkClass = (href: string) =>
-    `block rounded-lg px-3 py-2.5 text-base font-medium transition-colors md:inline-block md:px-0 md:py-0 md:text-sm lg:text-base ${
-      pathname === href
+  const linkClass = (href: string) => {
+    const isActive =
+      href === "/" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
+
+    return `block rounded-lg px-3 py-2.5 text-base font-medium transition-colors md:inline-block md:px-0 md:py-0 md:text-sm lg:text-base ${
+      isActive
         ? "bg-orange-50 text-orange-600 md:bg-transparent md:font-bold"
         : "text-gray-700 hover:bg-gray-50 hover:text-gray-900 md:text-gray-600 md:hover:bg-transparent md:hover:text-gray-900"
     }`;
+  };
 
   return (
     <nav className="sticky top-0 z-50 border-b border-white/55 bg-[#FDFBEE]/78 px-4 py-3 shadow-[0_1px_0_rgba(23,23,23,0.06)] backdrop-blur-xl backdrop-saturate-150 md:border-gray-200/70 md:bg-[#FDFBEE]/86 md:px-6 md:py-4">

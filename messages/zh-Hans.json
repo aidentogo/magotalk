@@ -72,15 +72,23 @@
   "Books": {
     "pageEyebrow": "免费电子书",
     "pageTitle": "书籍",
-    "pageIntro": "这里集中下载 MAGO 的书。每本书可以同时提供 English、繁体、简体版本，统一提供 EPUB。",
-    "coverAlt": "Money Code 书籍封面",
+    "pageIntro": "这里集中下载 MAGO 的书。不同书籍会按实际内容提供 EPUB、PDF 或网页阅读版本。",
+    "coverAlt": "{title} 书籍封面",
     "authorLabel": "作者",
     "allEditionsEyebrow": "可下载版本",
     "allBooksTitle": "书籍列表",
-    "formatHint": "EPUB 会适配手机、平板、电脑和电子书阅读器，用户可以调字号、行距和阅读模式。",
+    "formatHint": "EPUB 适合电子书阅读器和可调字号阅读；PDF 适合保持原始排版、在线预览和下载保存。",
+    "viewDetails": "查看详情",
+    "downloadFormat": "下载 {format}",
     "rightsReserved": "保留所有权利。",
+    "formatLabels": {
+      "epub": "EPUB",
+      "pdf": "PDF",
+      "markdown": "Markdown"
+    },
     "bookDescriptions": {
-      "moneyCode": "Money Code 是 MAGO 关于金钱、工作、杠杆和个人决策的一本书，帮助你在 AI 与数字网络重塑世界的时代重新理解赚钱方式。"
+      "moneyCode": "Money Code 是 MAGO 关于金钱、工作、杠杆和个人决策的一本书，帮助你在 AI 与数字网络重塑世界的时代重新理解赚钱方式。",
+      "aiIsEatingTheWorld": "《AI is eating the world》讨论智能变便宜以后，工作、财富、公司、金融、信任与世界秩序会怎样被重新组织。"
     },
     "editions": {
       "zh-Hans": "简体",

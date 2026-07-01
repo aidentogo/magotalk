@@ -1,9 +1,11 @@
 import Image from "next/image";
-import { Download, Languages } from "lucide-react";
+import { ArrowRight, Download, Languages } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import {
   books,
+  getAvailableBookLocales,
   getBookCoverUrl,
   getBookDownloadFilename,
   getBookDownloadUrl,
@@ -11,8 +13,6 @@ import {
 } from "@/lib/books";
 
 type AppLocale = (typeof routing.locales)[number];
-
-const editionLocales: BookLocale[] = ["en", "zh-Hans", "zh-Hant"];
 
 function getBookLocale(locale: string): BookLocale {
   if (locale === "zh-Hans" || locale === "zh-Hant" || locale === "en") {
@@ -89,7 +89,7 @@ export default async function BooksPage({
                   <div className="relative aspect-[5/8] overflow-hidden rounded-lg bg-gray-100 ring-1 ring-gray-200">
                     <Image
                       src={getBookCoverUrl(book, currentLocale)}
-                      alt={t("coverAlt")}
+                      alt={t("coverAlt", { title: book.title })}
                       fill
                       sizes="(max-width: 768px) 220px, 180px"
                       className="object-cover"
@@ -108,7 +108,7 @@ export default async function BooksPage({
                       </p>
                     </div>
                     <p className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600">
-                      EPUB
+                      {t(`formatLabels.${book.primaryFormat}`)}
                     </p>
                   </div>
 
@@ -116,8 +116,38 @@ export default async function BooksPage({
                     {t(`bookDescriptions.${book.descriptionKey}`)}
                   </p>
 
+                  <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                    {book.detailPath ? (
+                      <Link
+                        href={book.detailPath}
+                        className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-gray-950 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+                      >
+                        {t("viewDetails")}
+                        <ArrowRight className="h-4 w-4" aria-hidden />
+                      </Link>
+                    ) : null}
+                    <a
+                      href={getBookDownloadUrl(
+                        book,
+                        currentLocale,
+                        book.primaryFormat,
+                      )}
+                      download={getBookDownloadFilename(
+                        book,
+                        currentLocale,
+                        book.primaryFormat,
+                      )}
+                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:border-teal-600 hover:text-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+                    >
+                      <Download className="h-4 w-4" aria-hidden />
+                      {t("downloadFormat", {
+                        format: t(`formatLabels.${book.primaryFormat}`),
+                      })}
+                    </a>
+                  </div>
+
                   <div className="mt-6 grid gap-4 lg:grid-cols-3">
-                    {editionLocales.map((editionLocale) => (
+                    {getAvailableBookLocales(book).map((editionLocale) => (
                       <div
                         key={editionLocale}
                         className="rounded-lg border border-gray-200 bg-[#FDFBEE] p-4"
@@ -126,7 +156,7 @@ export default async function BooksPage({
                           <div className="relative h-20 w-12 shrink-0 overflow-hidden rounded-md bg-gray-100 ring-1 ring-gray-200">
                             <Image
                               src={getBookCoverUrl(book, editionLocale)}
-                              alt={t("coverAlt")}
+                              alt={t("coverAlt", { title: book.title })}
                               fill
                               sizes="48px"
                               className="object-cover"
@@ -147,17 +177,17 @@ export default async function BooksPage({
                             href={getBookDownloadUrl(
                               book,
                               editionLocale,
-                              "epub",
+                              book.primaryFormat,
                             )}
                             download={getBookDownloadFilename(
                               book,
                               editionLocale,
-                              "epub",
+                              book.primaryFormat,
                             )}
                             className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-lg bg-gray-950 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
                           >
                             <Download className="h-4 w-4" />
-                            EPUB
+                            {t(`formatLabels.${book.primaryFormat}`)}
                           </a>
                         </div>
                       </div>

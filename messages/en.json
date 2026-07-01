@@ -72,15 +72,23 @@
   "Books": {
     "pageEyebrow": "Free eBooks",
     "pageTitle": "Books",
-    "pageIntro": "Download MAGO's books in EPUB. Each title can provide English, Traditional, and Simplified editions.",
-    "coverAlt": "Money Code book cover",
+    "pageIntro": "Download MAGO's books. Titles are provided in EPUB, PDF, or web-reading formats where available.",
+    "coverAlt": "{title} book cover",
     "authorLabel": "Author",
     "allEditionsEyebrow": "Available editions",
     "allBooksTitle": "Book library",
-    "formatHint": "EPUB adapts to phones, tablets, computers, and e-readers, with adjustable font size and reading modes.",
+    "formatHint": "EPUB is best for e-readers and adjustable text. PDF preserves the original layout for previewing and downloading.",
+    "viewDetails": "View details",
+    "downloadFormat": "Download {format}",
     "rightsReserved": "All rights reserved.",
+    "formatLabels": {
+      "epub": "EPUB",
+      "pdf": "PDF",
+      "markdown": "Markdown"
+    },
     "bookDescriptions": {
-      "moneyCode": "Money Code is MAGO's guide to understanding money, work, leverage, and personal decision-making in a world reshaped by AI and digital networks."
+      "moneyCode": "Money Code is MAGO's guide to understanding money, work, leverage, and personal decision-making in a world reshaped by AI and digital networks.",
+      "aiIsEatingTheWorld": "AI is eating the world examines how cheap intelligence reorganizes work, wealth, companies, finance, trust, and world order."
     },
     "editions": {
       "zh-Hans": "Simplified",

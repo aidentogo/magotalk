@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: Props) {
   const ogLocale = ogLocaleMap[appLocale];
 
   return {
+    metadataBase: new URL("https://magotalk.com"),
     title: t("title"),
     description: t("description"),
     authors: [{ name: "MAGO" }],
