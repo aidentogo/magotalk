@@ -1,79 +1,72 @@
-# Header Design QA
+# Header Logo Design QA
 
 **Comparison Target**
 
-- Source visual truth: `https://ababnews.com/`, with captures at `/private/tmp/abab-header-desktop.png` and `/private/tmp/abab-header-mobile.png`.
-- Implementation: `http://localhost:4173/zh-Hans`, with captures at `/private/tmp/magotalk-header-desktop.png` and `/private/tmp/magotalk-header-mobile-final.png`.
-- Scope: the global header only. Page content below the header intentionally remains MagoTalk's existing product UI.
-- State: light theme, homepage, header at the top of the page; menu, search, and scrolled sticky states were also tested.
+- Source visual truth: `/Users/pengxie/Desktop/Screenshot 2026-08-15 at 2.34.31 PM.png`, representing the pre-change header plus the user's direction to make the centered MagoTalk logo larger.
+- Implementation: `http://localhost:3000/zh-Hans`; final compact-header capture at `/private/tmp/magotalk-header-compact.png`.
+- Combined full-view comparison: `/private/tmp/magotalk-logo-comparison.png`.
+- Combined focused header comparison: `/private/tmp/magotalk-logo-header-comparison.png`.
+- State: Chinese Simplified homepage, light theme, header at the top of the page.
 
 **Viewport and Normalization**
 
-- Desktop CSS viewport: `1440 x 900`, device pixel ratio `1`.
-- Desktop source pixels: `1201 x 895`; implementation pixels: `1201 x 716`. The in-app browser surface clipped the available page height differently, so the focused header comparison used equal `1201 x 100` top crops. Width and header scale were matched.
-- Mobile CSS viewport: `390 x 844`, device pixel ratio `1`.
-- Mobile source pixels: `382 x 827`; implementation pixels: `382 x 827`. Captures were compared at equal pixel dimensions without resampling.
+- Implementation CSS viewport: `1300 x 492`, device pixel ratio `2`.
+- Source pixels: `1300 x 492`; implementation capture pixels: `1201 x 489` because the in-app browser surface reserves a small amount of chrome.
+- The source contains a `72px` upper browser/canvas band and a `237px` visible header region. For focused comparison, that header was cropped and normalized to `680 x 124`; the implementation header was cropped to `1200 x 124`. This aligns the visible header height without treating browser chrome or capture density as design drift.
 
 **Full-view Comparison Evidence**
 
-- Desktop: both headers use the same two-tier composition, `118px` total height, centered brand, right-side utilities, centered category navigation, and a lightweight sticky surface.
-- Mobile: both headers use a `98px` two-tier composition with menu control, centered brand, right-side utility controls, compact second-row navigation, and an active underline.
-- MagoTalk's warm cream, orange, teal, and its existing wordmark are intentionally retained instead of copying ABAB's brand assets or palette.
+- The centered logo remains the dominant identity element above the navigation.
+- The implementation preserves the existing cream background, centered navigation, active orange underline, and orange hero boundary.
+- The logo slot increased from `208 x 69` to `248 x 83`, while the desktop brand row was tightened to `68px`. The SVG's intrinsic transparent margins allow the larger wordmark to remain visually separated from navigation.
 
 **Focused Region Comparison Evidence**
 
-- Focused desktop header crops: `/private/tmp/abab-header-desktop-focus.png` and `/private/tmp/magotalk-header-desktop-focus.png`.
-- The focused comparison confirmed matching brand centering, two-row baseline, link density, active underline placement, utility alignment, translucent background, and low-elevation shadow.
-- Mobile screenshots were already tightly framed enough for typography, spacing, icon alignment, and the active state to be read without an additional crop.
+- The focused combined comparison at `/private/tmp/magotalk-logo-header-comparison.png` places the normalized pre-change header on the left and the implementation on the right.
+- The implementation wordmark is visibly larger and retains optical centering, clear whitespace, and separation from the navigation.
 
 **Required Fidelity Surfaces**
 
-- Fonts and typography: MagoTalk retains Geist and the supplied MagoTalk wordmark. Navigation size, weight, line height, and active hierarchy match the reference's compact treatment.
-- Spacing and layout rhythm: desktop header height is `118px`; mobile header height is `98px`; the content container is capped at `1400px`; row heights, centered tracks, utility spacing, and underline offsets match the reference structure.
-- Colors and visual tokens: the reference's translucent sticky treatment is retained while colors are mapped to MagoTalk's existing cream, orange, and teal brand tokens. Contrast remains sufficient in active and inactive states.
-- Image quality and asset fidelity: the existing vector MagoTalk logo is rendered through `next/image`; no placeholder, CSS-drawn, or recreated brand asset is used.
-- Copy and content: existing localized MagoTalk routes and labels are preserved. A localized main-navigation label was added for accessibility.
+- Fonts and typography: navigation typography, weight, line height, letter spacing, hierarchy, and wrapping are unchanged. The supplied logo remains a vector asset rather than reconstructed text.
+- Spacing and layout rhythm: desktop logo row is now `68px`; navigation row remains `42px`, giving the desktop header a compact `110px` total height. Mobile keeps the existing `60px` row and `180px` logo.
+- Colors and visual tokens: cream, orange, teal, active underline, translucent sticky background, and shadow tokens are unchanged.
+- Image quality and asset fidelity: `/public/logo-magotalk.svg` is still rendered through `next/image` at its native aspect ratio with no rasterization, stretching, or substitute asset.
+- Copy and content: all localized navigation labels and page content are unchanged.
 
 **Findings**
 
-- No actionable P0, P1, or P2 mismatch remains within the requested header scope.
+- No actionable P0, P1, or P2 issue remains for the requested logo enlargement.
 
 **Open Questions**
 
-- None blocking. The homepage filter utility is intentionally hidden from the header so the mobile right edge matches the reference's search-only treatment.
+- None blocking. The change intentionally enlarges only the desktop breakpoint; mobile remains conservative so the menu and centered brand do not compete for space.
 
 **Interaction and Accessibility Checks**
 
-- Mobile menu opens, closes from its close control and backdrop, closes on Escape, and prevents background scroll while open.
-- Search opens in the correct position below the `98px` mobile header and receives input focus.
-- Search and language controls remain functional; the filter control is intentionally hidden.
-- Active links expose `aria-current="page"`; both navigation rows have localized accessible labels.
-- Sticky position, `12px` backdrop blur, and stronger scrolled shadow were verified at runtime.
-- Browser console contained no header errors. The only warning was an unrelated existing homepage LCP suggestion for an episode cover.
+- The desktop Electronic Books navigation link successfully routed to `/zh-Hans/books`.
+- Clicking the centered MagoTalk logo returned to `/zh-Hans`.
+- At `390 x 844`, the logo remained `180px` wide, the menu control stayed visible, and `body.scrollWidth` stayed within the viewport.
+- Browser console contained no errors on the homepage or navigation check.
 
 **Comparison History**
 
-- Pass 1: the mobile filter and search glyphs read smaller than the reference utility icon. Fix: increased both to `18px` and removed reduced opacity.
-- Pass 2: refreshed implementation evidence confirmed clear utility icons while preserving brand centering and the `98px` header height. No P0/P1/P2 issue remained.
-- Pass 3: user requested removal of the visible filter icon. Fix: hid the filter control while preserving the search control and header alignment.
-- Pass 4: user requested the search icon immediately after Contact. Fix: consolidated the responsive navigation into one semantic nav and mounted the search action directly after the final link on desktop and mobile.
+- Earlier header pass: desktop logo width was `208px`, which the user identified as visually too small.
+- Enlargement pass: increased desktop width to `248px`; recaptured the implementation and created normalized full/header comparisons.
+- Compactness pass: after the user noted excessive vertical space, reduced the desktop logo row to `68px` while leaving the `248px` wordmark and orange banner unchanged.
+- Post-fix evidence at `/private/tmp/magotalk-header-compact.png` confirms a clearly larger centered wordmark, a shorter `110px` header, no visible navigation collision, no mobile overflow, and no browser console errors.
 
 **Implementation Checklist**
 
-- [x] Two-tier sticky header
-- [x] Responsive desktop/mobile layout
-- [x] Centered MagoTalk wordmark
-- [x] Active route underline
-- [x] Scroll elevation state
-- [x] Functional mobile menu
-- [x] Functional search and locale controls
-- [x] Header filter control hidden as requested
-- [x] Search action positioned immediately after Contact
-- [x] Localized navigation accessibility label
-- [x] Desktop and mobile visual verification
+- [x] Increase desktop MagoTalk logo from `208px` to `248px`
+- [x] Tighten desktop logo row to `68px`
+- [x] Preserve vector aspect ratio and optical centering
+- [x] Preserve navigation alignment and interaction
+- [x] Verify mobile layout and overflow
+- [x] Verify browser console
+- [x] Run lint and TypeScript checks
 
 **Follow-up Polish**
 
-- No remaining header-specific polish item is required for this change.
+- No remaining logo-specific polish item is required for this iteration.
 
 final result: passed

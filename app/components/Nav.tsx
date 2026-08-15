@@ -70,7 +70,7 @@ export default function Nav() {
       }`}
     >
       <div className="mx-auto max-w-[1400px] px-3 sm:px-4 lg:px-6">
-        <div className="grid h-[60px] grid-cols-[1fr_auto_1fr] items-center lg:h-[76px]">
+        <div className="grid h-[60px] grid-cols-[1fr_auto_1fr] items-center lg:h-[68px]">
           <div className="flex min-w-0 items-center justify-start">
             <button
               type="button"
@@ -95,10 +95,10 @@ export default function Nav() {
             <Image
               src="/logo-magotalk.svg"
               alt="MagoTalk"
-              width={208}
-              height={69}
+              width={248}
+              height={83}
               priority
-              className="h-auto w-[180px] object-contain sm:w-[190px] lg:w-[208px]"
+              className="h-auto w-[180px] object-contain sm:w-[190px] lg:w-[248px]"
             />
           </Link>
 
