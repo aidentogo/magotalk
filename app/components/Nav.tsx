@@ -19,16 +19,26 @@ export default function Nav() {
   const t = useTranslations("Nav");
   const menuId = useId();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
 
   useEffect(() => {
+    const updateScrollState = () => setScrolled(window.scrollY > 8);
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollState);
+  }, []);
+
+  useEffect(() => {
     if (!menuOpen) return;
+
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMenuOpen(false);
     };
+
     document.addEventListener("keydown", onKeyDown);
     document.body.style.overflow = "hidden";
     return () => {
@@ -37,90 +47,130 @@ export default function Nav() {
     };
   }, [menuOpen]);
 
-  const linkClass = (href: string) => {
-    const isActive =
-      href === "/" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
+  const isActiveLink = (href: string) =>
+    href === "/"
+      ? pathname === href
+      : pathname === href || pathname.startsWith(`${href}/`);
 
-    return `block rounded-lg px-3 py-2.5 text-base font-medium transition-colors md:inline-block md:px-0 md:py-0 md:text-sm lg:text-base ${
+  const navLinkClass = (href: string) => {
+    const isActive = isActiveLink(href);
+    return `relative flex h-8 items-center whitespace-nowrap px-3 text-xs font-semibold transition-colors lg:h-10 lg:px-5 lg:text-sm ${
       isActive
-        ? "bg-orange-50 text-orange-600 md:bg-transparent md:font-bold"
-        : "text-gray-700 hover:bg-gray-50 hover:text-gray-900 md:text-gray-600 md:hover:bg-transparent md:hover:text-gray-900"
+        ? "text-[#FE4F2D] after:absolute after:inset-x-2.5 after:bottom-0 after:h-0.5 after:rounded-full after:bg-[#FE4F2D] lg:after:inset-x-4"
+        : "text-[#315E5B]/75 hover:text-[#015551]"
     }`;
   };
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-white/55 bg-[#FDFBEE]/78 px-4 py-3 shadow-[0_1px_0_rgba(23,23,23,0.06)] backdrop-blur-xl backdrop-saturate-150 md:border-gray-200/70 md:bg-[#FDFBEE]/86 md:px-6 md:py-4">
-      <div className="relative z-50 mx-auto flex max-w-7xl items-center justify-between gap-3">
-        <Link href="/" className="flex shrink-0 items-center">
-          <Image
-            src="/logo-magotalk.svg"
-            alt="MagoTalk Logo"
-            width={120}
-            height={40}
-            className="h-auto object-contain"
-          />
-        </Link>
+    <header
+      className={`sticky top-0 z-50 bg-[#FDFBEE]/95 backdrop-blur-md transition-shadow duration-300 ${
+        scrolled
+          ? "shadow-[0_4px_12px_rgba(1,85,81,0.12)]"
+          : "shadow-[0_1px_2px_rgba(1,85,81,0.07)]"
+      }`}
+    >
+      <div className="mx-auto max-w-[1400px] px-3 sm:px-4 lg:px-6">
+        <div className="grid h-[60px] grid-cols-[1fr_auto_1fr] items-center lg:h-[76px]">
+          <div className="flex min-w-0 items-center justify-start">
+            <button
+              type="button"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[#163F3C] transition-colors hover:bg-[#57B4BA]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FE4F2D] lg:hidden"
+              aria-expanded={menuOpen}
+              aria-controls={menuId}
+              aria-label={menuOpen ? t("menuClose") : t("menuOpen")}
+              onClick={() => setMenuOpen((open) => !open)}
+            >
+              {menuOpen ? (
+                <X className="h-5 w-5" strokeWidth={2} aria-hidden />
+              ) : (
+                <Menu className="h-5 w-5" strokeWidth={2} aria-hidden />
+              )}
+            </button>
+          </div>
 
-        <div className="hidden items-center gap-6 md:flex">
-          <div className="flex items-center gap-6 lg:gap-8">
-            {navLinks.map(({ href, key }) => (
-              <Link key={href} href={href} className={linkClass(href)}>
-                {t(key)}
-              </Link>
-            ))}
+          <Link
+            href="/"
+            className="col-start-2 flex items-center justify-center transition-opacity hover:opacity-80 focus-visible:rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FE4F2D]"
+          >
+            <Image
+              src="/logo-magotalk.svg"
+              alt="MagoTalk"
+              width={208}
+              height={69}
+              priority
+              className="h-auto w-[180px] object-contain sm:w-[190px] lg:w-[208px]"
+            />
+          </Link>
+
+          <div className="flex min-w-0 items-center justify-end">
+            <div className="hidden lg:block">
+              <LocaleSwitcher />
+            </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 md:gap-3">
+        <nav
+          className="flex h-[38px] items-center justify-center gap-0.5 overflow-x-auto lg:h-[42px] lg:gap-1"
+          aria-label={t("mainNavigation")}
+        >
+          {navLinks.map(({ href, key }) => {
+            const active = isActiveLink(href);
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={navLinkClass(href)}
+              >
+                {t(key)}
+              </Link>
+            );
+          })}
           <div
             id="home-header-actions"
-            className="flex items-center gap-1.5 empty:hidden md:gap-2"
+            className="flex h-9 items-center empty:hidden lg:h-10"
           />
-          <LocaleSwitcher />
-          <button
-            type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/70 bg-white/58 text-gray-800 shadow-[0_4px_18px_rgba(15,23,42,0.14)] backdrop-blur-xl transition-colors hover:border-orange-300/70 hover:bg-white/78 hover:text-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 md:hidden"
-            aria-expanded={menuOpen}
-            aria-controls={menuId}
-            aria-label={menuOpen ? t("menuClose") : t("menuOpen")}
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            {menuOpen ? (
-              <X className="h-5 w-5" aria-hidden />
-            ) : (
-              <Menu className="h-5 w-5" aria-hidden />
-            )}
-          </button>
-        </div>
+        </nav>
       </div>
 
-      {menuOpen && (
+      {menuOpen ? (
         <>
           <button
             type="button"
-            className="fixed inset-0 z-40 bg-black/10 backdrop-blur-[1px] md:hidden"
+            className="fixed inset-0 top-[98px] z-40 bg-[#163F3C]/10 backdrop-blur-[1px] lg:hidden"
             aria-label={t("menuClose")}
             onClick={() => setMenuOpen(false)}
           />
           <div
             id={menuId}
-            className="relative z-50 mt-3 overflow-hidden rounded-lg border border-white/60 bg-[#FDFBEE]/88 px-2 py-2 shadow-[0_18px_50px_rgba(15,23,42,0.16)] backdrop-blur-2xl backdrop-saturate-150 md:hidden"
+            className="absolute left-3 right-3 top-[60px] z-50 overflow-hidden rounded-2xl border border-[#315E5B]/10 bg-[#FDFBEE]/98 p-2 shadow-[0_18px_50px_rgba(1,85,81,0.18)] backdrop-blur-2xl lg:hidden"
           >
             <div className="flex flex-col gap-1">
-              {navLinks.map(({ href, key }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className={linkClass(href)}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {t(key)}
-                </Link>
-              ))}
+              {navLinks.map(({ href, key }) => {
+                const active = isActiveLink(href);
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    aria-current={active ? "page" : undefined}
+                    className={`rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${
+                      active
+                        ? "bg-[#FE4F2D]/10 text-[#FE4F2D]"
+                        : "text-[#315E5B] hover:bg-[#57B4BA]/10 hover:text-[#015551]"
+                    }`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {t(key)}
+                  </Link>
+                );
+              })}
+            </div>
+            <div className="mt-2 flex items-center justify-end border-t border-[#315E5B]/10 px-2 pt-2">
+              <LocaleSwitcher showLabel />
             </div>
           </div>
         </>
-      )}
-    </nav>
+      ) : null}
+    </header>
   );
 }

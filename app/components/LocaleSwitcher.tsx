@@ -7,7 +7,13 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { localeNativeLabels, type AppLocale } from "@/i18n/localeDisplay";
 import { routing } from "@/i18n/routing";
 
-export default function LocaleSwitcher() {
+type LocaleSwitcherProps = {
+  showLabel?: boolean;
+};
+
+export default function LocaleSwitcher({
+  showLabel = false,
+}: LocaleSwitcherProps) {
   const t = useTranslations("Nav");
   const locale = useLocale() as AppLocale;
   const pathname = usePathname();
@@ -31,19 +37,24 @@ export default function LocaleSwitcher() {
   return (
     <details ref={detailsRef} className="group relative">
       <summary
-        className="list-none cursor-pointer inline-flex items-center gap-1.5 rounded-md px-1.5 py-1 text-sm md:text-base text-gray-600 transition-colors hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 group-open:text-orange-500"
+        className={`list-none cursor-pointer items-center gap-2 rounded-full text-sm font-semibold text-[#315E5B] transition-colors hover:bg-[#57B4BA]/10 hover:text-[#015551] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FE4F2D] group-open:text-[#FE4F2D] ${
+          showLabel
+            ? "inline-flex min-h-9 px-3 py-2"
+            : "inline-flex h-9 w-9 justify-center"
+        }`}
         aria-label={t("language")}
       >
         <Globe
-          className="h-[1em] w-[1em] shrink-0 opacity-70"
-          strokeWidth={1.5}
+          className="h-4 w-4 shrink-0"
+          strokeWidth={1.8}
           aria-hidden
         />
+        {showLabel ? <span>{t("language")}</span> : null}
       </summary>
       <div
         role="listbox"
         aria-label={t("language")}
-        className="absolute right-0 z-[60] mt-1.5 min-w-[11rem] overflow-hidden rounded-lg border border-gray-200/90 bg-white py-1 shadow-md"
+        className="absolute right-0 z-[60] mt-1.5 min-w-[11rem] overflow-hidden rounded-xl border border-[#315E5B]/10 bg-[#FFFDF4] py-1 shadow-[0_14px_36px_rgba(1,85,81,0.16)]"
       >
         {routing.locales.map((l) => {
           const active = l === locale;
@@ -57,8 +68,8 @@ export default function LocaleSwitcher() {
               aria-selected={active}
               className={`flex w-full items-center px-4 py-2.5 text-left text-sm font-medium transition-colors ${
                 active
-                  ? "bg-orange-50 text-orange-700"
-                  : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                  ? "bg-[#FE4F2D]/10 text-[#D83D1E]"
+                  : "text-[#315E5B] hover:bg-[#57B4BA]/10 hover:text-[#015551]"
               }`}
             >
               {localeNativeLabels[l]}

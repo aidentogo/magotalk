@@ -215,30 +215,32 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
   };
 
   const headerIconButtonClass = (active: boolean) =>
-    `relative inline-flex shrink-0 items-center justify-center rounded-md px-1.5 py-1 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 md:text-base ${
+    `relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FE4F2D] md:text-base ${
       active
-        ? "text-orange-500"
-        : "text-gray-600 hover:text-gray-900"
+        ? "bg-[#FE4F2D]/10 text-[#FE4F2D]"
+        : "text-[#315E5B] hover:bg-[#57B4BA]/10 hover:text-[#015551]"
     }`;
 
   const headerActions = (
     <div ref={headerActionsRef} className="relative flex items-center gap-1.5">
-      <button
-        type="button"
-        onClick={toggleFilters}
-        aria-expanded={filtersOpen}
-        aria-label={t("filterToggle")}
-        className={headerIconButtonClass(filtersOpen || hasActiveFilters)}
-      >
-        <SlidersHorizontal
-          className="h-[1em] w-[1em] opacity-70"
-          strokeWidth={1.7}
-          aria-hidden
-        />
-        {hasActiveFilters && (
-          <span className="absolute right-0 top-0 h-1.5 w-1.5 rounded-full bg-orange-500" />
-        )}
-      </button>
+      <div className="hidden">
+        <button
+          type="button"
+          onClick={toggleFilters}
+          aria-expanded={filtersOpen}
+          aria-label={t("filterToggle")}
+          className={headerIconButtonClass(filtersOpen || hasActiveFilters)}
+        >
+          <SlidersHorizontal
+            className="h-[18px] w-[18px]"
+            strokeWidth={1.7}
+            aria-hidden
+          />
+          {hasActiveFilters && (
+            <span className="absolute right-0 top-0 h-1.5 w-1.5 rounded-full bg-orange-500" />
+          )}
+        </button>
+      </div>
 
       <button
         type="button"
@@ -248,7 +250,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
         className={headerIconButtonClass(searchOpen || hasActiveSearch)}
       >
         <Search
-          className="h-[1em] w-[1em] opacity-70"
+          className="h-[18px] w-[18px]"
           strokeWidth={1.8}
           aria-hidden
         />
@@ -258,7 +260,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
       </button>
 
       {filtersOpen && (
-        <div className="fixed left-4 right-4 top-[4.5rem] z-[70] max-h-[70vh] overflow-auto rounded-xl border border-gray-200 bg-white p-3 shadow-[0_18px_50px_rgba(15,23,42,0.18)] md:absolute md:left-auto md:right-0 md:top-full md:mt-2 md:w-80">
+        <div className="fixed left-4 right-4 top-[6.75rem] z-[70] max-h-[70vh] overflow-auto rounded-xl border border-gray-200 bg-white p-3 shadow-[0_18px_50px_rgba(15,23,42,0.18)] lg:absolute lg:left-auto lg:right-0 lg:top-full lg:mt-2 lg:w-80">
           <div className="flex items-center justify-between gap-3">
             <p className="text-sm font-semibold text-gray-900">
               {t("filterToggle")}
@@ -312,7 +314,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
           aria-label={t("searchLabel")}
           onSubmit={submitSearch}
           autoComplete="off"
-          className="fixed left-4 right-4 top-[4.5rem] z-[70] rounded-xl border border-gray-200 bg-white p-2 shadow-[0_18px_50px_rgba(15,23,42,0.18)] md:absolute md:left-auto md:right-0 md:top-full md:mt-2 md:w-80"
+          className="fixed left-4 right-4 top-[6.75rem] z-[70] rounded-xl border border-gray-200 bg-white p-2 shadow-[0_18px_50px_rgba(15,23,42,0.18)] lg:absolute lg:left-auto lg:right-0 lg:top-full lg:mt-2 lg:w-80"
         >
           <div className="flex h-11 overflow-hidden rounded-full border border-gray-300 bg-white transition-colors focus-within:border-gray-400 focus-within:ring-2 focus-within:ring-gray-100">
             <label htmlFor="episode-search" className="sr-only">
