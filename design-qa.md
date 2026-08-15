@@ -3,7 +3,7 @@
 **Comparison Target**
 
 - Source visual truth: `/Users/pengxie/Desktop/Screenshot 2026-08-15 at 2.34.31 PM.png`, representing the pre-change header plus the user's direction to make the centered MagoTalk logo larger.
-- Implementation: `http://localhost:3000/zh-Hans`; final compact-header capture at `/private/tmp/magotalk-header-compact.png`.
+- Implementation: `http://localhost:3000/zh-Hans`; final optical-alignment capture at `/private/tmp/magotalk-logo-shifted-up.png`.
 - Combined full-view comparison: `/private/tmp/magotalk-logo-comparison.png`.
 - Combined focused header comparison: `/private/tmp/magotalk-logo-header-comparison.png`.
 - State: Chinese Simplified homepage, light theme, header at the top of the page.
@@ -18,7 +18,7 @@
 
 - The centered logo remains the dominant identity element above the navigation.
 - The implementation preserves the existing cream background, centered navigation, active orange underline, and orange hero boundary.
-- The logo slot increased from `208 x 69` to `248 x 83`, while the desktop brand row was tightened to `68px`. The SVG's intrinsic transparent margins allow the larger wordmark to remain visually separated from navigation.
+- The logo slot increased from `208 x 69` to `248 x 83`, while the desktop brand row was tightened to `68px`. A desktop-only `-5px` vertical translation compensates for the SVG's asymmetric transparent margins.
 
 **Focused Region Comparison Evidence**
 
@@ -28,7 +28,7 @@
 **Required Fidelity Surfaces**
 
 - Fonts and typography: navigation typography, weight, line height, letter spacing, hierarchy, and wrapping are unchanged. The supplied logo remains a vector asset rather than reconstructed text.
-- Spacing and layout rhythm: desktop logo row is now `68px`; navigation row remains `42px`, giving the desktop header a compact `110px` total height. Mobile keeps the existing `60px` row and `180px` logo.
+- Spacing and layout rhythm: desktop logo row is `68px`; navigation row remains `42px`, giving the desktop header a compact `110px` total height. The wordmark is optically shifted upward `5px`; mobile keeps the existing `60px` row and `180px` logo.
 - Colors and visual tokens: cream, orange, teal, active underline, translucent sticky background, and shadow tokens are unchanged.
 - Image quality and asset fidelity: `/public/logo-magotalk.svg` is still rendered through `next/image` at its native aspect ratio with no rasterization, stretching, or substitute asset.
 - Copy and content: all localized navigation labels and page content are unchanged.
@@ -53,12 +53,14 @@
 - Earlier header pass: desktop logo width was `208px`, which the user identified as visually too small.
 - Enlargement pass: increased desktop width to `248px`; recaptured the implementation and created normalized full/header comparisons.
 - Compactness pass: after the user noted excessive vertical space, reduced the desktop logo row to `68px` while leaving the `248px` wordmark and orange banner unchanged.
-- Post-fix evidence at `/private/tmp/magotalk-header-compact.png` confirms a clearly larger centered wordmark, a shorter `110px` header, no visible navigation collision, no mobile overflow, and no browser console errors.
+- Optical-alignment pass: moved only the desktop wordmark upward `5px` to balance the visible space above and below it; header height, navigation, and orange banner remain unchanged.
+- Post-fix evidence at `/private/tmp/magotalk-logo-shifted-up.png` confirms a clearly larger centered wordmark, a shorter `110px` header, balanced vertical whitespace, no visible navigation collision, no mobile overflow, and no browser console errors.
 
 **Implementation Checklist**
 
 - [x] Increase desktop MagoTalk logo from `208px` to `248px`
 - [x] Tighten desktop logo row to `68px`
+- [x] Shift the desktop wordmark upward `5px` for optical centering
 - [x] Preserve vector aspect ratio and optical centering
 - [x] Preserve navigation alignment and interaction
 - [x] Verify mobile layout and overflow

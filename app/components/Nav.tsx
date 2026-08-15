@@ -98,7 +98,7 @@ export default function Nav() {
               width={248}
               height={83}
               priority
-              className="h-auto w-[180px] object-contain sm:w-[190px] lg:w-[248px]"
+              className="h-auto w-[180px] object-contain sm:w-[190px] lg:w-[248px] lg:-translate-y-[5px]"
             />
           </Link>
 
