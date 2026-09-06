@@ -9,6 +9,7 @@ import LocaleSwitcher from "@/app/components/LocaleSwitcher";
 
 const navLinks = [
   { href: "/", key: "home" as const },
+  { href: "/news", key: "news" as const },
   { href: "/books", key: "books" as const },
   { href: "/about", key: "about" as const },
   { href: "/contact", key: "contact" as const },

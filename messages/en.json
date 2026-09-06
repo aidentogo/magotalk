@@ -12,7 +12,8 @@
     "language": "Language",
     "mainNavigation": "Main navigation",
     "menuOpen": "Open menu",
-    "menuClose": "Close menu"
+    "menuClose": "Close menu",
+    "news": "News"
   },
   "Footer": {
     "copyright": "© {year} MagoTalk. All rights reserved."
@@ -125,5 +126,21 @@
     "title": "Page not found",
     "body": "The page you are looking for does not exist or was moved.",
     "homeLink": "Back to home"
+  },
+  "News": {
+    "title": "News",
+    "intro": "Announcements, milestones, and new chapters from MagoTalk.",
+    "emptyTitle": "Our next chapter starts here.",
+    "emptyBody": "This is where we share major announcements, new projects, and moments that matter. Check back for our first update.",
+    "exploreEpisodes": "Explore our conversations",
+    "readArticle": "Read article",
+    "backToNews": "All news",
+    "published": "Published",
+    "updated": "Updated",
+    "source": "Reference source",
+    "pagination": "News pages",
+    "previous": "Previous",
+    "next": "Next",
+    "pageStatus": "Page {page} of {totalPages}"
   }
 }

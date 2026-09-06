@@ -1,5 +1,7 @@
 # MagoTalk 工作经验与发布工作流
 
+网站 News 新闻栏目使用独立的 `public.news_posts` 表；新闻发布请阅读 [NEWS_WORKFLOW.md](./NEWS_WORKFLOW.md)。
+
 这份文档记录 MagoTalk 每期海报制作、Supabase 更新和网站验证的固定流程。目标是以后用户只给标题、副标题、时间和 Space URL 时，可以直接执行，不需要重新摸索。
 
 ## 核心信息
