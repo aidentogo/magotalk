@@ -5,7 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { getNewsPage, NEWS_PAGE_SIZE, SITE_URL } from "@/lib/news";
+import { formatNewsDate, getNewsPage, NEWS_PAGE_SIZE, SITE_URL } from "@/lib/news";
 
 export const dynamic = "force-dynamic";
 
@@ -68,6 +68,9 @@ export default async function NewsPage({ params, searchParams }: Props) {
               <h2 className="text-2xl font-semibold leading-snug tracking-tight text-[#015551] sm:text-3xl">
                 <Link href={`/news/${post.slug}`} className="hover:text-[#C93619]">{post.title}</Link>
               </h2>
+              <time dateTime={post.published_at} className="mt-2 block text-sm text-[#315E5B]">
+                {formatNewsDate(post.published_at, locale)}
+              </time>
               <div className="news-prose mt-4">
                 <Markdown skipHtml components={{
                   h1: ({ children }) => <h3>{children}</h3>,

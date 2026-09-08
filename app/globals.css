@@ -48,10 +48,10 @@ video {
 .news-prose {
   color: #315e5b;
   font-size: 1.0625rem;
-  line-height: 1.9;
+  line-height: 1.75;
   overflow-wrap: anywhere;
 }
-.news-prose > * + * { margin-top: 1.4em; }
+.news-prose > * + * { margin-top: 1em; }
 .news-prose h2, .news-prose h3, .news-prose h4 {
   color: #015551;
   font-weight: 650;
