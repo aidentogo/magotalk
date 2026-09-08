@@ -16,7 +16,7 @@ export type NewsPost = {
   updated_at: string;
 };
 
-export type NewsSummary = Omit<NewsPost, "content" | "source_url">;
+export type NewsSummary = Omit<NewsPost, "source_url">;
 
 function newsClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -36,7 +36,7 @@ function publishedNews() {
 export async function getNewsPage(page = 1) {
   const offset = (page - 1) * NEWS_PAGE_SIZE;
   const { data, error, count } = await publishedNews()
-    .select("slug,title,summary,author,language,published_at,updated_at", { count: "exact" })
+    .select("slug,title,summary,content,author,language,published_at,updated_at", { count: "exact" })
     .eq("status", "published")
     .lte("published_at", new Date().toISOString())
     .order("published_at", { ascending: false })

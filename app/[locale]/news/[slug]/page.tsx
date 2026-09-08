@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import Markdown from "react-markdown";
@@ -45,38 +45,22 @@ export default async function NewsArticlePage({ params }: Props) {
   };
 
   return (
-    <main className="mx-auto w-full max-w-3xl px-5 py-10 sm:px-8 md:py-16">
+    <main className="mx-auto w-full max-w-3xl px-5 py-4 sm:px-8 md:py-8">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
-      <Link href="/news" className="inline-flex items-center gap-2 text-sm font-semibold text-[#315E5B] hover:text-[#C93619]">
+      <Link href="/news" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#315E5B] hover:text-[#C93619]">
         <ArrowLeft className="h-4 w-4" aria-hidden />{t("backToNews")}
       </Link>
-      <article lang={post.language} className="mt-10">
-        <header className="border-b border-[#015551]/20 pb-8">
-          <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-[#C93619]">MagoTalk · {t("title")}</p>
-          <h1 className="break-words text-4xl font-bold leading-tight tracking-tight text-[#015551] sm:text-5xl">{post.title}</h1>
-          <p className="mt-6 whitespace-pre-line text-xl leading-relaxed text-[#315E5B]">{post.summary}</p>
-          <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#315E5B]">
-            <span>{post.author}</span>
-            <span>{t("published")} <time dateTime={post.published_at}>{formatNewsDate(post.published_at, locale)}</time></span>
-            {post.updated_at.slice(0, 10) > post.published_at.slice(0, 10) ? (
-              <span>{t("updated")} <time dateTime={post.updated_at}>{formatNewsDate(post.updated_at, locale)}</time></span>
-            ) : null}
-          </div>
+      <article lang={post.language} className="mt-3">
+        <header>
+          <h1 className="break-words text-3xl font-bold leading-tight tracking-tight text-[#015551] sm:text-4xl">{post.title}</h1>
+          <time className="mt-3 block text-sm text-[#315E5B]" dateTime={post.published_at}>{formatNewsDate(post.published_at, locale)}</time>
         </header>
-        <div className="news-prose mt-9">
+        <div className="news-prose mt-5">
           <Markdown skipHtml components={{
             h1: ({ children }) => <h2>{children}</h2>,
             a: ({ href, children }) => <a href={href} rel="noopener noreferrer">{children}</a>,
           }}>{post.content}</Markdown>
         </div>
-        {sourceUrl ? (
-          <footer className="mt-12 border-t border-[#015551]/20 pt-6">
-            <h2 className="text-sm font-semibold text-[#015551]">{t("source")}</h2>
-            <a href={sourceUrl} rel="noopener noreferrer" className="mt-3 inline-flex max-w-full items-start gap-2 break-all text-sm text-[#C93619] hover:underline">
-              {sourceUrl}<ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-            </a>
-          </footer>
-        ) : null}
       </article>
     </main>
   );

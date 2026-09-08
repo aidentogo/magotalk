@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import Markdown from "react-markdown";
 import { ArrowRight, Newspaper } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { formatNewsDate, getNewsPage, NEWS_PAGE_SIZE, SITE_URL } from "@/lib/news";
+import { getNewsPage, NEWS_PAGE_SIZE, SITE_URL } from "@/lib/news";
 
 export const dynamic = "force-dynamic";
 
@@ -49,7 +50,7 @@ export default async function NewsPage({ params, searchParams }: Props) {
   if (page > totalPages) notFound();
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-5 py-6 sm:px-8 md:py-10" aria-label={t("title")}>
+    <main className="mx-auto w-full max-w-3xl px-5 py-4 sm:px-8 md:py-8" aria-label={t("title")}>
 
       {posts.length === 0 ? (
         <section className="py-16 sm:py-24" aria-labelledby="news-empty-title">
@@ -63,16 +64,16 @@ export default async function NewsPage({ params, searchParams }: Props) {
       ) : (
         <div className="divide-y divide-[#015551]/15">
           {posts.map((post) => (
-            <article key={post.slug} className="grid gap-4 py-9 md:grid-cols-[180px_1fr] md:gap-8">
-              <time dateTime={post.published_at} className="pt-1 text-sm text-[#315E5B]">{formatNewsDate(post.published_at, locale)}</time>
-              <div>
-                <h2 lang={post.language} className="text-2xl font-semibold leading-snug tracking-tight text-[#015551] sm:text-3xl">
-                  <Link href={`/news/${post.slug}`} className="hover:text-[#C93619]">{post.title}</Link>
-                </h2>
-                <p lang={post.language} className="mt-3 max-w-3xl whitespace-pre-line leading-relaxed text-[#315E5B]">{post.summary}</p>
-                <Link href={`/news/${post.slug}`} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#C93619] hover:underline" aria-label={`${t("readArticle")}: ${post.title}`}>
-                  {t("readArticle")}<ArrowRight className="h-4 w-4" aria-hidden />
-                </Link>
+            <article key={post.slug} lang={post.language} className="py-6 first:pt-0">
+              <h2 className="text-2xl font-semibold leading-snug tracking-tight text-[#015551] sm:text-3xl">
+                <Link href={`/news/${post.slug}`} className="hover:text-[#C93619]">{post.title}</Link>
+              </h2>
+              <div className="news-prose mt-4">
+                <Markdown skipHtml components={{
+                  h1: ({ children }) => <h3>{children}</h3>,
+                  h2: ({ children }) => <h3>{children}</h3>,
+                  a: ({ href, children }) => <a href={href} rel="noopener noreferrer">{children}</a>,
+                }}>{post.content}</Markdown>
               </div>
             </article>
           ))}
