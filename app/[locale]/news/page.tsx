@@ -49,12 +49,7 @@ export default async function NewsPage({ params, searchParams }: Props) {
   if (page > totalPages) notFound();
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8 md:py-20">
-      <header className="border-b border-[#015551]/20 pb-10 md:pb-14">
-        <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-[#FE4F2D]">MagoTalk</p>
-        <h1 className="text-5xl font-bold tracking-tight text-[#015551] sm:text-7xl">{t("title")}</h1>
-        <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#315E5B]">{t("intro")}</p>
-      </header>
+    <main className="mx-auto w-full max-w-6xl px-5 py-6 sm:px-8 md:py-10" aria-label={t("title")}>
 
       {posts.length === 0 ? (
         <section className="py-16 sm:py-24" aria-labelledby="news-empty-title">
