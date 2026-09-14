@@ -7,6 +7,7 @@ export type BookFile = {
 };
 
 export type BookEdition = {
+  publicationDate: string;
   coverPath: string;
   files: Partial<Record<BookFormat, BookFile>>;
 };
@@ -47,6 +48,7 @@ export const books: Book[] = [
     fallbackLocale: "en",
     editions: {
       "zh-Hans": {
+        publicationDate: "2026-05-15",
         coverPath: "money-code/zh-Hans/Money-Code-cover-zh-Hans.jpg",
         files: {
           epub: {
@@ -56,6 +58,7 @@ export const books: Book[] = [
         },
       },
       "zh-Hant": {
+        publicationDate: "2026-05-15",
         coverPath: "money-code/zh-Hant/Money-Code-cover-zh-Hant.jpg",
         files: {
           epub: {
@@ -65,6 +68,7 @@ export const books: Book[] = [
         },
       },
       en: {
+        publicationDate: "2026-05-14",
         coverPath: "money-code/en/Money-Code-cover-en.jpg",
         files: {
           epub: {
@@ -97,6 +101,7 @@ export const books: Book[] = [
     fallbackLocale: "zh-Hans",
     editions: {
       en: {
+        publicationDate: "2026-07-01",
         coverPath:
           "ai-is-eating-the-world/cover_front_ebook_1600x2560.jpg",
         files: {
@@ -111,6 +116,7 @@ export const books: Book[] = [
         },
       },
       "zh-Hans": {
+        publicationDate: "2026-06-30",
         coverPath:
           "ai-is-eating-the-world/cover_front_ebook_1600x2560.jpg",
         files: {
@@ -129,6 +135,7 @@ export const books: Book[] = [
         },
       },
       "zh-Hant": {
+        publicationDate: "2026-06-30",
         coverPath:
           "ai-is-eating-the-world/cover_front_ebook_1600x2560.jpg",
         files: {

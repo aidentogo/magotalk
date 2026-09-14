@@ -1,4 +1,5 @@
 import Image from "next/image";
+import BookPublication from "@/app/components/BookPublication";
 import { ArrowRight, Download, Languages } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -122,6 +123,9 @@ export default async function BooksPage({
                   <p className="mt-4 max-w-3xl text-base leading-relaxed text-gray-600">
                     {t(`bookDescriptions.${book.descriptionKey}`)}
                   </p>
+                  <div className="text-gray-600">
+                    <BookPublication book={book} locale={currentLocale} />
+                  </div>
 
                   <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                     {book.detailPath ? (

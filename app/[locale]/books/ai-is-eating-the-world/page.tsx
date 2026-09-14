@@ -1,4 +1,5 @@
 import Image from "next/image";
+import BookPublication from "@/app/components/BookPublication";
 import {
   BookOpen,
   ChevronLeft,
@@ -392,6 +393,9 @@ export default async function AiIsEatingTheWorldPage({
             <p className="mt-5 text-base font-semibold text-amber-200/88">
               {content.authorLine}
             </p>
+            <div className="text-white/80">
+              <BookPublication book={book} locale={locale as BookLocale} />
+            </div>
 
             <BookCover
               className="mx-auto mt-8 w-full max-w-[190px] sm:max-w-[220px] lg:hidden"
