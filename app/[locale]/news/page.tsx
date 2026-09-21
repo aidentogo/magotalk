@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Markdown from "react-markdown";
 import { ArrowRight, Newspaper } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -50,8 +49,12 @@ export default async function NewsPage({ params, searchParams }: Props) {
   if (page > totalPages) notFound();
 
   return (
-    <main className="mx-auto w-full max-w-3xl px-5 py-4 sm:px-8 md:py-8" aria-label={t("title")}>
+    <main className="mx-auto w-full max-w-3xl px-5 py-8 sm:px-8 md:py-12" aria-label={t("title")}>
 
+      <header className="mb-8 border-b border-line pb-6">
+        <h1 className="text-3xl font-bold tracking-tight text-brand md:text-4xl">{t("title")}</h1>
+        <p className="mt-3 text-base leading-relaxed text-muted">{t("intro")}</p>
+      </header>
       {posts.length === 0 ? (
         <section className="py-16 sm:py-24" aria-labelledby="news-empty-title">
           <Newspaper className="mb-6 h-9 w-9 text-[#57B4BA]" strokeWidth={1.5} aria-hidden />
@@ -71,13 +74,10 @@ export default async function NewsPage({ params, searchParams }: Props) {
               <time dateTime={post.published_at} className="mt-2 block text-sm text-[#315E5B]">
                 {formatNewsDate(post.published_at, locale)}
               </time>
-              <div className="news-prose mt-4">
-                <Markdown skipHtml components={{
-                  h1: ({ children }) => <h3>{children}</h3>,
-                  h2: ({ children }) => <h3>{children}</h3>,
-                  a: ({ href, children }) => <a href={href} rel="noopener noreferrer">{children}</a>,
-                }}>{post.content}</Markdown>
-              </div>
+              <p className="mt-4 line-clamp-3 text-base leading-relaxed text-muted">{post.summary || post.content.replace(/[#*_`>]/g, "").slice(0, 220)}</p>
+              <Link href={`/news/${post.slug}`} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand hover:underline">
+                {t("readArticle")}<ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
             </article>
           ))}
         </div>

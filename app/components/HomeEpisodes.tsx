@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { createPortal } from "react-dom";
 import {
-  Play,
+  ArrowUpRight,
   Clock,
   ChevronLeft,
   ChevronRight,
@@ -12,7 +12,7 @@ import {
   X,
 } from "lucide-react";
 import { useState, useEffect, useRef, type FormEvent } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import {
   EPISODE_CATEGORIES,
@@ -27,12 +27,19 @@ import {
 } from "@/lib/supabase";
 import EpisodeGridSkeleton from "@/app/components/EpisodeGridSkeleton";
 
+function shortEpisodeDate(value: string, locale: string) {
+  const match = value.match(/(\d{4})[年/-](\d{1,2})[月/-](\d{1,2})/);
+  if (!match) return value;
+  return new Intl.DateTimeFormat(locale, { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" }).format(new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]))));
+}
+
 type HomeEpisodesProps = {
   initialData: EpisodesPageResult;
 };
 
 export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
   const t = useTranslations("Home");
+  const locale = useLocale();
   const [episodes, setEpisodes] = useState<Episode[]>(initialData.episodes);
   const [totalCount, setTotalCount] = useState(initialData.total);
   const [currentPage, setCurrentPage] = useState(1);
@@ -215,9 +222,9 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
   };
 
   const headerIconButtonClass = (active: boolean) =>
-    `relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FE4F2D] md:text-base ${
+    `relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand md:text-base ${
       active
-        ? "bg-[#FE4F2D]/10 text-[#FE4F2D]"
+        ? "bg-brand/10 text-brand"
         : "text-[#315E5B] hover:bg-[#57B4BA]/10 hover:text-[#015551]"
     }`;
 
@@ -237,7 +244,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
             aria-hidden
           />
           {hasActiveFilters && (
-            <span className="absolute right-0 top-0 h-1.5 w-1.5 rounded-full bg-orange-500" />
+            <span className="absolute right-0 top-0 h-1.5 w-1.5 rounded-full bg-brand" />
           )}
         </button>
       </div>
@@ -255,21 +262,21 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
           aria-hidden
         />
         {hasActiveSearch && !searchOpen && (
-          <span className="absolute right-0 top-0 h-1.5 w-1.5 rounded-full bg-orange-500" />
+          <span className="absolute right-0 top-0 h-1.5 w-1.5 rounded-full bg-brand" />
         )}
       </button>
 
       {filtersOpen && (
-        <div className="fixed left-4 right-4 top-[6.75rem] z-[70] max-h-[70vh] overflow-auto rounded-xl border border-gray-200 bg-white p-3 shadow-[0_18px_50px_rgba(15,23,42,0.18)] lg:absolute lg:left-auto lg:right-0 lg:top-full lg:mt-2 lg:w-80">
+        <div className="fixed left-4 right-4 top-[7.25rem] z-[70] max-h-[70vh] overflow-auto rounded-xl border border-line bg-white p-3 shadow-[0_18px_50px_rgba(15,23,42,0.18)] lg:absolute lg:left-0 lg:right-auto lg:top-full lg:mt-2 lg:w-80">
           <div className="flex items-center justify-between gap-3">
-            <p className="text-sm font-semibold text-gray-900">
+            <p className="text-sm font-semibold text-ink">
               {t("filterToggle")}
             </p>
             {hasActiveFilters && (
               <button
                 type="button"
                 onClick={clearFilters}
-                className="text-xs font-semibold text-gray-500 underline-offset-4 hover:text-orange-600 hover:underline"
+                className="text-xs font-semibold text-muted underline-offset-4 hover:text-brand hover:underline"
               >
                 {t("filterClear")}
               </button>
@@ -286,8 +293,8 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
                   onClick={() => handleCategorySelect(category)}
                   className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
                     selected
-                      ? "bg-orange-500 text-white"
-                      : "bg-[#FDFBEE] text-gray-600 ring-1 ring-gray-200 hover:text-orange-600 hover:ring-orange-300"
+                      ? "bg-brand text-white"
+                      : "bg-[#FDFBEE] text-muted ring-1 ring-gray-200 hover:text-brand hover:ring-line"
                   }`}
                 >
                   {category === "All Categories"
@@ -298,7 +305,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
             })}
           </div>
           {hasActiveFilters && (
-            <p className="mt-3 text-xs font-medium text-gray-500">
+            <p className="mt-3 text-xs font-medium text-muted">
               {t("selectedCategories", {
                 tags: selectedCategories.join(", "),
                 count: totalCount,
@@ -314,9 +321,9 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
           aria-label={t("searchLabel")}
           onSubmit={submitSearch}
           autoComplete="off"
-          className="fixed left-4 right-4 top-[6.75rem] z-[70] rounded-xl border border-gray-200 bg-white p-2 shadow-[0_18px_50px_rgba(15,23,42,0.18)] lg:absolute lg:left-auto lg:right-0 lg:top-full lg:mt-2 lg:w-80"
+          className="fixed left-4 right-4 top-[7.25rem] z-[70] rounded-xl border border-line bg-white p-2 shadow-[0_18px_50px_rgba(15,23,42,0.18)] lg:absolute lg:left-0 lg:right-auto lg:top-full lg:mt-2 lg:w-80"
         >
-          <div className="flex h-11 overflow-hidden rounded-full border border-gray-300 bg-white transition-colors focus-within:border-gray-400 focus-within:ring-2 focus-within:ring-gray-100">
+          <div className="flex h-11 overflow-hidden rounded-full border border-line bg-white transition-colors focus-within:border-gray-400 focus-within:ring-2 focus-within:ring-gray-100">
             <label htmlFor="episode-search" className="sr-only">
               {t("searchLabel")}
             </label>
@@ -332,13 +339,13 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
               autoCorrect="off"
               autoCapitalize="none"
               spellCheck={false}
-              className="min-w-0 flex-1 bg-transparent px-4 text-base font-medium text-gray-900 outline-none placeholder:text-gray-500"
+              className="min-w-0 flex-1 bg-transparent px-4 text-base font-medium text-ink outline-none placeholder:text-muted"
             />
             <button
               type="button"
               onClick={closeSearch}
               aria-label={t("searchClose")}
-              className="inline-flex h-full w-11 shrink-0 items-center justify-center text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-gray-500"
+              className="inline-flex h-full w-11 shrink-0 items-center justify-center text-muted transition-colors hover:bg-gray-50 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-gray-500"
             >
               <X className="h-5 w-5" aria-hidden />
             </button>
@@ -346,7 +353,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
               type="submit"
               disabled={isLoading}
               aria-label={t("searchSubmit")}
-              className="inline-flex h-full w-12 shrink-0 items-center justify-center border-l border-gray-300 text-gray-950 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-gray-500"
+              className="inline-flex h-full w-12 shrink-0 items-center justify-center border-l border-line text-ink transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-gray-500"
             >
               <Search className="h-5 w-5" strokeWidth={2.5} aria-hidden />
             </button>
@@ -356,7 +363,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
               type="button"
               onClick={clearSearch}
               aria-label={t("searchClear")}
-              className="mt-2 inline-flex max-w-full items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700 ring-1 ring-gray-200 hover:text-orange-600 hover:ring-orange-200"
+              className="mt-2 inline-flex max-w-full items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-muted ring-1 ring-gray-200 hover:text-brand hover:ring-line"
             >
               <span className="max-w-64 truncate">
                 {t("searchActive", { query: activeSearchQuery })}
@@ -370,25 +377,25 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
   );
 
   return (
-    <div>
+    <main>
       {headerActionsRoot ? createPortal(headerActions, headerActionsRoot) : null}
 
       <h1 className="sr-only">{t("heroTitle")}</h1>
 
       <div
         id="episodes-list"
-        className="px-6 pt-4 pb-8 md:pt-5 md:pb-6 lg:pb-5 bg-[#FDFBEE]"
+        className="px-5 py-6 md:px-6 md:py-8 bg-background"
       >
         <div className="max-w-7xl mx-auto">
           {isLoading ? (
             <EpisodeGridSkeleton />
           ) : episodes.length === 0 ? (
             <div className="text-center py-10 md:py-8">
-              <p className="text-gray-600">{t("empty")}</p>
+              <p className="text-muted">{t("empty")}</p>
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-5 lg:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {episodes.map((episode) => (
                   <Link
                     key={episode.slug}
@@ -396,38 +403,35 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
                     aria-label={t("viewEpisode", {
                       episode: episode.slug.toUpperCase(),
                     })}
-                    className="group block"
+                    className="group block rounded-xl"
                   >
-                    <div className="bg-white rounded-xl md:rounded-lg shadow-md md:shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-0.5">
+                    <div className="h-full bg-white rounded-xl border border-line hover:border-brand/40 transition-colors overflow-hidden">
                       <div className="aspect-square relative bg-gray-100 overflow-hidden">
                         <Image
                           src={getCoverImageUrl(episode.cover_image)}
                           alt={episode.title}
                           fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                          className="object-cover hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                          className="object-cover"
                         />
                       </div>
 
-                      <div className="px-4 pt-1 pb-3 md:px-3 md:pt-1 md:pb-2.5 flex flex-col">
-                        <h3 className="text-base md:text-sm font-semibold text-gray-900 mb-2 md:mb-1.5 line-clamp-2 leading-snug md:leading-snug min-h-[48px] md:min-h-[40px]">
+                      <div className="p-4 flex flex-col">
+                        <p className="mb-2 text-xs font-semibold tracking-wider text-brand">{episode.slug.toUpperCase()}</p>
+                        <h2 className="text-base font-semibold text-ink mb-4 line-clamp-2 leading-relaxed min-h-[52px]">
                           {episode.title}
-                        </h3>
+                        </h2>
 
-                        <div className="grid grid-cols-[minmax(0,1fr)_2.5rem] items-center gap-2 mt-auto pt-0.5 md:pt-0.5 border-t border-gray-100">
-                          <div className="min-w-0 flex items-center gap-1 text-xs text-gray-500">
+                        <div className="flex items-center justify-between gap-2 mt-auto pt-3 border-t border-line">
+                          <div className="min-w-0 flex items-center gap-1.5 text-sm text-muted">
                             <Clock className="h-3 w-3 shrink-0" />
-                            <span className="min-w-0 truncate">
-                              {episode.date || t("timeTbd")}
-                            </span>
+                            <span>{shortEpisodeDate(episode.date, locale) || t("timeTbd")}</span>
                           </div>
 
-                          <div
-                            className="size-10 shrink-0 rounded-full bg-orange-500 text-white transition-colors group-hover:bg-orange-600 flex items-center justify-center"
-                            aria-hidden
-                          >
-                            <Play className="ml-0.5 size-[17px]" />
-                          </div>
+                          <span className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-brand">
+                            {t("detailsCta")}
+                            <ArrowUpRight className="h-4 w-4" aria-hidden />
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -443,7 +447,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
                     totalPages,
                   })}
                 >
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-muted">
                     {t("paginationStatus", { page: currentPage, totalPages })}
                   </p>
                   <div className="flex flex-wrap items-center justify-center gap-2">
@@ -451,7 +455,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
                       type="button"
                       onClick={() => goToPage(currentPage - 1)}
                       disabled={currentPage <= 1 || isLoading}
-                      className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm transition-colors hover:border-orange-300 hover:text-orange-600 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm transition-colors hover:border-line hover:text-brand disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <ChevronLeft className="h-4 w-4" aria-hidden />
                       {t("paginationPrev")}
@@ -471,8 +475,8 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
                             aria-label={t("paginationPage", { page })}
                             className={`min-w-9 rounded-lg px-2.5 py-2 text-sm font-semibold transition-colors ${
                               page === currentPage
-                                ? "bg-orange-500 text-white"
-                                : "border border-gray-200 bg-white text-gray-800 hover:border-orange-300 hover:text-orange-600"
+                                ? "bg-brand text-white"
+                                : "border border-line bg-white text-gray-800 hover:border-line hover:text-brand"
                             } disabled:cursor-not-allowed disabled:opacity-50`}
                           >
                             {page}
@@ -485,7 +489,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
                       type="button"
                       onClick={() => goToPage(currentPage + 1)}
                       disabled={currentPage >= totalPages || isLoading}
-                      className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm transition-colors hover:border-orange-300 hover:text-orange-600 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm transition-colors hover:border-line hover:text-brand disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {t("paginationNext")}
                       <ChevronRight className="h-4 w-4" aria-hidden />
@@ -498,6 +502,6 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
         </div>
       </div>
 
-    </div>
+    </main>
   );
 }

@@ -1,4 +1,4 @@
-import { bookLocaleOrder, getPublicBookUrl, type Book, type BookLocale } from "@/lib/books";
+import { bookLocaleOrder, type Book, type BookLocale } from "@/lib/books";
 
 const labels = {
   en: {
@@ -21,8 +21,8 @@ const labels = {
 export default function BookPublication({ book, locale }: { book: Book; locale: BookLocale }) {
   const text = labels[locale];
   return (
-    <section id={`${book.slug}-publication`} className="mt-5 text-sm" aria-label={text.title}>
-      <h4 className="font-semibold">{text.title}</h4>
+    <details id={`${book.slug}-publication`} className="mt-6 border-t border-current/15 pt-4 text-sm">
+      <summary className="cursor-pointer py-1 font-medium">{text.title}</summary>
       <dl className="mt-2 space-y-1">
         {bookLocaleOrder.map((language) => {
           const edition = book.editions[language];
@@ -32,14 +32,12 @@ export default function BookPublication({ book, locale }: { book: Book; locale: 
               <dt>{text.languages[language]}:</dt>
               <dd>
                 <time dateTime={edition.publicationDate}>{edition.publicationDate}</time>
-                {" · "}
-                <a className="underline underline-offset-2" href={getPublicBookUrl(edition.files.epub.path)}>EPUB</a>
               </dd>
             </div>
           );
         })}
       </dl>
       <p className="mt-2 max-w-xl text-xs leading-relaxed opacity-80">{text.note}</p>
-    </section>
+    </details>
   );
 }

@@ -35,33 +35,33 @@ export default async function AboutPage({
   const t = await getTranslations("About");
 
   return (
-    <main className="flex min-h-[calc(100svh-73px)] bg-[#FDFBEE] px-5 py-6 md:h-[calc(100svh-73px)] md:items-center md:overflow-hidden md:px-8 md:py-8">
-      <div className="mx-auto grid w-full max-w-7xl gap-8 md:grid-cols-[minmax(0,1.08fr)_minmax(300px,0.72fr)] md:items-center md:gap-10 lg:gap-14">
+    <main className="bg-background px-5 py-8 md:px-8 md:py-14">
+      <div className="mx-auto grid w-full max-w-7xl gap-8 md:grid-cols-[minmax(0,1.08fr)_minmax(300px,0.72fr)] md:items-start md:gap-10 lg:gap-14">
         <section aria-labelledby="about-title" className="min-w-0">
           <h1
             id="about-title"
-            className="max-w-3xl text-5xl font-extrabold leading-none tracking-tight text-gray-950 md:text-6xl lg:text-7xl"
+            className="max-w-3xl text-4xl font-bold leading-tight tracking-tight text-ink md:text-5xl"
           >
             {t("title")}
           </h1>
-          <p className="mt-5 max-w-2xl text-xl font-semibold leading-snug text-gray-900 md:text-2xl">
+          <p className="mt-4 max-w-2xl text-lg font-semibold leading-snug text-ink md:text-xl">
             {t("subtitle")}
           </p>
 
           <div className="mt-8 grid max-w-3xl gap-5 sm:grid-cols-2 md:mt-10">
-            <div className="border-t border-gray-300 pt-5">
-              <h2 className="text-sm font-bold uppercase tracking-[0.16em] text-gray-950">
+            <div className="border-t border-line pt-5">
+              <h2 className="text-sm font-bold uppercase tracking-[0.16em] text-ink">
                 {t("aboutHeading")}
               </h2>
-              <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-gray-600">
+              <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-muted">
                 {t("aboutBody")}
               </p>
             </div>
-            <div className="border-t border-orange-300 pt-5">
-              <h2 className="text-sm font-bold uppercase tracking-[0.16em] text-gray-950">
+            <div className="border-t border-line pt-5">
+              <h2 className="text-sm font-bold uppercase tracking-[0.16em] text-ink">
                 {t("missionHeading")}
               </h2>
-              <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-gray-600">
+              <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-muted">
                 {t("missionBody")}
               </p>
             </div>
@@ -71,19 +71,19 @@ export default async function AboutPage({
 
         <section
           aria-labelledby="about-team-heading"
-          className="min-w-0 border-l-0 border-gray-200 md:border-l md:pl-8 lg:pl-10"
+          className="min-w-0 border-l-0 border-line md:border-l md:pl-8 lg:pl-10"
         >
-          <div className="flex items-end justify-between gap-4 border-b border-gray-200 pb-4">
+          <div className="flex items-end justify-between gap-4 border-b border-line pb-4">
             <div>
               <h2
                 id="about-team-heading"
-                className="text-2xl font-bold tracking-tight text-gray-950"
+                className="text-2xl font-bold tracking-tight text-ink"
               >
                 {t("guestBiosTitle")}
               </h2>
-              <p className="mt-1 text-sm text-gray-500">{t("teamIntro")}</p>
+              <p className="mt-1 text-sm text-muted">{t("teamIntro")}</p>
             </div>
-            <p className="text-sm font-semibold text-orange-600 tabular-nums">
+            <p className="text-sm font-semibold text-brand tabular-nums">
               0{hosts.length}
             </p>
           </div>
@@ -102,13 +102,13 @@ export default async function AboutPage({
                     />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-lg font-bold text-gray-950">
+                    <h3 className="text-lg font-bold text-ink">
                       {host.name}
                     </h3>
-                    <p className="mt-0.5 text-sm font-semibold text-orange-600">
+                    <p className="mt-0.5 text-sm font-semibold text-brand">
                       {t(host.roleKey)}
                     </p>
-                    <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                    <p className="mt-1 text-sm leading-relaxed text-muted">
                       {t(host.bioKey)}
                     </p>
                   </div>

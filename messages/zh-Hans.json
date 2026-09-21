@@ -43,7 +43,8 @@
     "empty": "暂无符合条件的节目。",
     "selectedCategories": "已选择：{tags}（{count} 个节目）",
     "footerCopyright": "© {year} MagoTalk. 保留所有权利。",
-    "timeTbd": "时间待定"
+    "timeTbd": "时间待定",
+    "detailsCta": "查看节目"
   },
   "About": {
     "title": "关于",
@@ -102,7 +103,8 @@
       "zh-Hans": "适合简体读者的版本。",
       "zh-Hant": "适合繁体读者的版本。",
       "en": "English edition."
-    }
+    },
+    "editionLabel": "选择版本"
   },
   "Episode": {
     "backToEpisodes": "全部节目",

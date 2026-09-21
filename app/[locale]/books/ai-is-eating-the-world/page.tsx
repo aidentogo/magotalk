@@ -66,7 +66,7 @@ const pageContent: Record<AppLocale, BookPageContent> = {
       "当智能变得便宜，工作、财富、公司、信任和价值都会被重新分配。",
       "这不是一本 AI 工具教程，也不是技术百科。它写的是智能变便宜以后，写作、编程、搜索、媒体、法律、金融、公司结构和信任会怎样被重新组织。",
     ],
-    readPdf: "阅读 PDF",
+    readPdf: "阅读简体 PDF 预览",
     viewToc: "查看目录",
     downloadEpub: "下载 EPUB",
     downloadUnavailable: "即将提供",
@@ -81,8 +81,8 @@ const pageContent: Record<AppLocale, BookPageContent> = {
     contentsTitle: "目录",
     readLabel: "READ",
     readTitle: "阅读与下载",
-    openPdf: "打开 PDF",
-    downloadPdf: "下载 PDF",
+    openPdf: "打开简体 PDF 预览",
+    downloadPdf: "下载简体 PDF 预览",
     downloadMarkdown: "下载 Markdown",
     coverAlt: "AI is eating the world 书籍封面",
     seoDescription:
@@ -140,7 +140,7 @@ const pageContent: Record<AppLocale, BookPageContent> = {
       "當智能變得便宜，工作、財富、公司、信任和價值都會被重新分配。",
       "這不是一本 AI 工具教程，也不是技術百科。它寫的是智能變便宜以後，寫作、程式設計、搜尋、媒體、法律、金融、公司結構和信任會如何被重新組織。",
     ],
-    readPdf: "閱讀 PDF",
+    readPdf: "閱讀簡體 PDF 預覽",
     viewToc: "查看目錄",
     downloadEpub: "下載 EPUB",
     downloadUnavailable: "即將提供",
@@ -155,8 +155,8 @@ const pageContent: Record<AppLocale, BookPageContent> = {
     contentsTitle: "目錄",
     readLabel: "READ",
     readTitle: "閱讀與下載",
-    openPdf: "開啟 PDF",
-    downloadPdf: "下載 PDF",
+    openPdf: "開啟簡體 PDF 預覽",
+    downloadPdf: "下載簡體 PDF 預覽",
     downloadMarkdown: "下載 Markdown",
     coverAlt: "AI is eating the world 書籍封面",
     seoDescription:
@@ -214,7 +214,7 @@ const pageContent: Record<AppLocale, BookPageContent> = {
       "As intelligence gets cheaper, work, wealth, companies, trust, and value will be redistributed.",
       "This is not an AI tool manual or a technical encyclopedia. It is about how writing, coding, search, media, law, finance, company structure, and trust are reorganized when intelligence becomes cheap.",
     ],
-    readPdf: "Read PDF",
+    readPdf: "Read Chinese PDF preview",
     viewToc: "View contents",
     downloadEpub: "Download EPUB",
     downloadUnavailable: "Coming soon",
@@ -229,8 +229,8 @@ const pageContent: Record<AppLocale, BookPageContent> = {
     contentsTitle: "Contents",
     readLabel: "READ",
     readTitle: "Read and download",
-    openPdf: "Open PDF",
-    downloadPdf: "Download PDF",
+    openPdf: "Open Chinese PDF preview",
+    downloadPdf: "Download Chinese PDF preview",
     downloadMarkdown: "Download Markdown",
     coverAlt: "AI is eating the world book cover",
     seoDescription:
@@ -362,7 +362,7 @@ export default async function AiIsEatingTheWorldPage({
   const markdownFile = getBookFile(book, currentBookLocale, "markdown");
 
   return (
-    <main className="min-h-screen bg-[#F7F1E3] text-[#101312]">
+    <main className="min-h-screen bg-background text-ink">
       <section className="relative overflow-hidden bg-[#050808] text-white">
         <div
           className="absolute inset-0 opacity-35"
@@ -374,27 +374,54 @@ export default async function AiIsEatingTheWorldPage({
         />
         <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#050808] to-transparent" />
 
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 py-12 md:py-16 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center lg:py-20">
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 py-12 md:py-12 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center lg:py-12">
           <div className="max-w-3xl">
             <Link
               href="/books"
-              className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-white/68 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+              className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-white/68 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               <ChevronLeft className="h-4 w-4" aria-hidden />
               {content.backToBooks}
             </Link>
 
-            <h1 className="max-w-3xl text-5xl font-semibold leading-[0.98] text-white md:text-7xl">
+            <h1 className="max-w-3xl text-3xl font-semibold leading-tight text-white md:text-5xl">
               {book.title}
             </h1>
-            <p className="mt-6 max-w-2xl text-xl leading-relaxed text-cyan-50/86 md:text-2xl">
+            <p className="mt-6 max-w-2xl text-xl leading-relaxed text-white/85 md:text-2xl">
               {content.subtitle}
             </p>
-            <p className="mt-5 text-base font-semibold text-amber-200/88">
+            <p className="mt-5 text-base font-semibold text-white/80">
               {content.authorLine}
             </p>
-            <div className="text-white/80">
-              <BookPublication book={book} locale={locale as BookLocale} />
+            <div className="mt-9 flex flex-wrap gap-3">
+              <a
+                href="#read"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-brand px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                <BookOpen className="h-4 w-4" aria-hidden />
+                {content.readPdf}
+              </a>
+              <a
+                href="#toc"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/18 bg-white/8 px-5 py-3 text-sm font-bold text-white transition-colors hover:border-white/60 hover:bg-white/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                <ListTree className="h-4 w-4" aria-hidden />
+                {content.viewToc}
+              </a>
+              {epubFile ? (
+                <a
+                  href={getPublicBookUrl(epubFile.path)}
+                  download={epubFile.filename}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/30 bg-white/10 px-5 py-3 text-sm font-bold text-white transition-colors hover:border-white/60 hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  <Download className="h-4 w-4" aria-hidden />
+                  {content.downloadEpub}
+                </a>
+              ) : (
+                <span className="inline-flex min-h-11 cursor-not-allowed items-center justify-center rounded-lg border border-white/12 bg-white/6 px-5 py-3 text-sm font-bold text-white/46">
+                  {content.downloadUnavailable}
+                </span>
+              )}
             </div>
 
             <BookCover
@@ -409,36 +436,12 @@ export default async function AiIsEatingTheWorldPage({
               ))}
             </div>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="#read"
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-cyan-300 px-5 py-3 text-sm font-bold text-[#051010] transition-colors hover:bg-cyan-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
-              >
-                <BookOpen className="h-4 w-4" aria-hidden />
-                {content.readPdf}
-              </a>
-              <a
-                href="#toc"
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/18 bg-white/8 px-5 py-3 text-sm font-bold text-white transition-colors hover:border-cyan-200/60 hover:bg-white/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
-              >
-                <ListTree className="h-4 w-4" aria-hidden />
-                {content.viewToc}
-              </a>
-              {epubFile ? (
-                <a
-                  href={getPublicBookUrl(epubFile.path)}
-                  download={epubFile.filename}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-amber-200/36 bg-amber-200/10 px-5 py-3 text-sm font-bold text-amber-100 transition-colors hover:border-amber-200/70 hover:bg-amber-200/16 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-200"
-                >
-                  <Download className="h-4 w-4" aria-hidden />
-                  {content.downloadEpub}
-                </a>
-              ) : (
-                <span className="inline-flex min-h-11 cursor-not-allowed items-center justify-center rounded-lg border border-white/12 bg-white/6 px-5 py-3 text-sm font-bold text-white/46">
-                  {content.downloadUnavailable}
-                </span>
-              )}
+
+            <div className="text-white/80">
+              <BookPublication book={book} locale={locale as BookLocale} />
             </div>
+
+
           </div>
 
           <BookCover
@@ -469,7 +472,7 @@ export default async function AiIsEatingTheWorldPage({
 
       <section
         id="toc"
-        className="scroll-mt-24 border-y border-[#d8cbb5] bg-[#EFE6D3] px-6 py-14 md:py-20"
+        className="scroll-mt-32 border-y border-line bg-brand/5 px-6 py-14 md:py-20"
       >
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
@@ -485,7 +488,7 @@ export default async function AiIsEatingTheWorldPage({
             {content.toc.map((section, index) => (
               <section
                 key={section.title}
-                className="border-t border-[#b7a98f] pt-5"
+                className="border-t border-line pt-5"
               >
                 <p className="font-mono text-sm text-teal-800/78">
                   {String(index + 1).padStart(2, "0")}
@@ -504,9 +507,9 @@ export default async function AiIsEatingTheWorldPage({
         </div>
       </section>
 
-      <section id="read" className="scroll-mt-24 px-6 py-14 md:py-20">
+      <section id="read" className="scroll-mt-32 px-6 py-14 md:py-20">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="mb-8 flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
             <div>
               <p className="text-sm font-semibold text-teal-700">
                 {content.readLabel}
@@ -515,12 +518,12 @@ export default async function AiIsEatingTheWorldPage({
                 {content.readTitle}
               </h2>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-wrap gap-3">
               <a
                 href={pdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-[#111513] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-teal-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-teal-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
               >
                 <BookOpen className="h-4 w-4" aria-hidden />
                 {content.openPdf}
@@ -528,7 +531,7 @@ export default async function AiIsEatingTheWorldPage({
               <a
                 href={pdfUrl}
                 download={pdfFilename}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-[#c5b89f] bg-white/48 px-4 py-2 text-sm font-semibold text-[#111513] transition-colors hover:border-teal-700 hover:text-teal-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-line bg-white/48 px-4 py-2 text-sm font-semibold text-[#111513] transition-colors hover:border-teal-700 hover:text-teal-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
               >
                 <Download className="h-4 w-4" aria-hidden />
                 {content.downloadPdf}
@@ -537,7 +540,7 @@ export default async function AiIsEatingTheWorldPage({
                 <a
                   href={getPublicBookUrl(epubFile.path)}
                   download={epubFile.filename}
-                  className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-[#c5b89f] bg-white/48 px-4 py-2 text-sm font-semibold text-[#111513] transition-colors hover:border-teal-700 hover:text-teal-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
+                  className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-line bg-white/48 px-4 py-2 text-sm font-semibold text-[#111513] transition-colors hover:border-teal-700 hover:text-teal-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
                 >
                   <Download className="h-4 w-4" aria-hidden />
                   {content.downloadEpub}
@@ -551,7 +554,7 @@ export default async function AiIsEatingTheWorldPage({
                 <a
                   href={getPublicBookUrl(markdownFile.path)}
                   download={markdownFile.filename}
-                  className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-[#c5b89f] bg-white/48 px-4 py-2 text-sm font-semibold text-[#111513] transition-colors hover:border-teal-700 hover:text-teal-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
+                  className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-line bg-white/48 px-4 py-2 text-sm font-semibold text-[#111513] transition-colors hover:border-teal-700 hover:text-teal-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
                 >
                   <FileText className="h-4 w-4" aria-hidden />
                   {content.downloadMarkdown}
@@ -560,7 +563,7 @@ export default async function AiIsEatingTheWorldPage({
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-lg border border-[#d0c3ad] bg-[#0b0f0f] shadow-[0_18px_60px_rgba(28,24,16,0.2)]">
+          <div className="overflow-hidden rounded-lg border border-line bg-[#0b0f0f] shadow-[0_18px_60px_rgba(28,24,16,0.2)]">
             <iframe
               src={pdfUrl}
               title="AI is eating the world PDF"

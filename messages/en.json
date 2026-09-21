@@ -43,7 +43,8 @@
     "empty": "No episodes match your filters.",
     "selectedCategories": "Selected: {tags} ({count} episodes)",
     "footerCopyright": "© {year} MagoTalk. All rights reserved.",
-    "timeTbd": "TBD"
+    "timeTbd": "TBD",
+    "detailsCta": "Details"
   },
   "About": {
     "title": "About",
@@ -102,7 +103,8 @@
       "zh-Hans": "Simplified edition",
       "zh-Hant": "Traditional edition",
       "en": "English edition"
-    }
+    },
+    "editionLabel": "Edition"
   },
   "Episode": {
     "backToEpisodes": "All episodes",

@@ -35,12 +35,17 @@ export default function LocaleSwitcher({
   }, []);
 
   return (
-    <details ref={detailsRef} className="group relative">
+    <details ref={detailsRef} className="group relative" onKeyDown={(event) => {
+      if (event.key === "Escape" && detailsRef.current) {
+        detailsRef.current.open = false;
+        detailsRef.current.querySelector("summary")?.focus();
+      }
+    }}>
       <summary
-        className={`list-none cursor-pointer items-center gap-2 rounded-full text-sm font-semibold text-[#315E5B] transition-colors hover:bg-[#57B4BA]/10 hover:text-[#015551] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FE4F2D] group-open:text-[#FE4F2D] ${
+        className={`list-none cursor-pointer items-center gap-2 rounded-full text-sm font-semibold text-[#315E5B] transition-colors hover:bg-[#57B4BA]/10 hover:text-[#015551] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand group-open:text-brand ${
           showLabel
-            ? "inline-flex min-h-9 px-3 py-2"
-            : "inline-flex h-9 w-9 justify-center"
+            ? "inline-flex min-h-11 px-3 py-2"
+            : "inline-flex h-11 w-11 justify-center"
         }`}
         aria-label={t("language")}
       >
@@ -52,7 +57,7 @@ export default function LocaleSwitcher({
         {showLabel ? <span>{t("language")}</span> : null}
       </summary>
       <div
-        role="listbox"
+        role="group"
         aria-label={t("language")}
         className="absolute right-0 z-[60] mt-1.5 min-w-[11rem] overflow-hidden rounded-xl border border-[#315E5B]/10 bg-[#FFFDF4] py-1 shadow-[0_14px_36px_rgba(1,85,81,0.16)]"
       >
@@ -64,11 +69,11 @@ export default function LocaleSwitcher({
               href={pathname}
               locale={l}
               prefetch={false}
-              role="option"
-              aria-selected={active}
+              onClick={() => { if (detailsRef.current) detailsRef.current.open = false; }}
+              aria-current={active ? "true" : undefined}
               className={`flex w-full items-center px-4 py-2.5 text-left text-sm font-medium transition-colors ${
                 active
-                  ? "bg-[#FE4F2D]/10 text-[#D83D1E]"
+                  ? "bg-brand/10 text-brand"
                   : "text-[#315E5B] hover:bg-[#57B4BA]/10 hover:text-[#015551]"
               }`}
             >
