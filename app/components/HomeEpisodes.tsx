@@ -373,66 +373,7 @@ export default function HomeEpisodes({ initialData }: HomeEpisodesProps) {
     <div>
       {headerActionsRoot ? createPortal(headerActions, headerActionsRoot) : null}
 
-      <div className="bg-gradient-to-r from-orange-500 to-orange-600 px-6 flex items-center min-h-[140px] md:min-h-[160px] lg:min-h-[180px]">
-        <div className="max-w-7xl mx-auto w-full py-5 md:py-6 lg:py-7">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="w-full md:w-3/5 lg:w-1/2 text-white text-center md:text-left">
-              <h1 className="font-extrabold tracking-tight">
-                <span className="block text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-none">
-                  {t("heroTitle")}
-                </span>
-                <span className="block text-lg sm:text-xl md:text-3xl lg:text-4xl leading-tight mt-0.5 md:mt-1">
-                  {t("heroSubtitle")}
-                </span>
-              </h1>
-              <p className="mt-3 max-w-xl mx-auto md:mx-0 text-sm sm:text-base md:text-lg text-orange-50/95 leading-snug">
-                {t("heroDescription")}
-              </p>
-            </div>
-
-            <div className="flex w-full md:w-auto justify-center md:justify-end">
-              <div className="flex items-center gap-4 lg:gap-6">
-                <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/95 p-2 shadow-sm">
-                  <Image
-                    src="/icons/coins/btc.svg"
-                    alt="Bitcoin"
-                    width={32}
-                    height={32}
-                    className="block h-full w-full object-contain"
-                  />
-                </div>
-                <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/95 p-2 shadow-sm">
-                  <Image
-                    src="/icons/coins/eth.svg"
-                    alt="Ethereum"
-                    width={32}
-                    height={32}
-                    className="block h-full w-full object-contain"
-                  />
-                </div>
-                <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/95 p-2 shadow-sm">
-                  <Image
-                    src="/icons/coins/usdt.svg"
-                    alt="Tether (USDT)"
-                    width={32}
-                    height={32}
-                    className="block h-full w-full object-contain"
-                  />
-                </div>
-                <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/95 p-2 shadow-sm">
-                  <Image
-                    src="/icons/coins/usdc.svg"
-                    alt="USD Coin"
-                    width={32}
-                    height={32}
-                    className="block h-full w-full object-contain"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <h1 className="sr-only">{t("heroTitle")}</h1>
 
       <div
         id="episodes-list"
