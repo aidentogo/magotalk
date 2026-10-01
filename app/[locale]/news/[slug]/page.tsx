@@ -54,6 +54,7 @@ export default async function NewsArticlePage({ params }: Props) {
         <header>
           <h1 className="break-words text-3xl font-bold leading-tight tracking-tight text-[#015551] sm:text-4xl">{post.title}</h1>
           <time className="mt-3 block text-sm text-[#315E5B]" dateTime={post.published_at}>{formatNewsDate(post.published_at, locale)}</time>
+          <p className="mt-2 text-sm text-muted">{post.author}</p>
         </header>
         <div className="news-prose mt-5">
           <Markdown skipHtml components={{
@@ -61,6 +62,13 @@ export default async function NewsArticlePage({ params }: Props) {
             a: ({ href, children }) => <a href={href} rel="noopener noreferrer">{children}</a>,
           }}>{post.content}</Markdown>
         </div>
+        <footer className="mt-10 border-t border-line pt-6 text-sm leading-relaxed text-muted">
+          {sourceUrl ? <p className="mb-4">{t("source")}: <a href={sourceUrl} className="break-all text-brand underline underline-offset-4" rel="noopener noreferrer">{sourceUrl}</a></p> : null}
+          <h2 className="font-semibold text-ink">{t("citationTitle")}</h2>
+          <p className="mt-2">{post.author}. {post.title}. {formatNewsDate(post.published_at, post.language)}.</p>
+          <a href={newsArticleUrl(post)} className="mt-2 block break-all text-brand underline underline-offset-4">{newsArticleUrl(post)}</a>
+          <p className="mt-3">{t("updated")}: <time dateTime={post.updated_at}>{formatNewsDate(post.updated_at, locale)}</time></p>
+        </footer>
       </article>
     </main>
   );

@@ -49,3 +49,13 @@ Supabase 项目 `pmlradrjbsfkrxpflxmy`，独立表 `public.news_posts`。节目�
 - `pnpm build`、TypeScript 和 ESLint 检查通过。
 - 本地生产模式验证三种界面的栏目、404、12 条分页、Markdown 文章、canonical、NewsArticle JSON-LD、来源链接和 sitemap；桌面与手机浏览器视觉检查通过。
 - 参考实现文档：[Next.js JSON-LD](https://nextjs.org/docs/app/guides/json-ld)、[Supabase RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)。
+
+## 节目纪要与文字稿（2026-10-01）
+
+About 展示最新三篇新闻与节目记录，并链接至 News 完整归档。文章保留固定地址，正文底部提供作者、日期、来源、固定链接及更新日期。
+
+- 节目纪要使用 `magotalk-ep096-recap` 形式；逐字稿使用 `magotalk-ep096-transcript` 形式。其他期数保持 episodes 表中原有 slug（例如 ep096）的写法。
+- 节目详情自动展示符合 `magotalk-{episodeSlug}-` 前缀的已发布记录。每篇记录独立保存，不把长正文堆进 About。
+- 纪要应标注“非逐字稿”；只有实际逐字整理的文字稿才标为逐字稿。保留发言归属、节目日期和原录音链接，区分个人回忆与核实事实。
+- 来源只有部分录音时明确注明范围，不暗示录音覆盖全文。新增原始文字稿时单独发布，不覆盖既有纪要。
+- 已发布 EP96 纪要：`/zh-Hans/news/magotalk-ep096-recap`，来源为 episodes.ep096 已有的上半部分 X Space 录音；节目行与海报没有修改。

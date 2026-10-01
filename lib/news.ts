@@ -17,6 +17,7 @@ export type NewsPost = {
 };
 
 export type NewsSummary = Omit<NewsPost, "source_url">;
+export type NewsListing = Pick<NewsPost, "slug" | "title" | "summary" | "language" | "published_at">;
 
 function newsClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -30,6 +31,33 @@ function newsClient() {
 
 function publishedNews() {
   return newsClient().from("news_posts");
+}
+
+// About only needs a short preview. The full archive remains paginated at /news.
+export async function getLatestNews(limit = 3): Promise<NewsListing[]> {
+  const { data, error } = await publishedNews()
+    .select("slug,title,summary,language,published_at")
+    .eq("status", "published")
+    .lte("published_at", new Date().toISOString())
+    .order("published_at", { ascending: false })
+    .order("slug")
+    .limit(limit);
+  if (error) throw new Error("News is temporarily unavailable.");
+  return (data ?? []) as NewsListing[];
+}
+
+// Stable editorial convention: magotalk-ep096-recap / magotalk-ep096-transcript.
+export async function getEpisodeNews(episodeSlug: string): Promise<NewsListing[]> {
+  if (!/^ep\d+$/.test(episodeSlug)) return [];
+  const { data, error } = await publishedNews()
+    .select("slug,title,summary,language,published_at")
+    .like("slug", `magotalk-${episodeSlug}-%`)
+    .eq("status", "published")
+    .lte("published_at", new Date().toISOString())
+    .order("published_at", { ascending: false })
+    .order("slug");
+  if (error) throw new Error("Episode records are temporarily unavailable.");
+  return (data ?? []) as NewsListing[];
 }
 
 // Public credentials and RLS protect drafts, even if a query is changed later.

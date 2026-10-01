@@ -60,7 +60,13 @@
     "hostKcRole": "Co-host",
     "hostKcBio": "Shapes topics and live discussion, with a focus on markets and industry context.",
     "hostStevenRole": "Co-host",
-    "hostStevenBio": "Supports production and storytelling; bridges community and audience feedback."
+    "hostStevenBio": "Supports production and storytelling; bridges community and audience feedback.",
+    "recordsTitle": "News & episode records",
+    "recordsIntro": "Updates, conversation notes and transcripts, each with its full text and a permanent link.",
+    "recordsAll": "Browse all records",
+    "recordsRead": "Read article",
+    "recordsEmpty": "No episode records yet.",
+    "recordsUnavailable": "Records are temporarily unavailable. Please try again later."
   },
   "Contact": {
     "title": "Contact",
@@ -117,7 +123,9 @@
     "timeTbd": "TBD",
     "metaTitleSuffix": "MagoTalk",
     "spacePending": "The X Space link will be posted here soon.",
-    "followOnX": "Follow @MagoTalk on X"
+    "followOnX": "Follow @MagoTalk on X",
+    "recordsTitle": "Episode notes & transcripts",
+    "recordsUnavailable": "Episode records are temporarily unavailable."
   },
   "Error": {
     "title": "Something went wrong",
@@ -143,6 +151,7 @@
     "pagination": "News pages",
     "previous": "Previous",
     "next": "Next",
-    "pageStatus": "Page {page} of {totalPages}"
+    "pageStatus": "Page {page} of {totalPages}",
+    "citationTitle": "Citation"
   }
 }

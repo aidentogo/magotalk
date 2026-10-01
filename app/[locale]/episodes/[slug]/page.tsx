@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { Suspense } from "react";
+import EpisodeRecords from "@/app/components/EpisodeRecords";
 import {
   Calendar,
   ChevronLeft,
@@ -126,6 +128,9 @@ export default async function EpisodeDetail({
           <Image src={getCoverImageUrl(episode.cover_image)} alt={episode.title} width={800} height={800} sizes="(max-width: 768px) 100vw, 480px" className="h-auto w-full" priority />
         </div>
         <div className="space-y-8">
+          <Suspense fallback={null}>
+            <EpisodeRecords slug={slug} locale={locale} />
+          </Suspense>
           <section>
             <SectionHeading icon={Mic} title={t("summaryTitle")} />
             <p className="whitespace-pre-line text-base leading-relaxed text-muted">{episode.description}</p>

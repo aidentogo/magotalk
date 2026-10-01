@@ -60,7 +60,13 @@
     "hostKcRole": "联合主持",
     "hostKcBio": "参与议题策划与现场讨论，侧重市场与产业观察。",
     "hostStevenRole": "联合主持",
-    "hostStevenBio": "参与节目制作与内容表达，连接社区与听众反馈。"
+    "hostStevenBio": "参与节目制作与内容表达，连接社区与听众反馈。",
+    "recordsTitle": "新闻与节目记录",
+    "recordsIntro": "节目动态、对谈纪要与文字稿，保留每篇记录的完整正文和固定链接。",
+    "recordsAll": "查看全部记录",
+    "recordsRead": "阅读全文",
+    "recordsEmpty": "暂时还没有节目记录。",
+    "recordsUnavailable": "节目记录暂时无法加载，请稍后再试。"
   },
   "Contact": {
     "title": "联系",
@@ -117,7 +123,9 @@
     "timeTbd": "时间待定",
     "metaTitleSuffix": "MagoTalk",
     "spacePending": "X Space 链接即将公布，请稍后再来。",
-    "followOnX": "关注 @MagoTalk"
+    "followOnX": "关注 @MagoTalk",
+    "recordsTitle": "节目纪要与文字稿",
+    "recordsUnavailable": "节目记录暂时无法加载。"
   },
   "Error": {
     "title": "出错了",
@@ -143,6 +151,7 @@
     "pagination": "新闻分页",
     "previous": "上一页",
     "next": "下一页",
-    "pageStatus": "第 {page} 页，共 {totalPages} 页"
+    "pageStatus": "第 {page} 页，共 {totalPages} 页",
+    "citationTitle": "引用信息"
   }
 }

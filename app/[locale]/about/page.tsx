@@ -1,8 +1,12 @@
 import Image from "next/image";
+import { Suspense } from "react";
+import AboutNews from "@/app/components/AboutNews";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 
 type AppLocale = (typeof routing.locales)[number];
+
+export const dynamic = "force-dynamic";
 
 const hosts = [
   {
@@ -119,6 +123,9 @@ export default async function AboutPage({
 
         </section>
       </div>
+      <Suspense fallback={null}>
+        <AboutNews locale={locale} />
+      </Suspense>
     </main>
   );
 }
