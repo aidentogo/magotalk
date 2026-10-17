@@ -112,6 +112,12 @@ export function newsArticleUrl(post: Pick<NewsPost, "slug" | "language">) {
   return `${SITE_URL}/${post.language}/news/${post.slug}`;
 }
 
+export function newsBlurb(summary: string) {
+  return summary
+    .replace(/\s*This English recap preserves the conversation's personal recollections and viewpoints\.?/g, "")
+    .trim();
+}
+
 export function formatNewsDate(date: string, locale: string) {
   return new Intl.DateTimeFormat(locale, {
     year: "numeric", month: "long", day: "numeric", timeZone: "UTC",

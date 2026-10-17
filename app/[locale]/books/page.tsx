@@ -37,10 +37,7 @@ export default async function BooksPage({
 
   return (
     <main className="mx-auto w-full max-w-6xl px-5 py-8 md:px-6 md:py-12">
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold tracking-tight text-brand md:text-5xl">{t("pageTitle")}</h1>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">{t("pageIntro")}</p>
-      </header>
+      <h1 className="mb-8 text-4xl font-bold tracking-tight text-ink md:text-5xl">{t("pageTitle")}</h1>
       <div className="space-y-6">
         {books.map((book) => <BookCard key={`${book.slug}-${currentLocale}`} book={book} locale={currentLocale} />)}
       </div>

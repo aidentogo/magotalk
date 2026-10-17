@@ -1,4 +1,4 @@
-import { ExternalLink, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import XIcon from "@/app/components/XIcon";
@@ -21,93 +21,23 @@ export default async function ContactPage({
   const t = await getTranslations("Contact");
 
   return (
-    <main className="bg-background px-5 py-8 md:px-8 md:py-14">
-      <div className="mx-auto grid w-full max-w-7xl gap-8 md:grid-cols-[minmax(0,0.95fr)_minmax(340px,0.85fr)] md:items-start md:gap-12 lg:gap-16">
-        <section aria-labelledby="contact-title" className="min-w-0">
-          <h1
-            id="contact-title"
-            className="max-w-3xl text-4xl font-bold leading-tight tracking-tight text-ink md:text-5xl"
-          >
-            {t("title")}
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg font-semibold leading-snug text-ink md:text-xl">
-            {t("subtitle")}
-          </p>
-
-          <div className="mt-8 max-w-2xl border-t border-line pt-5 md:mt-10">
-            <p className="whitespace-pre-line text-base leading-relaxed text-muted">
-              {t("pageIntro")}
-            </p>
-          </div>
-        </section>
-
-        <section
-          aria-labelledby="contact-touch-heading"
-          className="min-w-0 border-l-0 border-line md:border-l md:pl-8 lg:pl-10"
-        >
-          <div className="border-b border-line pb-4">
-            <h2
-              id="contact-touch-heading"
-              className="text-2xl font-bold tracking-tight text-ink"
-            >
-              {t("getInTouch")}
-            </h2>
-          </div>
-
-          <div className="divide-y divide-gray-200">
-            <a
-              href={contactEmailHref}
-              aria-label={`${t("emailLabel")}: ${contactEmail}`}
-              className="group flex items-center gap-4 py-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
-            >
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-brand ring-1 ring-gray-200 transition-colors group-hover:bg-brand group-hover:text-white">
-                <Mail className="h-5 w-5" strokeWidth={2} aria-hidden />
-              </div>
-              <div className="min-w-0 flex-1 text-left">
-                <h3 className="flex items-center gap-1.5 text-sm font-semibold text-muted">
-                  {t("emailLabel")}
-                  <ExternalLink
-                    className="h-3.5 w-3.5 shrink-0 opacity-50 transition-opacity group-hover:opacity-100"
-                    aria-hidden
-                  />
-                </h3>
-                <p className="mt-1 break-all text-base sm:text-lg font-semibold text-ink group-hover:text-brand-strong">
-                  {contactEmail}
-                </p>
-              </div>
-            </a>
-
-            <a
-              href={xProfileUrl}
-              className="group flex items-center gap-4 py-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
-            >
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gray-950 text-white transition-colors group-hover:bg-brand">
-                <XIcon className="h-4 w-4" />
-              </div>
-              <div className="min-w-0 flex-1 text-left">
-                <h3 className="flex items-center gap-1.5 text-sm font-semibold text-muted">
-                  {t("xLabel")}
-                  <ExternalLink
-                    className="h-3.5 w-3.5 shrink-0 opacity-50 transition-opacity group-hover:opacity-100"
-                    aria-hidden
-                  />
-                </h3>
-                <p className="mt-1 text-lg font-semibold text-ink group-hover:text-brand-strong">
-                  {xHandle}
-                </p>
-              </div>
-            </a>
-          </div>
-
-          <div className="mt-6 border-t border-line pt-5">
-            <h2 className="text-sm font-bold uppercase tracking-[0.16em] text-ink">
-              {t("collabTitle")}
-            </h2>
-            <p className="mt-3 max-w-xl whitespace-pre-line text-base leading-relaxed text-muted">
-              {t("collabBody")}
-            </p>
-          </div>
-        </section>
+    <main className="mx-auto w-full max-w-3xl px-5 py-10 sm:px-8 md:py-16">
+      <h1 className="text-4xl font-bold tracking-tight text-ink md:text-5xl">{t("title")}</h1>
+      <div className="mt-10 divide-y divide-line border-t border-line">
+        <a href={contactEmailHref} className="flex items-center gap-4 py-5 hover:text-brand-strong">
+          <Mail className="h-5 w-5 shrink-0 text-brand" strokeWidth={2} aria-hidden />
+          <span className="min-w-0">
+            <span className="block text-sm text-muted">{t("emailLabel")}</span>
+            <span className="mt-1 block break-all text-lg font-semibold text-ink">{contactEmail}</span>
+          </span>
+        </a>
+        <a href={xProfileUrl} className="flex items-center gap-4 py-5 hover:text-brand-strong">
+          <XIcon className="h-4 w-4 shrink-0 text-ink" />
+          <span className="min-w-0">
+            <span className="block text-sm text-muted">{t("xLabel")}</span>
+            <span className="mt-1 block text-lg font-semibold text-ink">{xHandle}</span>
+          </span>
+        </a>
       </div>
     </main>
   );

@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { formatNewsDate, getLatestNews, type NewsListing } from "@/lib/news";
+import { formatNewsDate, getLatestNews, newsBlurb, type NewsListing } from "@/lib/news";
 
 export default async function AboutNews({ locale }: { locale: string }) {
   const t = await getTranslations({ locale, namespace: "About" });
@@ -14,12 +14,9 @@ export default async function AboutNews({ locale }: { locale: string }) {
   }
 
   return (
-    <section aria-labelledby="about-records-heading" className="mx-auto mt-12 w-full max-w-7xl border-t border-line pt-8 md:mt-16">
+    <section aria-labelledby="about-records-heading" className="mt-14 w-full border-t border-line pt-8">
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h2 id="about-records-heading" className="text-2xl font-bold tracking-tight text-ink">{t("recordsTitle")}</h2>
-          <p className="mt-2 max-w-2xl text-base leading-relaxed text-muted">{t("recordsIntro")}</p>
-        </div>
+        <h2 id="about-records-heading" className="text-2xl font-bold tracking-tight text-ink">{t("recordsTitle")}</h2>
         <Link href="/news" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand hover:underline">
           {t("recordsAll")}<ArrowRight className="h-4 w-4" aria-hidden />
         </Link>
@@ -32,7 +29,7 @@ export default async function AboutNews({ locale }: { locale: string }) {
               <h3 className="mt-2 text-lg font-semibold leading-snug text-ink">
                 <Link href={`/news/${post.slug}`} className="hover:text-accent">{post.title}</Link>
               </h3>
-              <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">{post.summary}</p>
+              <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">{newsBlurb(post.summary)}</p>
             </article>
           ))}
         </div>

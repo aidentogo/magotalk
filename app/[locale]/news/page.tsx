@@ -4,7 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { formatNewsDate, getNewsPage, NEWS_PAGE_SIZE, SITE_URL } from "@/lib/news";
+import { formatNewsDate, getNewsPage, newsBlurb, NEWS_PAGE_SIZE, SITE_URL } from "@/lib/news";
 
 export const dynamic = "force-dynamic";
 
@@ -50,10 +50,7 @@ export default async function NewsPage({ params, searchParams }: Props) {
 
   return (
     <main className="mx-auto w-full max-w-4xl px-5 py-10 sm:px-8 md:py-16" aria-label={t("title")}>
-      <header className="max-w-2xl">
-        <h1 className="text-4xl font-bold tracking-tight text-ink md:text-5xl">{t("title")}</h1>
-        <p className="mt-4 text-base leading-relaxed text-muted">{t("intro")}</p>
-      </header>
+      <h1 className="text-4xl font-bold tracking-tight text-ink md:text-5xl">{t("title")}</h1>
       {posts.length === 0 ? (
         <section className="mt-12 border-t border-line py-16" aria-labelledby="news-empty-title">
           <Newspaper className="mb-5 h-8 w-8 text-brand" strokeWidth={1.5} aria-hidden />
@@ -64,10 +61,10 @@ export default async function NewsPage({ params, searchParams }: Props) {
           </Link>
         </section>
       ) : (
-        <div className="mt-10 border-t border-ink/15 md:mt-14">
+        <div className="mt-10 border-t border-ink/15">
           {posts.map((post, index) => {
             const lead = page === 1 && index === 0;
-            const summary = post.summary || post.content.replace(/[#*_`>]/g, "").slice(0, 220);
+            const summary = newsBlurb(post.summary) || post.content.replace(/[#*_`>]/g, "").slice(0, 220);
             return (
               <article key={post.slug} lang={post.language} className="border-b border-line">
                 <Link

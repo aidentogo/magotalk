@@ -5,7 +5,6 @@ import { useId, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowRight, Download } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import BookPublication from "@/app/components/BookPublication";
 import { getAvailableBookLocales, getBookCoverUrl, getBookFile, getPublicBookUrl, type Book, type BookLocale } from "@/lib/books";
 
 export default function BookCard({ book, locale }: { book: Book; locale: BookLocale }) {
@@ -35,7 +34,6 @@ export default function BookCard({ book, locale }: { book: Book; locale: BookLoc
           {file ? <a href={getPublicBookUrl(file.path)} download={file.filename} className="button-primary"><Download className="h-4 w-4" aria-hidden />{t("downloadFormat", { format: t(`formatLabels.${book.primaryFormat}`) })}</a> : <span className="text-sm text-muted">{t("comingSoon")}</span>}
           {book.detailPath ? <Link href={book.detailPath} className="button-secondary">{t("viewDetails")}<ArrowRight className="h-4 w-4" aria-hidden /></Link> : null}
         </div>
-        <BookPublication book={book} locale={locale} />
       </div>
     </article>
   );
