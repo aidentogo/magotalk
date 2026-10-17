@@ -27,15 +27,12 @@ export default async function AboutNews({ locale }: { locale: string }) {
       {posts.length ? (
         <div className="mt-6 grid gap-6 md:grid-cols-3">
           {posts.map((post) => (
-            <article key={post.slug} lang={post.language} className="rounded-xl border border-line bg-white p-5">
-              <time dateTime={post.published_at} className="text-sm text-muted">{formatNewsDate(post.published_at, locale)}</time>
-              <h3 className="mt-3 text-lg font-semibold leading-relaxed text-ink">
-                <Link href={`/news/${post.slug}`} className="hover:text-brand">{post.title}</Link>
+            <article key={post.slug} lang={post.language} className="border-t border-line pt-5">
+              <time dateTime={post.published_at} className="text-sm tabular-nums text-muted">{formatNewsDate(post.published_at, locale)}</time>
+              <h3 className="mt-2 text-lg font-semibold leading-snug text-ink">
+                <Link href={`/news/${post.slug}`} className="hover:text-accent">{post.title}</Link>
               </h3>
-              <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted">{post.summary}</p>
-              <Link href={`/news/${post.slug}`} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand hover:underline">
-                {t("recordsRead")}<ArrowRight className="h-4 w-4" aria-hidden />
-              </Link>
+              <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">{post.summary}</p>
             </article>
           ))}
         </div>

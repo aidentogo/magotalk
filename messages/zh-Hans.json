@@ -61,12 +61,12 @@
     "hostKcBio": "参与议题策划与现场讨论，侧重市场与产业观察。",
     "hostStevenRole": "联合主持",
     "hostStevenBio": "参与节目制作与内容表达，连接社区与听众反馈。",
-    "recordsTitle": "新闻与节目记录",
-    "recordsIntro": "节目动态、对谈纪要与文字稿，保留每篇记录的完整正文和固定链接。",
-    "recordsAll": "查看全部记录",
-    "recordsRead": "阅读全文",
-    "recordsEmpty": "暂时还没有节目记录。",
-    "recordsUnavailable": "节目记录暂时无法加载，请稍后再试。"
+    "recordsTitle": "新闻",
+    "recordsIntro": "MagoTalk 最近发布的新闻。",
+    "recordsAll": "全部新闻",
+    "recordsRead": "阅读",
+    "recordsEmpty": "还没有新闻。",
+    "recordsUnavailable": "新闻暂时无法加载，请稍后再试。"
   },
   "Contact": {
     "title": "联系",
@@ -124,8 +124,8 @@
     "metaTitleSuffix": "MagoTalk",
     "spacePending": "X Space 链接即将公布，请稍后再来。",
     "followOnX": "关注 @MagoTalk",
-    "recordsTitle": "节目纪要与文字稿",
-    "recordsUnavailable": "节目记录暂时无法加载。"
+    "recordsTitle": "新闻",
+    "recordsUnavailable": "新闻暂时无法加载。"
   },
   "Error": {
     "title": "出错了",
@@ -139,9 +139,9 @@
   },
   "News": {
     "title": "新闻",
-    "intro": "记录 MagoTalk 的重要动态、项目进展与里程碑。",
-    "emptyTitle": "新的篇章，从这里开始。",
-    "emptyBody": "这里将记录我们的重要发布、新项目和关键时刻。第一篇新闻即将与你见面。",
+    "intro": "MagoTalk 的新闻。",
+    "emptyTitle": "还没有新闻。",
+    "emptyBody": "新的文章会发布在这里。",
     "exploreEpisodes": "先来听听我们的对话",
     "readArticle": "阅读全文",
     "backToNews": "全部新闻",

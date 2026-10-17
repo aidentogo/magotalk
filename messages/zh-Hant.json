@@ -61,12 +61,12 @@
     "hostKcBio": "參與議題策劃與現場討論，側重市場與產業觀察。",
     "hostStevenRole": "聯合主持",
     "hostStevenBio": "參與節目製作與內容表達，連結社群與聽眾回饋。",
-    "recordsTitle": "新聞與節目紀錄",
-    "recordsIntro": "節目動態、對談紀要與文字稿，保留每篇紀錄的完整正文和固定連結。",
-    "recordsAll": "查看全部紀錄",
-    "recordsRead": "閱讀全文",
-    "recordsEmpty": "暫時還沒有節目紀錄。",
-    "recordsUnavailable": "節目紀錄暫時無法載入，請稍後再試。"
+    "recordsTitle": "新聞",
+    "recordsIntro": "MagoTalk 最近發布的新聞。",
+    "recordsAll": "全部新聞",
+    "recordsRead": "閱讀",
+    "recordsEmpty": "還沒有新聞。",
+    "recordsUnavailable": "新聞暫時無法載入，請稍後再試。"
   },
   "Contact": {
     "title": "聯絡",
@@ -124,8 +124,8 @@
     "metaTitleSuffix": "MagoTalk",
     "spacePending": "𝕏 Space 連結即將公布，請稍後再來。",
     "followOnX": "關注 @MagoTalk",
-    "recordsTitle": "節目紀要與文字稿",
-    "recordsUnavailable": "節目紀錄暫時無法載入。"
+    "recordsTitle": "新聞",
+    "recordsUnavailable": "新聞暫時無法載入。"
   },
   "Error": {
     "title": "發生錯誤",
@@ -139,9 +139,9 @@
   },
   "News": {
     "title": "新聞",
-    "intro": "記錄 MagoTalk 的重要動態、專案進展與里程碑。",
-    "emptyTitle": "新的篇章，從這裡開始。",
-    "emptyBody": "這裡將記錄我們的重要發布、新專案和關鍵時刻。第一篇新聞即將與你見面。",
+    "intro": "MagoTalk 的新聞。",
+    "emptyTitle": "還沒有新聞。",
+    "emptyBody": "新的文章會發布在這裡。",
     "exploreEpisodes": "先來聽聽我們的對話",
     "readArticle": "閱讀全文",
     "backToNews": "全部新聞",

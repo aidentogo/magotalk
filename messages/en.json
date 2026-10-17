@@ -61,12 +61,12 @@
     "hostKcBio": "Shapes topics and live discussion, with a focus on markets and industry context.",
     "hostStevenRole": "Co-host",
     "hostStevenBio": "Supports production and storytelling; bridges community and audience feedback.",
-    "recordsTitle": "News & episode records",
-    "recordsIntro": "Updates, conversation notes and transcripts, each with its full text and a permanent link.",
-    "recordsAll": "Browse all records",
-    "recordsRead": "Read article",
-    "recordsEmpty": "No episode records yet.",
-    "recordsUnavailable": "Records are temporarily unavailable. Please try again later."
+    "recordsTitle": "News",
+    "recordsIntro": "The latest from MagoTalk.",
+    "recordsAll": "All news",
+    "recordsRead": "Read",
+    "recordsEmpty": "No news yet.",
+    "recordsUnavailable": "News is temporarily unavailable. Please try again later."
   },
   "Contact": {
     "title": "Contact",
@@ -124,8 +124,8 @@
     "metaTitleSuffix": "MagoTalk",
     "spacePending": "The X Space link will be posted here soon.",
     "followOnX": "Follow @MagoTalk on X",
-    "recordsTitle": "Episode notes & transcripts",
-    "recordsUnavailable": "Episode records are temporarily unavailable."
+    "recordsTitle": "News",
+    "recordsUnavailable": "News is temporarily unavailable."
   },
   "Error": {
     "title": "Something went wrong",
@@ -139,11 +139,11 @@
   },
   "News": {
     "title": "News",
-    "intro": "Announcements, milestones, and new chapters from MagoTalk.",
-    "emptyTitle": "Our next chapter starts here.",
-    "emptyBody": "This is where we share major announcements, new projects, and moments that matter. Check back for our first update.",
+    "intro": "News from MagoTalk.",
+    "emptyTitle": "No news yet.",
+    "emptyBody": "New pieces will be published here.",
     "exploreEpisodes": "Explore our conversations",
-    "readArticle": "Read article",
+    "readArticle": "Read",
     "backToNews": "All news",
     "published": "Published",
     "updated": "Updated",

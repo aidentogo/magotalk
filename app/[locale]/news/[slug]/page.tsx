@@ -9,6 +9,10 @@ import { formatNewsDate, getNewsBySlug, newsArticleUrl, SITE_URL } from "@/lib/n
 export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
+function articleBody(content: string) {
+  return content.replace(/^>\s*\*\*Document type:[^\n]*\n+/, "");
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getNewsBySlug(slug);
@@ -45,30 +49,22 @@ export default async function NewsArticlePage({ params }: Props) {
   };
 
   return (
-    <main className="mx-auto w-full max-w-3xl px-5 py-4 sm:px-8 md:py-8">
+    <main className="mx-auto w-full max-w-3xl px-5 py-8 sm:px-8 md:py-12">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
-      <Link href="/news" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#315E5B] hover:text-[#C93619]">
+      <Link href="/news" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-muted hover:text-accent">
         <ArrowLeft className="h-4 w-4" aria-hidden />{t("backToNews")}
       </Link>
-      <article lang={post.language} className="mt-3">
-        <header>
-          <h1 className="break-words text-3xl font-bold leading-tight tracking-tight text-[#015551] sm:text-4xl">{post.title}</h1>
-          <time className="mt-3 block text-sm text-[#315E5B]" dateTime={post.published_at}>{formatNewsDate(post.published_at, locale)}</time>
-          <p className="mt-2 text-sm text-muted">{post.author}</p>
+      <article lang={post.language} className="mt-8">
+        <header className="max-w-2xl">
+          <time className="text-sm tabular-nums text-muted" dateTime={post.published_at}>{formatNewsDate(post.published_at, locale)}</time>
+          <h1 className="mt-3 text-pretty text-3xl font-bold leading-[1.15] tracking-tight text-ink sm:text-4xl">{post.title}</h1>
         </header>
-        <div className="news-prose mt-5">
+        <div className="news-prose mt-8">
           <Markdown skipHtml components={{
             h1: ({ children }) => <h2>{children}</h2>,
             a: ({ href, children }) => <a href={href} rel="noopener noreferrer">{children}</a>,
-          }}>{post.content}</Markdown>
+          }}>{articleBody(post.content)}</Markdown>
         </div>
-        <footer className="mt-10 border-t border-line pt-6 text-sm leading-relaxed text-muted">
-          {sourceUrl ? <p className="mb-4">{t("source")}: <a href={sourceUrl} className="break-all text-brand underline underline-offset-4" rel="noopener noreferrer">{sourceUrl}</a></p> : null}
-          <h2 className="font-semibold text-ink">{t("citationTitle")}</h2>
-          <p className="mt-2">{post.author}. {post.title}. {formatNewsDate(post.published_at, post.language)}.</p>
-          <a href={newsArticleUrl(post)} className="mt-2 block break-all text-brand underline underline-offset-4">{newsArticleUrl(post)}</a>
-          <p className="mt-3">{t("updated")}: <time dateTime={post.updated_at}>{formatNewsDate(post.updated_at, locale)}</time></p>
-        </footer>
       </article>
     </main>
   );

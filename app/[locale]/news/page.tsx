@@ -49,45 +49,62 @@ export default async function NewsPage({ params, searchParams }: Props) {
   if (page > totalPages) notFound();
 
   return (
-    <main className="mx-auto w-full max-w-3xl px-5 py-8 sm:px-8 md:py-12" aria-label={t("title")}>
-
-      <header className="mb-8 border-b border-line pb-6">
-        <h1 className="text-3xl font-bold tracking-tight text-brand md:text-4xl">{t("title")}</h1>
-        <p className="mt-3 text-base leading-relaxed text-muted">{t("intro")}</p>
+    <main className="mx-auto w-full max-w-4xl px-5 py-10 sm:px-8 md:py-16" aria-label={t("title")}>
+      <header className="max-w-2xl">
+        <h1 className="text-4xl font-bold tracking-tight text-ink md:text-5xl">{t("title")}</h1>
+        <p className="mt-4 text-base leading-relaxed text-muted">{t("intro")}</p>
       </header>
       {posts.length === 0 ? (
-        <section className="py-16 sm:py-24" aria-labelledby="news-empty-title">
-          <Newspaper className="mb-6 h-9 w-9 text-[#57B4BA]" strokeWidth={1.5} aria-hidden />
-          <h2 id="news-empty-title" className="text-2xl font-semibold text-[#015551]">{t("emptyTitle")}</h2>
-          <p className="mt-3 max-w-xl leading-relaxed text-[#315E5B]">{t("emptyBody")}</p>
-          <Link href="/" className="mt-7 inline-flex items-center gap-2 font-semibold text-[#C93619] hover:underline">
+        <section className="mt-12 border-t border-line py-16" aria-labelledby="news-empty-title">
+          <Newspaper className="mb-5 h-8 w-8 text-brand" strokeWidth={1.5} aria-hidden />
+          <h2 id="news-empty-title" className="text-2xl font-semibold text-ink">{t("emptyTitle")}</h2>
+          <p className="mt-3 max-w-xl leading-relaxed text-muted">{t("emptyBody")}</p>
+          <Link href="/" className="mt-6 inline-flex items-center gap-2 font-semibold text-accent hover:underline">
             {t("exploreEpisodes")}<ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </section>
       ) : (
-        <div className="divide-y divide-[#015551]/15">
-          {posts.map((post) => (
-            <article key={post.slug} lang={post.language} className="py-6 first:pt-0">
-              <h2 className="text-2xl font-semibold leading-snug tracking-tight text-[#015551] sm:text-3xl">
-                <Link href={`/news/${post.slug}`} className="hover:text-[#C93619]">{post.title}</Link>
-              </h2>
-              <time dateTime={post.published_at} className="mt-2 block text-sm text-[#315E5B]">
-                {formatNewsDate(post.published_at, locale)}
-              </time>
-              <p className="mt-4 line-clamp-3 text-base leading-relaxed text-muted">{post.summary || post.content.replace(/[#*_`>]/g, "").slice(0, 220)}</p>
-              <Link href={`/news/${post.slug}`} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand hover:underline">
-                {t("readArticle")}<ArrowRight className="h-4 w-4" aria-hidden />
-              </Link>
-            </article>
-          ))}
+        <div className="mt-10 border-t border-ink/15 md:mt-14">
+          {posts.map((post, index) => {
+            const lead = page === 1 && index === 0;
+            const summary = post.summary || post.content.replace(/[#*_`>]/g, "").slice(0, 220);
+            return (
+              <article key={post.slug} lang={post.language} className="border-b border-line">
+                <Link
+                  href={`/news/${post.slug}`}
+                  className="group grid gap-2 py-7 sm:grid-cols-[11rem_minmax(0,1fr)] sm:items-baseline sm:gap-10 sm:py-8"
+                >
+                  <time
+                    dateTime={post.published_at}
+                    className="text-sm tabular-nums text-muted sm:pt-1"
+                  >
+                    {formatNewsDate(post.published_at, locale)}
+                  </time>
+                  <div className="min-w-0">
+                    <h2
+                      className={`text-pretty font-semibold leading-snug tracking-tight text-ink group-hover:text-accent ${
+                        lead ? "text-2xl sm:text-[1.75rem]" : "text-xl sm:text-2xl"
+                      }`}
+                    >
+                      {post.title}
+                    </h2>
+                    <p className={`mt-3 max-w-2xl leading-relaxed text-muted ${lead ? "line-clamp-3 text-base" : "line-clamp-2 text-[15px]"}`}>
+                      {summary}
+                    </p>
+                    <span className="sr-only">{t("readArticle")}</span>
+                  </div>
+                </Link>
+              </article>
+            );
+          })}
         </div>
       )}
 
       {totalPages > 1 ? (
-        <nav aria-label={t("pagination")} className="mt-8 flex items-center justify-between gap-4 border-t border-[#015551]/20 pt-6 text-sm text-[#015551]">
-          {page > 1 ? <Link href={page === 2 ? "/news" : `/news?page=${page - 1}`} className="font-semibold hover:underline">{t("previous")}</Link> : <span />}
-          <p>{t("pageStatus", { page, totalPages })}</p>
-          {page < totalPages ? <Link href={`/news?page=${page + 1}`} className="font-semibold hover:underline">{t("next")}</Link> : <span />}
+        <nav aria-label={t("pagination")} className="mt-8 flex items-center justify-between gap-4 text-sm text-ink">
+          {page > 1 ? <Link href={page === 2 ? "/news" : `/news?page=${page - 1}`} className="font-semibold hover:text-accent">{t("previous")}</Link> : <span />}
+          <p className="text-muted">{t("pageStatus", { page, totalPages })}</p>
+          {page < totalPages ? <Link href={`/news?page=${page + 1}`} className="font-semibold hover:text-accent">{t("next")}</Link> : <span />}
         </nav>
       ) : null}
     </main>

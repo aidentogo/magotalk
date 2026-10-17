@@ -2,6 +2,8 @@
 
 导航顺序：Home → News → Books → About → Contact。栏目地址：`https://magotalk.com/en/news`，简体和繁体界面分别是 `/zh-Hans/news` 和 `/zh-Hant/news`。
 
+栏目是一份新闻列表，不按类型分栏。对谈文字和项目近况都作为新闻发布，按时间倒序排在一起。
+
 ## 数据与权限
 
 Supabase 项目 `pmlradrjbsfkrxpflxmy`，独立表 `public.news_posts`。节目继续使用 `episodes`。
@@ -52,7 +54,7 @@ Supabase 项目 `pmlradrjbsfkrxpflxmy`，独立表 `public.news_posts`。节目�
 
 ## 节目纪要与文字稿（2026-10-01）
 
-About 展示最新三篇新闻与节目记录，并链接至 News 完整归档。文章保留固定地址，正文底部提供作者、日期、来源、固定链接及更新日期。
+About 展示最新三篇新闻，并链接至 News 完整归档。文章页只显示日期、标题和正文。摘要用于列表和搜索，不在正文页重复。作者、来源、固定链接和更新日期保留在 JSON-LD 里，不在正文下方再写一遍。
 
 - 节目纪要使用 `magotalk-ep096-recap` 形式；逐字稿使用 `magotalk-ep096-transcript` 形式。其他期数保持 episodes 表中原有 slug（例如 ep096）的写法。
 - 节目详情自动展示符合 `magotalk-{episodeSlug}-` 前缀的已发布记录。每篇记录独立保存，不把长正文堆进 About。
